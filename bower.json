@@ -1,0 +1,21 @@
+{
+  "name": "myun-node-service-master",
+  "description": "myun-node-service-master",
+  "main": "server/server.js",
+  "authors": [
+    "joneqian <qian.qing@aliyun.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

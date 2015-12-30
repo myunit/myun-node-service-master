@@ -1,22 +1,8 @@
 module.exports = function(MYUser) {
+  //注册用户
   MYUser.register = function(phone, password, verifyCode, cb) {
     //TODO: cloud logic
     cb(null, {phone: phone, password: password, verifyCode:verifyCode});
-  };
-
-  MYUser.getVerifyCode = function(phone, cb) {
-    //TODO: cloud logic
-    cb(null, {phone: phone, verifyCode:'123'});
-  };
-
-  MYUser.login = function(phone, password, cb) {
-    //TODO: cloud logic
-    MYUser.getApp(function (err , app) {
-      var AccessToken = app.models.AccessToken;
-      AccessToken.createAccessTokenId(function (err, token) {
-        cb(null, {phone: phone, token:token});
-      });
-    });
   };
 
   MYUser.remoteMethod(
@@ -33,6 +19,12 @@ module.exports = function(MYUser) {
     }
   );
 
+  //获取验证码
+  MYUser.getVerifyCode = function(phone, cb) {
+    //TODO: cloud logic
+    cb(null, {phone: phone, verifyCode:'123'});
+  };
+
   MYUser.remoteMethod(
     'getVerifyCode',
     {
@@ -44,6 +36,17 @@ module.exports = function(MYUser) {
       http: {path:'/get-verify-code', verb: 'post'}
     }
   );
+
+  //登录
+  MYUser.login = function(phone, password, cb) {
+    //TODO: cloud logic
+    MYUser.getApp(function (err , app) {
+      var AccessToken = app.models.AccessToken;
+      AccessToken.create({userId:'123'}, function (err, token) {
+        cb(null, {phone: phone, token: token.id, ttl: token.ttl, created:token.created, userId:token.userId});
+      });
+    });
+  };
 
   MYUser.remoteMethod(
     'login',
@@ -57,4 +60,28 @@ module.exports = function(MYUser) {
       http: {path:'/login', verb: 'post'}
     }
   );
+
+  //修改密码
+  MYUser.modifyPassword = function(phone, newPassword, oldPassword, cb) {
+    //TODO: cloud logic
+    MYUser.getApp(function (err , app) {
+      cb(null, {msg: 'ok'});
+    });
+  };
+
+  MYUser.remoteMethod(
+    'modifyPassword',
+    {
+      description: ['user modify password.'],
+      accepts: [
+        {arg: 'phone', type: 'string', required: true},
+        {arg: 'newPassword', type: 'string', required: true},
+        {arg: 'oldPassword', type: 'string', required: true}
+      ],
+      returns: {arg: 'status', type: 'string'},
+      http: {path:'/modify-password', verb: 'post'}
+    }
+  );
+
+
 };

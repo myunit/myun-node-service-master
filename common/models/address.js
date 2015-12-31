@@ -1,5 +1,6 @@
 module.exports = function(Address) {
   Address.getApp(function (err, app) {
+    var app_self = app;
     //获取行政区
     Address.getRoad = function (province, city, region, cb) {
       //TODO: cloud logic

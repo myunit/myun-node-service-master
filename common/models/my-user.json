@@ -47,6 +47,18 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "modifyPassword"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "forgetPassword"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "logout"
     }
   ],
   "methods": {}

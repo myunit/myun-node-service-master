@@ -36,5 +36,9 @@
   "MYUser": {
     "dataSource": null,
     "public": true
+  },
+  "MYToken": {
+    "dataSource": "redisDS",
+    "public": false
   }
 }

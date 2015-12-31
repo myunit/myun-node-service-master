@@ -54,11 +54,11 @@ module.exports = function (MYUser) {
       var myToken = app_self.models.MYToken;
       async.waterfall(
         [
-          /*function (cb) {
-            myToken.destroyAll({where: {userId: user}}, function (err) {
+          function (cb) {
+            myToken.destroyAll({userId: user}, function (err) {
               cb(err);
             });
-          },*/
+          },
           function (cb) {
             myToken.create({userId: user}, function (err, token) {
               cb(err, token);

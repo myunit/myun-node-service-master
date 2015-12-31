@@ -1,9 +1,10 @@
+var loopback = require('loopback');
+
 module.exports = function (MYUser) {
   MYUser.getApp(function (err, app) {
     var app_self = app;
-    var myToken = app_self.models.MYToken;
     //注册用户
-    MYUser.register = function (phone, password, verifyCode, address, cb) {
+    MYUser.register = function (user, password, verifyCode, address, cb) {
       //TODO: cloud logic-add user && save address(default)
       cb(null, {status: 0, msg: '成功'});
     };
@@ -13,6 +14,7 @@ module.exports = function (MYUser) {
       {
         description: ['注册一个新用户.'],
         accepts: [
+          {arg: 'user', type: 'string', required: true, description: '用户标识,可以是手机号或用户名'},
           {arg: 'password', type: 'string', required: true, description: '密码'},
           {arg: 'verifyCode', type: 'string', required: true, description: '验证码'},
           {
@@ -46,10 +48,10 @@ module.exports = function (MYUser) {
     );
 
     //登录
-    MYUser.login = function (phone, password, cb) {
+    MYUser.login = function (user, password, cb) {
       //TODO: cloud logic
       var myToken = app_self.models.MYToken;
-      myToken.create({userId: phone}, function (err, token) {
+      myToken.create({userId: user}, function (err, token) {
         cb(null, {status: 0, token: token.id, msg: '登录成功'});
       });
     };
@@ -59,7 +61,7 @@ module.exports = function (MYUser) {
       {
         description: ['用户登录'],
         accepts: [
-          {arg: 'phone', type: 'string', required: true, description: '手机号'},
+          {arg: 'user', type: 'string', required: true, description: '用户标识,可以是手机号或用户名'},
           {arg: 'password', type: 'string', required: true, description: '密码'}
         ],
         returns: {arg: 'repData', type: 'string'},
@@ -70,21 +72,19 @@ module.exports = function (MYUser) {
     //退出登录
     MYUser.logout = function (cb) {
       //TODO: cloud logic
-      cb(null, {status: 0, msg: '退出成功'});
-    };
-
-    MYUser.beforeRemote('logout', function (context, unused, next) {
-      var req = context.req;
+      var ctx = loopback.getCurrentContext();
       var myToken = app_self.models.MYToken;
-      var logOutToken = new myToken({id: req.accessToken.id});
+      var token = ctx.get('accessToken');
+      var logOutToken = new myToken({id: token.id});
       logOutToken.destroy(function (err) {
         if (err) {
-          next(err);
+          cb(null, {status: -1, msg: '退出异常'});
         } else {
-          next();
+          cb(null, {status: 0, msg: '退出成功'});
         }
       });
-    });
+
+    };
 
     MYUser.remoteMethod(
       'logout',
@@ -96,8 +96,11 @@ module.exports = function (MYUser) {
     );
 
     //修改密码
-    MYUser.modifyPassword = function (phone, newPassword, oldPassword, cb) {
+    MYUser.modifyPassword = function (oldPassword, newPassword, cb) {
       //TODO: cloud logic
+      var ctx = loopback.getCurrentContext();
+      var token = ctx.get('accessToken');
+      console.log('token id: ' + token.id);
       cb(null, {status: 0, msg: '密码修改成功'});
     };
 
@@ -106,7 +109,7 @@ module.exports = function (MYUser) {
       {
         description: ['修改密码(access token)'],
         accepts: [
-          {arg: 'phone', type: 'string', required: true, description: '手机号'},
+          {arg: 'oldPassword', type: 'string', required: true, description: '旧密码'},
           {arg: 'newPassword', type: 'string', required: true, description: '新密码'}
         ],
         returns: {arg: 'repData', type: 'string'},
@@ -115,7 +118,7 @@ module.exports = function (MYUser) {
     );
 
     //忘记密码
-    MYUser.forgetPassword = function (phone, verifyCode, newPassword, oldPassword, cb) {
+    MYUser.forgetPassword = function (user, verifyCode, newPassword, cb) {
       //TODO: cloud logic
       cb(null, {status: 0, msg: '密码重设成功'});
     };
@@ -125,10 +128,9 @@ module.exports = function (MYUser) {
       {
         description: ['忘记密码'],
         accepts: [
-          {arg: 'phone', type: 'string', required: true, description: '手机号'},
+          {arg: 'user', type: 'string', required: true, description: '用户标识,可以是手机号或用户名'},
           {arg: 'verifyCode', type: 'string', required: true, description: '验证码'},
-          {arg: 'newPassword', type: 'string', required: true, description: '新密码'},
-          {arg: 'oldPassword', type: 'string', required: true, description: '旧密码'}
+          {arg: 'newPassword', type: 'string', required: true, description: '新密码'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/forget-password', verb: 'post'}

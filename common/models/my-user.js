@@ -14,9 +14,9 @@ module.exports = function (MYUser) {
         accepts: [
           {arg: 'password', type: 'string', required: true, description: '密码'},
           {arg: 'verifyCode', type: 'string', required: true, description: '验证码'},
-          {arg: 'address', type: 'Object', required: true,
-            description: ['地址(JSON): {"receiver":"string", "phone":"string",',
-              '"province":int, "city":int, "region":int, "road":int, "addDetail":"string"}'
+          {arg: 'address', type: 'string', required: true,
+            description: ['地址(JSON string): {"receiver":"string", "phone":"string",',
+              '"province":number, "city":number, "region":number, "road":number, "addDetail":"string"}'
             ]
           }
         ],

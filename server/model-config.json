@@ -41,8 +41,8 @@
     "dataSource": "redisDS",
     "public": false
   },
-  "address": {
+  "Address": {
     "dataSource": null,
-    "public": false
+    "public": true
   }
 }

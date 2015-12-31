@@ -8,14 +8,6 @@
   "properties": {},
   "validations": [],
   "relations": {
-    "accessTokens": {
-      "type": "hasMany",
-      "model": "MYToken",
-      "foreignKey": "userId",
-      "options": {
-        "disableInclude": true
-      }
-    }
   },
   "acls": [
     {

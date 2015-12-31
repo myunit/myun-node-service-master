@@ -8,11 +8,6 @@
   "properties": {},
   "validations": [],
   "relations": {
-    "user": {
-      "type": "belongsTo",
-      "model": "MYUser",
-      "foreignKey": "userId"
-    }
   },
   "acls": [],
   "methods": {}

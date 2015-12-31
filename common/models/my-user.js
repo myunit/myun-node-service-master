@@ -1,4 +1,5 @@
 var loopback = require('loopback');
+var async = require('async');
 
 module.exports = function (MYUser) {
   MYUser.getApp(function (err, app) {
@@ -18,7 +19,7 @@ module.exports = function (MYUser) {
           {arg: 'password', type: 'string', required: true, description: '密码'},
           {arg: 'verifyCode', type: 'string', required: true, description: '验证码'},
           {
-            arg: 'address', type: 'string', required: true,
+            arg: 'address', type: 'string', required: false,
             description: ['地址(JSON string): {"receiver":"string", "phone":"string",',
               '"province":number, "city":number, "region":number, "road":number, "addDetail":"string"}'
             ]
@@ -48,12 +49,29 @@ module.exports = function (MYUser) {
     );
 
     //登录
-    MYUser.login = function (user, password, cb) {
+    MYUser.login = function (user, password, loginCb) {
       //TODO: cloud logic
       var myToken = app_self.models.MYToken;
-      myToken.create({userId: user}, function (err, token) {
-        cb(null, {status: 0, token: token.id, msg: '登录成功'});
-      });
+      async.waterfall(
+        [
+          /*function (cb) {
+            myToken.destroyAll({where: {userId: user}}, function (err) {
+              cb(err);
+            });
+          },*/
+          function (cb) {
+            myToken.create({userId: user}, function (err, token) {
+              cb(err, token);
+            });
+          }
+        ],
+        function (err, token) {
+          if (err) {
+            loginCb(null, {status: -1, token: '', msg: '登录失败'});
+          } else {
+            loginCb(null, {status: 0, token: token.id, msg: '登录成功'});
+          }
+        });
     };
 
     MYUser.remoteMethod(
@@ -100,7 +118,6 @@ module.exports = function (MYUser) {
       //TODO: cloud logic
       var ctx = loopback.getCurrentContext();
       var token = ctx.get('accessToken');
-      console.log('token id: ' + token.id);
       cb(null, {status: 0, msg: '密码修改成功'});
     };
 

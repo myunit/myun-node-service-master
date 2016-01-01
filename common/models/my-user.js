@@ -17,7 +17,7 @@ module.exports = function (MYUser) {
     MYUser.remoteMethod(
       'register',
       {
-        description: ['注册一个新用户.'],
+        description: ['注册一个新用户.返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
         accepts: [
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
@@ -42,7 +42,7 @@ module.exports = function (MYUser) {
     MYUser.remoteMethod(
       'getVerifyCode',
       {
-        description: ['获取验证码'],
+        description: ['获取验证码.返回结果-status:操作结果 0 成功 -1 失败, verifyCode:验证码'],
         accepts: [
           {arg: 'phone', type: 'string', required: true, description: '手机号'}
         ],
@@ -82,7 +82,7 @@ module.exports = function (MYUser) {
     MYUser.remoteMethod(
       'login',
       {
-        description: ['用户登录'],
+        description: ['用户登录.返回结果-status:操作结果 0 成功 -1 失败, token:用户token, msg:附带信息'],
         accepts: [
           {
             arg: 'credentials', type: 'object', required: true, http: {source: 'body'},
@@ -116,7 +116,7 @@ module.exports = function (MYUser) {
     MYUser.remoteMethod(
       'logout',
       {
-        description: ['用户退出登录(access token)'],
+        description: ['用户退出登录(access token).返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/logout', verb: 'post'}
       }
@@ -134,7 +134,7 @@ module.exports = function (MYUser) {
     MYUser.remoteMethod(
       'modifyPassword',
       {
-        description: ['修改密码(access token)'],
+        description: ['修改密码(access token).返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
         accepts: [
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
@@ -160,7 +160,7 @@ module.exports = function (MYUser) {
     MYUser.remoteMethod(
       'forgetPassword',
       {
-        description: ['忘记密码'],
+        description: ['忘记密码.返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
         accepts: [
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},

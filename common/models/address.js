@@ -1,3 +1,4 @@
+var loopback = require('loopback');
 module.exports = function(Address) {
   Address.getApp(function (err, app) {
     var app_self = app;
@@ -24,6 +25,8 @@ module.exports = function(Address) {
     //获取用户地址
     Address.getUserAddress = function (pageId, pageSize, cb) {
       //TODO: cloud logic
+      var ctx = loopback.getCurrentContext();
+      var token = ctx.get('accessToken');
       cb(null, {count:100, data:[
         {id:1, default:true, province:1, city:1, region:1, road:1, addDetail:'XX小区门口'},
         {id:2, default:true, province:1, city:1, region:1, road:1, addDetail:'XX商店'}

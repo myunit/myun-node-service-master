@@ -22,7 +22,7 @@ module.exports = function (MYUser) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '用户注册信息(JSON string) {"user":"string", "password":"string","verifyCode":"string",',
+              '用户注册信息(JSON string) {"realm(optional)":"string", "user":"string", "password":"string","verifyCode":"string",',
               '"address(optional)":{"receiver":"string","phone":"string","province":number,"city":number,',
               '"region":number,"road":number,"addDetail":"string"}}'
             ]
@@ -87,7 +87,7 @@ module.exports = function (MYUser) {
           {
             arg: 'credentials', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '用户登录信息(JSON string) {"user":"string", "password":"string"}'
+              '用户登录信息(JSON string) {"realm(optional)":"string", "user":"string", "password":"string"}'
             ]
           }
         ],
@@ -165,7 +165,7 @@ module.exports = function (MYUser) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '密码信息(JSON string) {"user":"string", "verifyCode":"string", "newPassword":"string"}'
+              '密码信息(JSON string) {"realm(optional)":"string", "user":"string", "verifyCode":"string", "newPassword":"string"}'
             ]
           }
         ],

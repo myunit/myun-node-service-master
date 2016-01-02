@@ -44,5 +44,9 @@
   "Address": {
     "dataSource": null,
     "public": true
+  },
+  "goods": {
+    "dataSource": null,
+    "public": true
   }
 }

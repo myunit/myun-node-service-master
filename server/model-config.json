@@ -45,7 +45,7 @@
     "dataSource": null,
     "public": true
   },
-  "goods": {
+  "Goods": {
     "dataSource": null,
     "public": true
   }

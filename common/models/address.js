@@ -103,7 +103,7 @@ module.exports = function (Address) {
     );
 
     //删除用户地址
-    Address.delUserAddress = function (data, cb) {
+    Address.delUserAddress = function (id, cb) {
       //TODO: cloud logic
       var ctx = loopback.getCurrentContext();
       var token = ctx.get('accessToken');

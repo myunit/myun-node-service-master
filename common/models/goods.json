@@ -1,5 +1,5 @@
 {
-  "name": "goods",
+  "name": "Goods",
   "base": "Model",
   "idInjection": true,
   "options": {
@@ -41,6 +41,13 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "getSaleGoods"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "getGoodsDetail"
     }
   ],
   "methods": {}

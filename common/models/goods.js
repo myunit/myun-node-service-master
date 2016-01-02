@@ -1,12 +1,15 @@
 var loopback = require('loopback');
 
-module.exports = function(Goods) {
+module.exports = function (Goods) {
   Goods.getApp(function (err, app) {
     var app_self = app;
     //获取用户收藏商品列表
     Goods.getCollection = function (userId, pageId, pageSize, cb) {
       //TODO: cloud logic
-      cb(null, {count: 1 , data: [{id:0, goodsId:111, goodsName:'方便面', goodsPrice:'15元', url:'https://docs.strongloop.com/'}]});
+      cb(null, {
+        count: 1,
+        data: [{id: 0, goodsId: 111, goodsName: '方便面', goodsPrice: '15元', url: 'https://docs.strongloop.com/'}]
+      });
     };
 
     Goods.getUserCollection = function (pageId, pageSize, cb) {
@@ -39,7 +42,10 @@ module.exports = function(Goods) {
       var ctx = loopback.getCurrentContext();
       var token = ctx.get('accessToken');
 
-      cb(null, {count: 1 , data: [{id:0, goodsId:111, goodsName:'方便面', goodsPrice:'15元', url:'https://docs.strongloop.com/'}]});
+      cb(null, {
+        count: 1,
+        data: [{id: 0, goodsId: 111, goodsName: '方便面', goodsPrice: '15元', url: 'https://docs.strongloop.com/'}]
+      });
     };
 
     Goods.remoteMethod(
@@ -49,7 +55,8 @@ module.exports = function(Goods) {
           '用户收藏或取消收藏商品(access token).返回结果-status:操作结果 0 成功 -1 失败, id:收藏编号(只在收藏操作时存在), msg:附带信息'
         ],
         accepts: [
-          {arg: 'data', type: 'object', required: true, http: {source: 'body'},
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
               '收藏对象信息(JSON string, id收藏编号-存在该字段时,认为是取消收藏操作, 否则认为是收藏操作)',
               ' {"id(optional)":"number", "goodsId":"number"}'
@@ -64,7 +71,7 @@ module.exports = function(Goods) {
     //获取新商品列表
     Goods.getNewGoods = function (pageId, pageSize, cb) {
       //TODO: cloud logic
-      cb(null, {count: 1 , data: [{id:0, name:'方便面', price:'15元', url:'https://docs.strongloop.com/'}]});
+      cb(null, {count: 1, data: [{id: 0, name: '方便面', price: '15元', url: 'https://docs.strongloop.com/'}]});
     };
 
     Goods.remoteMethod(
@@ -84,9 +91,9 @@ module.exports = function(Goods) {
     );
 
     //获取特卖/活动商品列表
-    Goods.getSaleGoods = function (pageId, pageSize, cb) {
+    Goods.getSaleGoods = function (saleId, pageId, pageSize, cb) {
       //TODO: cloud logic
-      cb(null, {count: 1 , data: [{id:0, name:'方便面', price:'15元', url:'https://docs.strongloop.com/'}]});
+      cb(null, {count: 1, data: [{id: 0, name: '方便面', price: '15元', url: 'https://docs.strongloop.com/'}]});
     };
 
     Goods.remoteMethod(
@@ -103,6 +110,35 @@ module.exports = function(Goods) {
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-sale-goods', verb: 'get'}
+      }
+    );
+
+    //获取商品详情
+    Goods.getGoodsDetail = function (goodsId, cb) {
+      //TODO: cloud logic
+      cb(null, {
+        id: 0,
+        name: '方便面',
+        unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+        thumbnail: [],
+        detail: '',
+        img: []
+      });
+    };
+
+    Goods.remoteMethod(
+      'getGoodsDetail',
+      {
+        description: [
+          '获取商品详细信息.返回结果-id:商品编号, name:商品名称, ',
+          'unitPrice:单价[{price:价格, meas:单位}], thumbnail:缩略图[\'url\',\'url\',\'url\'], ',
+          'detail:商品详情, img:商品图片[\'url\',\'url\',\'url\']}'
+        ],
+        accepts: [
+          {arg: 'id', type: 'number', required: true, description: '商品编号'},
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-goods-detail', verb: 'get'}
       }
     );
   });

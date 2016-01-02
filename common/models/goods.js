@@ -4,12 +4,15 @@ module.exports = function(Goods) {
   Goods.getApp(function (err, app) {
     var app_self = app;
     //获取用户收藏商品列表
-    Goods.getUserCollection = function (pageId, pageSize, cb) {
+    Goods.getCollection = function (userId, pageId, pageSize, cb) {
       //TODO: cloud logic
+      cb(null, {count: 1 , data: [{id:0, goodsId:111, goodsName:'方便面', goodsPrice:'15元', url:'https://docs.strongloop.com/'}]});
+    };
+
+    Goods.getUserCollection = function (pageId, pageSize, cb) {
       var ctx = loopback.getCurrentContext();
       var token = ctx.get('accessToken');
-
-      cb(null, {count: 1 , data: [{id:0, goodsId:111, goodsName:'方便面', goodsPrice:'15元', url:'https://docs.strongloop.com/'}]});
+      Goods.getCollection(token.userId, pageId, pageSize, cb);
     };
 
     Goods.remoteMethod(

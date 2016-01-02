@@ -34,6 +34,13 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "getNewGoods"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "getSaleGoods"
     }
   ],
   "methods": {}

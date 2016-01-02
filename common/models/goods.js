@@ -19,7 +19,7 @@ module.exports = function(Goods) {
       'getUserCollection',
       {
         description: [
-          '获取用户收藏列表(access token).返回结果-count:该用户收藏总数, data:该次查询的收藏品数组[{',
+          '获取用户收藏列表(access token).返回结果-count:收藏品总数, data:该次查询的收藏品数组[{',
           'id:收藏编号, goodsId:商品编号, goodsName:商品名, goodsPrice:商品价格, url:商品图片url}]'
         ],
         accepts: [
@@ -71,7 +71,7 @@ module.exports = function(Goods) {
       'getNewGoods',
       {
         description: [
-          '获取新列表.返回结果-count:新商品总数, data:该次查询的新商品数组[{',
+          '获取新列表.返回结果-count:商品总数, data:该次查询的新商品数组[{',
           'id:商品编号, name:商品名, price:商品价格, url:商品图片url}]'
         ],
         accepts: [
@@ -80,6 +80,29 @@ module.exports = function(Goods) {
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-new-goods', verb: 'get'}
+      }
+    );
+
+    //获取特卖/活动商品列表
+    Goods.getSaleGoods = function (pageId, pageSize, cb) {
+      //TODO: cloud logic
+      cb(null, {count: 1 , data: [{id:0, name:'方便面', price:'15元', url:'https://docs.strongloop.com/'}]});
+    };
+
+    Goods.remoteMethod(
+      'getSaleGoods',
+      {
+        description: [
+          '获取特卖/活动列表.返回结果-count:商品总数, data:该次查询的新商品数组[{',
+          'id:商品编号, name:商品名, price:商品价格, url:商品图片url}]'
+        ],
+        accepts: [
+          {arg: 'saleId', type: 'number', required: true, description: '特卖/活动编号'},
+          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-sale-goods', verb: 'get'}
       }
     );
   });

@@ -40,7 +40,7 @@ module.exports = function (Address) {
       'getUserAddress',
       {
         description: [
-          '获取用户地址信息(access token).返回结果-count:该用户地址总数, data:该次查询的地址数组[{',
+          '获取用户地址信息(access token).返回结果-count:地址总数, data:该次查询的地址数组[{',
           'id:地址编号, default:是否默认, province:省份编号, city:城市编号, region:行政区编号, road:街道编号, detail:详细地址}]'
         ],
         accepts: [

@@ -197,7 +197,7 @@ module.exports = function (Goods) {
           'detail:商品详情, img:商品图片[\'url\',\'url\',\'url\']}'
         ],
         accepts: [
-          {arg: 'id', type: 'number', required: true, description: '商品编号'},
+          {arg: 'id', type: 'number', required: true, description: '商品编号'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-goods-detail', verb: 'get'}

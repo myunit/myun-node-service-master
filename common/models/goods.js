@@ -1,4 +1,5 @@
 var loopback = require('loopback');
+var async = require('async');
 
 module.exports = function (Goods) {
   Goods.getApp(function (err, app) {
@@ -75,29 +76,48 @@ module.exports = function (Goods) {
     );
 
     //获取新商品列表
-    Goods.getNewGoods = function (pageId, pageSize, cb) {
+    Goods.getNewGoods = function (pageId, pageSize, queryCart, goodsCb) {
       //TODO: cloud logic
-      cb(null, {
-        count: 1,
-        data: [{
-          id: 0,
-          name: '方便面',
-          unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
-          url: 'https://docs.strongloop.com/'
-        }]
-      });
+      async.waterfall(
+        [
+          function (cb) {
+            cb(null, {
+              count: 1,
+              data: [{
+                id: 0,
+                name: '方便面',
+                unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+                url: 'https://docs.strongloop.com/'
+              }]
+            });
+          },
+          function (goodsObj, cb) {
+            //TODO get number of shopping cart
+            goodsObj['numInCart'] = 10;
+            cb(null, goodsObj);
+          }
+        ],
+        function (err, goodsObj) {
+          if (err) {
+            goodsCb(err);
+          } else {
+            goodsCb(null, goodsObj);
+          }
+        }
+      );
     };
 
     Goods.remoteMethod(
       'getNewGoods',
       {
         description: [
-          '获取新列表.返回结果-count:商品总数, data:该次查询的新商品数组[{',
+          '获取新列表.返回结果-numInCart:购物车商品数量, count:商品总数, data:该次查询的新商品数组[{',
           'id:商品编号, name:商品名, unitPrice:商品价格, url:商品图片url}]'
         ],
         accepts: [
           {arg: 'pageId', type: 'number', required: true, description: '第几页'},
-          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'},
+          {arg: 'queryCart', type: 'boolean', required: false, default: true, description: '是否查询购物车'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-new-goods', verb: 'get'}
@@ -105,18 +125,36 @@ module.exports = function (Goods) {
     );
 
     //获取特卖/活动商品列表
-    Goods.getSaleGoods = function (saleId, pageId, pageSize, cb) {
+    Goods.getSaleGoods = function (saleId, pageId, pageSize, queryCart, goodsCb) {
       //TODO: cloud logic
-      cb(null, {
-        saleId: 0,
-        count: 1,
-        data: [{
-          id: 0,
-          name: '方便面',
-          unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
-          url: 'https://docs.strongloop.com/'
-        }]
-      });
+      async.waterfall(
+        [
+          function (cb) {
+            cb(null, {
+              saleId: 0,
+              count: 1,
+              data: [{
+                id: 0,
+                name: '方便面',
+                unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+                url: 'https://docs.strongloop.com/'
+              }]
+            });
+          },
+          function (goodsObj, cb) {
+            //TODO get number of shopping cart
+            goodsObj['numInCart'] = 10;
+            cb(null, goodsObj);
+          }
+        ],
+        function (err, goodsObj) {
+          if (err) {
+            goodsCb(err);
+          } else {
+            goodsCb(null, goodsObj);
+          }
+        }
+      );
     };
 
     Goods.remoteMethod(
@@ -129,7 +167,8 @@ module.exports = function (Goods) {
         accepts: [
           {arg: 'saleId', type: 'number', required: true, description: '特卖/活动编号'},
           {arg: 'pageId', type: 'number', required: true, description: '第几页'},
-          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'},
+          {arg: 'queryCart', type: 'boolean', required: false, default: true, description: '是否查询购物车'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-sale-goods', verb: 'get'}

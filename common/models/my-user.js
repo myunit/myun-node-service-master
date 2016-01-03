@@ -212,7 +212,8 @@ module.exports = function (MYUser) {
         ],
         accepts: [
           {arg: 'pageId', type: 'number', required: true, description: '第几页'},
-          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'},
+          {arg: 'queryCart', type: 'boolean', required: false, default: true, description: '是否查询购物车'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/my-collection', verb: 'get'}

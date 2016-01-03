@@ -8,7 +8,13 @@ module.exports = function (Goods) {
       //TODO: cloud logic
       cb(null, {
         count: 1,
-        data: [{id: 0, goodsId: 111, goodsName: '方便面', goodsPrice: '15元', url: 'https://docs.strongloop.com/'}]
+        data: [{
+          id: 0,
+          goodsId: 111,
+          goodsName: '方便面',
+          unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+          url: 'https://docs.strongloop.com/'
+        }]
       });
     };
 
@@ -23,7 +29,7 @@ module.exports = function (Goods) {
       {
         description: [
           '获取用户收藏列表(access token).返回结果-count:收藏品总数, data:该次查询的收藏品数组[{',
-          'id:收藏编号, goodsId:商品编号, goodsName:商品名, goodsPrice:商品价格, url:商品图片url}]'
+          'id:收藏编号, goodsId:商品编号, goodsName:商品名, unitPrice:商品价格, url:商品图片url}]'
         ],
         accepts: [
           {arg: 'pageId', type: 'number', required: true, description: '第几页'},
@@ -71,7 +77,15 @@ module.exports = function (Goods) {
     //获取新商品列表
     Goods.getNewGoods = function (pageId, pageSize, cb) {
       //TODO: cloud logic
-      cb(null, {count: 1, data: [{id: 0, name: '方便面', price: '15元', url: 'https://docs.strongloop.com/'}]});
+      cb(null, {
+        count: 1,
+        data: [{
+          id: 0,
+          name: '方便面',
+          unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+          url: 'https://docs.strongloop.com/'
+        }]
+      });
     };
 
     Goods.remoteMethod(
@@ -79,7 +93,7 @@ module.exports = function (Goods) {
       {
         description: [
           '获取新列表.返回结果-count:商品总数, data:该次查询的新商品数组[{',
-          'id:商品编号, name:商品名, price:商品价格, url:商品图片url}]'
+          'id:商品编号, name:商品名, unitPrice:商品价格, url:商品图片url}]'
         ],
         accepts: [
           {arg: 'pageId', type: 'number', required: true, description: '第几页'},
@@ -93,15 +107,24 @@ module.exports = function (Goods) {
     //获取特卖/活动商品列表
     Goods.getSaleGoods = function (saleId, pageId, pageSize, cb) {
       //TODO: cloud logic
-      cb(null, {count: 1, data: [{id: 0, name: '方便面', price: '15元', url: 'https://docs.strongloop.com/'}]});
+      cb(null, {
+        saleId: 0,
+        count: 1,
+        data: [{
+          id: 0,
+          name: '方便面',
+          unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+          url: 'https://docs.strongloop.com/'
+        }]
+      });
     };
 
     Goods.remoteMethod(
       'getSaleGoods',
       {
         description: [
-          '获取特卖/活动列表.返回结果-count:商品总数, data:该次查询的新商品数组[{',
-          'id:商品编号, name:商品名, price:商品价格, url:商品图片url}]'
+          '获取特卖/活动列表.返回结果-saleId:特卖/活动编号, count:商品总数, data:该次查询的新商品数组[{',
+          'id:商品编号, name:商品名, unitPrice:商品价格, url:商品图片url}]'
         ],
         accepts: [
           {arg: 'saleId', type: 'number', required: true, description: '特卖/活动编号'},
@@ -139,6 +162,143 @@ module.exports = function (Goods) {
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-goods-detail', verb: 'get'}
+      }
+    );
+
+    //商品搜索
+    Goods.searchGoods = function (keys, pageId, pageSize, cb) {
+      //TODO: cloud logic
+      cb(null, {
+        count: 1,
+        data: [{
+          id: 0,
+          name: '方便面',
+          unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+          thumbnail: [],
+          detail: '',
+          img: []
+        }]
+      });
+    };
+
+    Goods.remoteMethod(
+      'searchGoods',
+      {
+        description: [
+          '商品搜索.返回结果-count:商品总数, data:该次搜索的商品数组[{',
+          'id:商品编号, name:商品名, unitPrice:商品价格, url:商品图片url}]'
+        ],
+        accepts: [
+          {arg: 'keys', type: 'string', required: true, description: '搜索关键字数组'},
+          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/search-goods', verb: 'get'}
+      }
+    );
+
+    //新商品搜索
+    Goods.searchNewGoods = function (keys, pageId, pageSize, cb) {
+      //TODO: cloud logic
+      cb(null, {
+        count: 1,
+        data: [{
+          id: 0,
+          name: '方便面',
+          unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+          thumbnail: [],
+          detail: '',
+          img: []
+        }]
+      })
+    };
+
+    Goods.remoteMethod(
+      'searchNewGoods',
+      {
+        description: [
+          '新商品搜索.返回结果-count:商品总数, data:该次搜索的商品数组[{',
+          'id:商品编号, name:商品名, unitPrice:商品价格, url:商品图片url}]'
+        ],
+        accepts: [
+          {arg: 'keys', type: 'string', required: true, description: '搜索关键字数组'},
+          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/search-new-goods', verb: 'get'}
+      }
+    );
+
+    //特卖/活动商品搜索
+    Goods.searchSaleGoods = function (keys, pageId, pageSize, cb) {
+      //TODO: cloud logic
+      cb(null, {
+        saleId: 0,
+        count: 1,
+        data: [{
+          id: 0,
+          name: '方便面',
+          unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+          thumbnail: [],
+          detail: '',
+          img: []
+        }]
+      })
+    };
+
+    Goods.remoteMethod(
+      'searchSaleGoods',
+      {
+        description: [
+          '特卖活动商品搜索.返回结果-saleId:特卖/活动编号, count:商品总数, data:该次搜索的商品数组[{',
+          'id:商品编号, name:商品名, unitPrice:商品价格, url:商品图片url}]'
+        ],
+        accepts: [
+          {arg: 'keys', type: 'string', required: true, description: '搜索关键字数组'},
+          {arg: 'saleId', type: 'number', required: true, description: '特卖/活动编号'},
+          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/search-sale-goods', verb: 'get'}
+      }
+    );
+
+    //已收藏商品搜索
+    Goods.searchCollectionGoods = function (keys, pageId, pageSize, cb) {
+      //TODO: cloud logic
+      var ctx = loopback.getCurrentContext();
+      var token = ctx.get('accessToken');
+      cb(null, {
+        saleId: 0,
+        count: 1,
+        data: [{
+          id: 0,
+          name: '方便面',
+          unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+          thumbnail: [],
+          detail: '',
+          img: []
+        }]
+      })
+    };
+
+    Goods.remoteMethod(
+      'searchSaleGoods',
+      {
+        description: [
+          '已收藏商品搜索.返回结果-count:商品总数, data:该次搜索的商品数组[{',
+          'id:商品编号, name:商品名, unitPrice:商品价格, url:商品图片url}]'
+        ],
+        accepts: [
+          {arg: 'keys', type: 'string', required: true, description: '搜索关键字数组'},
+          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/search-collection-goods', verb: 'get'}
       }
     );
   });

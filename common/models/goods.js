@@ -161,7 +161,7 @@ module.exports = function (Goods) {
       'getSaleGoods',
       {
         description: [
-          '获取特卖/活动列表.返回结果-saleId:特卖/活动编号, count:商品总数, data:该次查询的新商品数组[{',
+          '获取特卖/活动列表.返回结果-numInCart:购物车商品数量, saleId:特卖/活动编号, count:商品总数, data:该次查询的新商品数组[{',
           'id:商品编号, name:商品名, unitPrice:商品价格, url:商品图片url}]'
         ],
         accepts: [
@@ -341,8 +341,8 @@ module.exports = function (Goods) {
       }
     );
 
-    //商品分类
-    Goods.getGoodsCategory = function (keys, pageId, pageSize, cb) {
+    //获取商品分类
+    Goods.getGoodsCategory = function (parentId, pageId, pageSize, cb) {
       //TODO: cloud logic
       cb(null, {
         count: 1,
@@ -358,7 +358,7 @@ module.exports = function (Goods) {
       'getGoodsCategory',
       {
         description: [
-          '商品分类.返回结果-count:类别总数, data:该次查询的分类数组[{',
+          '获取商品分类.返回结果-count:类别总数, data:该次查询的分类数组[{',
           'id:分类编号, name:分类名, img:分类图片url}]'
         ],
         accepts: [
@@ -368,6 +368,56 @@ module.exports = function (Goods) {
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-goods-category', verb: 'get'}
+      }
+    );
+
+    //根据分类获取商品
+    Goods.getGoodsByCategory = function (categoryId, pageId, pageSize, queryCart, goodsCb) {
+      //TODO: cloud logic
+      async.waterfall(
+        [
+          function (cb) {
+            cb(null, {
+              count: 1,
+              data: [{
+                id: 0,
+                name: '方便面',
+                unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+                url: 'https://docs.strongloop.com/'
+              }]
+            });
+          },
+          function (goodsObj, cb) {
+            //TODO get number of shopping cart
+            goodsObj['numInCart'] = 10;
+            cb(null, goodsObj);
+          }
+        ],
+        function (err, goodsObj) {
+          if (err) {
+            goodsCb(err);
+          } else {
+            goodsCb(null, goodsObj);
+          }
+        }
+      );
+    };
+
+    Goods.remoteMethod(
+      'getGoodsByCategory',
+      {
+        description: [
+          '商品分类.返回结果-numInCart:购物车商品数量, count:类别总数, data:该次查询的分类数组[{',
+          'id:分类编号, name:分类名, img:分类图片url}]'
+        ],
+        accepts: [
+          {arg: 'categoryId', type: 'number', required: true, description: '商品分类id'},
+          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'},
+          {arg: 'queryCart', type: 'boolean', required: false, default: true, description: '是否查询购物车'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-goods-by-category', verb: 'get'}
       }
     );
   });

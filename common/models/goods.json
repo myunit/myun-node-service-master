@@ -83,6 +83,13 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "getGoodsCategory"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "getGoodsByCategory"
     }
   ],
   "methods": {}

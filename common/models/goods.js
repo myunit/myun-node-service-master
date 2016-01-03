@@ -5,36 +5,53 @@ module.exports = function (Goods) {
   Goods.getApp(function (err, app) {
     var app_self = app;
     //获取用户收藏商品列表
-    Goods.getCollection = function (userId, pageId, pageSize, cb) {
-      //TODO: cloud logic
-      cb(null, {
-        count: 1,
-        data: [{
-          id: 0,
-          goodsId: 111,
-          goodsName: '方便面',
-          unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
-          url: 'https://docs.strongloop.com/'
-        }]
-      });
-    };
-
-    Goods.getUserCollection = function (pageId, pageSize, cb) {
+    Goods.getUserCollection = function (pageId, pageSize, queryCart, collCb) {
       var ctx = loopback.getCurrentContext();
       var token = ctx.get('accessToken');
-      Goods.getCollection(token.userId, pageId, pageSize, cb);
+      var ctx = loopback.getCurrentContext();
+      var token = ctx.get('accessToken');
+      //TODO: cloud logic
+      async.waterfall(
+        [
+          function (cb) {
+            cb(null, {
+              count: 1,
+              data: [{
+                id: 0,
+                goodsId: 111,
+                goodsName: '方便面',
+                unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+                url: 'https://docs.strongloop.com/'
+              }]
+            });
+          },
+          function (goodsObj, cb) {
+            //TODO get number of shopping cart
+            goodsObj['numInCart'] = 10;
+            cb(null, goodsObj);
+          }
+        ],
+        function (err, goodsObj) {
+          if (err) {
+            collCb(err);
+          } else {
+            collCb(null, goodsObj);
+          }
+        }
+      );
     };
 
     Goods.remoteMethod(
       'getUserCollection',
       {
         description: [
-          '获取用户收藏列表(access token).返回结果-count:收藏品总数, data:该次查询的收藏品数组[{',
+          '获取用户收藏列表(access token).返回结果-numInCart:购物车商品数量, count:收藏品总数, data:该次查询的收藏品数组[{',
           'id:收藏编号, goodsId:商品编号, goodsName:商品名, unitPrice:商品价格, url:商品图片url}]'
         ],
         accepts: [
           {arg: 'pageId', type: 'number', required: true, description: '第几页'},
-          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'},
+          {arg: 'queryCart', type: 'boolean', required: false, default: true, description: '是否查询购物车'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-user-collection', verb: 'get'}

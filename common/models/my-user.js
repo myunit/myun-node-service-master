@@ -175,49 +175,5 @@ module.exports = function (MYUser) {
         http: {path: '/forget-password', verb: 'post'}
       }
     );
-
-    //我的收藏
-    MYUser.myCollection = function (pageId, pageSize, collCb) {
-      var ctx = loopback.getCurrentContext();
-      var token = ctx.get('accessToken');
-      //TODO: cloud logic
-      var goods = app_self.models.Goods;
-      async.waterfall(
-        [
-          function (cb) {
-            goods.getCollection(token.userId, pageId, pageSize , cb);
-          },
-          function (goodsObj, cb) {
-            //TODO get number of shopping cart
-            goodsObj['numInCart'] = 10;
-            cb(null, goodsObj);
-          }
-        ],
-        function (err, goodsObj) {
-          if (err) {
-            collCb(err);
-          } else {
-            collCb(null, goodsObj);
-          }
-        }
-      );
-    };
-
-    MYUser.remoteMethod(
-      'myCollection',
-      {
-        description: [
-          '获取我的收藏列表(access token).返回结果-numInCart:购物车商品数量, count:该用户收藏总数, data:该次查询的收藏品数组[{',
-          'id:收藏编号, goodsId:商品编号, goodsName:商品名, goodsPrice:商品价格, url:商品图片url}]'
-        ],
-        accepts: [
-          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
-          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'},
-          {arg: 'queryCart', type: 'boolean', required: false, default: true, description: '是否查询购物车'}
-        ],
-        returns: {arg: 'repData', type: 'string'},
-        http: {path: '/my-collection', verb: 'get'}
-      }
-    );
   });
 };

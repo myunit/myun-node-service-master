@@ -340,5 +340,35 @@ module.exports = function (Goods) {
         http: {path: '/search-collection-goods', verb: 'get'}
       }
     );
+
+    //商品分类
+    Goods.getGoodsCategory = function (keys, pageId, pageSize, cb) {
+      //TODO: cloud logic
+      cb(null, {
+        count: 1,
+        data: [{
+          id: 0,
+          name: '化妆品',
+          img: ''
+        }]
+      });
+    };
+
+    Goods.remoteMethod(
+      'getGoodsCategory',
+      {
+        description: [
+          '商品分类.返回结果-count:类别总数, data:该次查询的分类数组[{',
+          'id:分类编号, name:分类名, img:分类图片url}]'
+        ],
+        accepts: [
+          {arg: 'parentId', type: 'number', required: false, default: -1, description: '父类id,顶级类别无改字段'},
+          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-goods-category', verb: 'get'}
+      }
+    );
   });
 };

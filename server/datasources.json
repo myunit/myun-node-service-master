@@ -11,6 +11,23 @@
   },
   "MYCloudDS": {
     "name": "MYCloudDS",
-    "connector": "rest"
+    "connector": "rest",
+    "options": {
+      "headers": {
+        "accept": "application/json",
+        "content-type": "application/json"
+      }
+    },
+    "operations": [
+      {
+        "template": {
+          "method": "GET",
+          "url": "http://127.0.0.1:3001/cart/"
+        },
+        "functions": {
+          "cart": []
+        }
+      }
+    ]
   }
 }

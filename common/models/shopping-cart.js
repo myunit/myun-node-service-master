@@ -96,7 +96,10 @@ module.exports = function (ShoppingCart) {
       accepts: [
         {
           arg: 'data', type: 'object', required: true, http: {source: 'body'},
-          description: '商品信息(JSON string) {id:商品id, styles:[{id: 1, num:5},{id: 2, num: 10}]}'
+          description: [
+            '商品信息(JSON string) {"id":商品id, "styles":[{"id": 款式id, "num":数量},',
+            '{"id": 款式id, "num": 数量}]}'
+          ]
         }
       ],
       returns: {arg: 'repData', type: 'string'},

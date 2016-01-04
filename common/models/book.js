@@ -15,8 +15,10 @@ module.exports = function (Book) {
       ],
       accepts: [
         {
-          arg: 'data', type: 'object', required: true, http: {source: 'body'}, description: ['订单信息(JSON string) {',
-          'mode:配送方式, address:配送地址, totalPrice:合计价格, goods:[{id:商品id, styles:[{id:款式id, num:款式数量}]}]}']
+          arg: 'data', type: 'object', required: true, http: {source: 'body'},
+          description: [
+            '订单信息(JSON string) {"mode":配送方式, "address":配送地址, "totalPrice":"合计价格", ',
+            '"goods":[{"id":商品id, "styles":[{"id":款式id, "num":款式数量}]}]}']
         }
       ],
       returns: {arg: 'repData', type: 'string'},

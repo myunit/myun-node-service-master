@@ -8,5 +8,9 @@
     "port": 6379,
     "name": "redisDS",
     "connector": "redis"
+  },
+  "MYCloudDS": {
+    "name": "MYCloudDS",
+    "connector": "rest"
   }
 }

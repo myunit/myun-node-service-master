@@ -124,8 +124,10 @@ module.exports = function (Goods) {
           function (goodsObj, cb) {
             //TODO get number of shopping cart
             goodsInter.getNumInCart(function (err, num) {
-              goodsObj['numInCart'] = num;
-              cb(null, goodsObj);
+              if (!err){
+                goodsObj['numInCart'] = num;
+              }
+              cb(err, goodsObj);
             });
           }
         ],

@@ -4,6 +4,7 @@
  * @description
  */
 var util = require('util');
+var async = require('async');
 
 var GoodsInterface = function (MYCloudDS) {
   this.MYCloudDS = MYCloudDS;
@@ -11,18 +12,32 @@ var GoodsInterface = function (MYCloudDS) {
 };
 util.inherits(GoodsInterface, Object);
 
-GoodsInterface.prototype.getNumInCart = function (cb) {
+GoodsInterface.prototype.getNumInCart = function (callback) {
   var DS = this.MYCloudDS;
-  var processResponse = function (error, result, response) {
-    if (!error) {
-      cb(null , result.num);
-
-    } else {
-      cb(error , null);
+  async.waterfall(
+    [
+      function (cb) {
+        DS.cart(function (error, result) {
+          if (!error) {
+            if (body.status === 'OK') {
+              cb(null, result.num);
+            } else {
+              cb(new Error('getNumInCart Error: ' + body.status), null);
+            }
+          } else {
+            cb(error, null);
+          }
+        });
+      }
+    ],
+    function (err, num) {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, num);
+      }
     }
-  };
-
-  DS.cart(processResponse);
+  );
 };
 
 exports = module.exports = GoodsInterface;

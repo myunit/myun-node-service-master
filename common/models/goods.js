@@ -8,8 +8,6 @@ module.exports = function (Goods) {
     Goods.getUserCollection = function (pageId, pageSize, queryCart, collCb) {
       var ctx = loopback.getCurrentContext();
       var token = ctx.get('accessToken');
-      var ctx = loopback.getCurrentContext();
-      var token = ctx.get('accessToken');
       //TODO: cloud logic
       async.waterfall(
         [

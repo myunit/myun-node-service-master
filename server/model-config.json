@@ -52,5 +52,9 @@
   "ShoppingCart": {
     "dataSource": null,
     "public": true
+  },
+  "Book": {
+    "dataSource": null,
+    "public": true
   }
 }

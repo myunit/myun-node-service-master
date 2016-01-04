@@ -37,7 +37,7 @@ module.exports = function (Book) {
             num: 5,
             totalPrice: '144元',
             create: '2015-12-11 09:12:14',
-            img: ['https://docs.strongloop.com/','https://docs.strongloop.com/']
+            img: ['https://docs.strongloop.com/', 'https://docs.strongloop.com/']
           },
           {
             id: 2,
@@ -45,7 +45,7 @@ module.exports = function (Book) {
             num: 15,
             totalPrice: '132元',
             create: '2015-12-21 09:12:14',
-            img: ['https://docs.strongloop.com/','https://docs.strongloop.com/']
+            img: ['https://docs.strongloop.com/', 'https://docs.strongloop.com/']
           }
         ]
       });
@@ -56,7 +56,7 @@ module.exports = function (Book) {
       {
         description: [
           '获取用户订单列表(access token).返回结果-count:订单总数, data:该次查询的订单数组[{id:订单id, ',
-          'status:订单状态, num:商品数量, totalPrice:合计价格, create:创建时间, img:[\'\',\'\']}]'
+          'status:订单状态, num:商品数量, totalPrice:合计价格, create:下单时间, img:[\'\',\'\']}]'
         ],
         accepts: [
           {
@@ -68,6 +68,47 @@ module.exports = function (Book) {
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-user-book', verb: 'get'}
+      }
+    );
+
+    //获取订单详情
+    Book.getBookDetail = function (id, cb) {
+      cb(null, {
+        id: 1,
+        status: '已审核',
+        totalPrice: '144元',
+        create: '2015-12-11 09:12:14',
+        mode: '货到付款',
+        address: 111,
+        detail: [
+          {
+            id: 1,
+            name: '方便面',
+            img: '',
+            styles: [{id: 1, name: '箱(10包)', price: 155, num: 3}, {id: 2, name: '包', price: 5, num: 30}]
+          },
+          {
+            id: 2,
+            name: '拉面',
+            img: '',
+            styles: [{id: 1, name: '箱(10包)', price: 155, num: 3}, {id: 2, name: '包', price: 5, num: 30}]
+          }]
+      });
+    };
+
+    Book.remoteMethod(
+      'getBookDetail',
+      {
+        description: [
+          '获取订单详情(access token).返回结果-id:订单id, create:下单时间, status:订单状态, totalPrice:合计金额',
+          'mode:配送方式, address:配送地址id, detail:[{id:商品id, name:商品名, styles:[{id:款式id, name: 款式名, price:价格, ',
+          'num:数量}], img:图片url}]'
+        ],
+        accepts: [
+          {arg: 'id', type: 'number', required: true, http: {source: 'path'}, description: '订单id'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-book-detail/:id', verb: 'get'}
       }
     );
   });

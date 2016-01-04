@@ -27,6 +27,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "getUserBook"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "getBookDetail"
     }
   ],
   "methods": {}

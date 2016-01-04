@@ -87,7 +87,6 @@ module.exports = function (ShoppingCart) {
       var token = ctx.get('accessToken');
       //TODO: cloud logic
       cb(null, {id: 112, styles: [{id: 1, num: 5}, {id: 2, num: 10}]});
-      console.log('data: ' + data.id);
     };
 
     ShoppingCart.remoteMethod(

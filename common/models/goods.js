@@ -44,7 +44,7 @@ module.exports = function (Goods) {
       {
         description: [
           '获取用户收藏列表(access token).返回结果-numInCart:购物车商品数量, count:收藏品总数, data:该次查询的收藏品数组[{',
-          'id:收藏编号, goodsId:商品编号, goodsName:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}],',
+          'id:收藏id, goodsId:商品id, goodsName:商品名, styles:商品款式[{id: 款式id, price:价格, meas:单位}],',
           ' url:商品图片url}]'
         ],
         accepts: [
@@ -83,13 +83,13 @@ module.exports = function (Goods) {
       {
         description: [
           '用户收藏或取消收藏商品(access token).返回结果-status:操作结果 0 成功 -1 失败, ',
-          'id:收藏编号(只在收藏操作时存在), msg:附带信息'
+          'id:收藏id(只在收藏操作时存在), msg:附带信息'
         ],
         accepts: [
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '收藏对象信息(JSON string, id收藏编号-存在该字段时,认为是取消收藏操作, 否则认为是收藏操作)',
+              '收藏对象信息(JSON string, id收藏id-存在该字段时,认为是取消收藏操作, 否则认为是收藏操作)',
               ' {"id(optional)":"number", "goodsId":"number"}'
             ]
           }
@@ -136,7 +136,7 @@ module.exports = function (Goods) {
       {
         description: [
           '获取新列表.返回结果-numInCart:购物车商品数量, count:商品总数, data:该次查询的新商品数组[{',
-          'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
+          'id:商品id, name:商品名, styles:商品款式[{id: 款式id, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
           {arg: 'pageId', type: 'number', required: true, http: {source: 'query'}, description: '第几页'},
@@ -192,11 +192,11 @@ module.exports = function (Goods) {
       'getSaleGoods',
       {
         description: [
-          '获取特卖/活动列表.返回结果-numInCart:购物车商品数量, saleId:特卖/活动编号, count:商品总数, data:该次查询的新商品数组[{',
-          'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
+          '获取特卖/活动列表.返回结果-numInCart:购物车商品数量, saleId:特卖/活动id, count:商品总数, data:该次查询的新商品数组[{',
+          'id:商品id, name:商品名, styles:商品款式[{id: 款式id, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
-          {arg: 'saleId', type: 'number', required: true, http: {source: 'path'}, description: '特卖/活动编号'},
+          {arg: 'saleId', type: 'number', required: true, http: {source: 'path'}, description: '特卖/活动id'},
           {arg: 'pageId', type: 'number', required: true, http: {source: 'query'}, description: '第几页'},
           {arg: 'pageSize', type: 'number', required: true, http: {source: 'query'}, description: '每页记录数'},
           {
@@ -230,12 +230,12 @@ module.exports = function (Goods) {
       'getGoodsDetail',
       {
         description: [
-          '获取商品详细信息.返回结果-id:商品编号, name:商品名称, ',
-          'styles:商品款式[{id: 款式编号, price:价格, meas:单位}], thumbnail:缩略图[\'url\',\'url\',\'url\'], ',
+          '获取商品详细信息.返回结果-id:商品id, name:商品名称, ',
+          'styles:商品款式[{id: 款式id, price:价格, meas:单位}], thumbnail:缩略图[\'url\',\'url\',\'url\'], ',
           'detail:商品详情, img:商品图片[\'url\',\'url\',\'url\']}'
         ],
         accepts: [
-          {arg: 'id', type: 'number', required: true, http: {source: 'path'}, description: '商品编号'}
+          {arg: 'id', type: 'number', required: true, http: {source: 'path'}, description: '商品id'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-goods-detail/:id', verb: 'get'}
@@ -263,7 +263,7 @@ module.exports = function (Goods) {
       {
         description: [
           '商品搜索.返回结果-count:商品总数, data:该次搜索的商品数组[{',
-          'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
+          'id:商品id, name:商品名, styles:商品款式[{id: 款式id, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
           {arg: 'keys', type: 'string', required: true, http: {source: 'query'}, description: '搜索关键字数组'},
@@ -296,7 +296,7 @@ module.exports = function (Goods) {
       {
         description: [
           '新商品搜索.返回结果-count:商品总数, data:该次搜索的商品数组[{',
-          'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
+          'id:商品id, name:商品名, styles:商品款式[{id: 款式id, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
           {arg: 'keys', type: 'string', required: true, http: {source: 'query'}, description: '搜索关键字数组'},
@@ -329,11 +329,11 @@ module.exports = function (Goods) {
       'searchSaleGoods',
       {
         description: [
-          '特卖活动商品搜索.返回结果-saleId:特卖/活动编号, count:商品总数, data:该次搜索的商品数组[{',
-          'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
+          '特卖活动商品搜索.返回结果-saleId:特卖/活动id, count:商品总数, data:该次搜索的商品数组[{',
+          'id:商品id, name:商品名, styles:商品款式[{id: 款式id, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
-          {arg: 'saleId', type: 'number', required: true, http: {source: 'path'}, description: '特卖/活动编号'},
+          {arg: 'saleId', type: 'number', required: true, http: {source: 'path'}, description: '特卖/活动id'},
           {arg: 'keys', type: 'string', required: true, http: {source: 'query'}, description: '搜索关键字数组'},
           {arg: 'pageId', type: 'number', required: true, http: {source: 'query'}, description: '第几页'},
           {arg: 'pageSize', type: 'number', required: true, http: {source: 'query'}, description: '每页记录数'}
@@ -367,7 +367,7 @@ module.exports = function (Goods) {
       {
         description: [
           '已收藏商品搜索.返回结果-count:商品总数, data:该次搜索的商品数组[{',
-          'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
+          'id:商品id, name:商品名, styles:商品款式[{id: 款式id, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
           {arg: 'keys', type: 'string', required: true, http: {source: 'query'}, description: '搜索关键字数组'},
@@ -397,7 +397,7 @@ module.exports = function (Goods) {
       {
         description: [
           '获取商品分类.返回结果-count:类别总数, data:该次查询的分类数组[{',
-          'id:分类编号, name:分类名, img:分类图片url}]'
+          'id:分类id, name:分类名, img:分类图片url}]'
         ],
         accepts: [
           {
@@ -449,7 +449,7 @@ module.exports = function (Goods) {
       {
         description: [
           '商品分类.返回结果-numInCart:购物车商品数量, count:类别总数, data:该次查询的分类数组[{',
-          'id:分类编号, name:分类名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], img:分类图片url}]'
+          'id:分类id, name:分类名, styles:商品款式[{id: 款式id, price:价格, meas:单位}], img:分类图片url}]'
         ],
         accepts: [
           {arg: 'categoryId', type: 'number', required: true, http: {source: 'path'}, description: '商品分类id'},

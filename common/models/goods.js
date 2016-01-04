@@ -18,7 +18,7 @@ module.exports = function (Goods) {
                 id: 0,
                 goodsId: 111,
                 goodsName: '方便面',
-                unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+                styles: [{id: 1, price: '5元', meas: '包'}, {id: 2, price: '50元', meas: '箱'}],
                 url: 'https://docs.strongloop.com/'
               }]
             });
@@ -44,7 +44,7 @@ module.exports = function (Goods) {
       {
         description: [
           '获取用户收藏列表(access token).返回结果-numInCart:购物车商品数量, count:收藏品总数, data:该次查询的收藏品数组[{',
-          'id:收藏编号, goodsId:商品编号, goodsName:商品名, unitPrice:商品价格, url:商品图片url}]'
+          'id:收藏编号, goodsId:商品编号, goodsName:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
           {arg: 'pageId', type: 'number', required: true, description: '第几页'},
@@ -101,7 +101,7 @@ module.exports = function (Goods) {
               data: [{
                 id: 0,
                 name: '方便面',
-                unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+                styles: [{id: 1, price: '5元', meas: '包'}, {id: 2, price: '50元', meas: '箱'}],
                 url: 'https://docs.strongloop.com/'
               }]
             });
@@ -127,7 +127,7 @@ module.exports = function (Goods) {
       {
         description: [
           '获取新列表.返回结果-numInCart:购物车商品数量, count:商品总数, data:该次查询的新商品数组[{',
-          'id:商品编号, name:商品名, unitPrice:商品价格, url:商品图片url}]'
+          'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
           {arg: 'pageId', type: 'number', required: true, description: '第几页'},
@@ -151,7 +151,7 @@ module.exports = function (Goods) {
               data: [{
                 id: 0,
                 name: '方便面',
-                unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+                styles: [{id: 1, price: '5元', meas: '包'}, {id: 2, price: '50元', meas: '箱'}],
                 url: 'https://docs.strongloop.com/'
               }]
             });
@@ -177,7 +177,7 @@ module.exports = function (Goods) {
       {
         description: [
           '获取特卖/活动列表.返回结果-numInCart:购物车商品数量, saleId:特卖/活动编号, count:商品总数, data:该次查询的新商品数组[{',
-          'id:商品编号, name:商品名, unitPrice:商品价格, url:商品图片url}]'
+          'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
           {arg: 'saleId', type: 'number', required: true, description: '特卖/活动编号'},
@@ -196,7 +196,7 @@ module.exports = function (Goods) {
       cb(null, {
         id: 0,
         name: '方便面',
-        unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+        styles: [{id: 1, price: '5元', meas: '包'}, {id: 2, price: '50元', meas: '箱'}],
         thumbnail: [],
         detail: '',
         img: []
@@ -208,7 +208,7 @@ module.exports = function (Goods) {
       {
         description: [
           '获取商品详细信息.返回结果-id:商品编号, name:商品名称, ',
-          'unitPrice:单价[{price:价格, meas:单位}], thumbnail:缩略图[\'url\',\'url\',\'url\'], ',
+          'styles:商品款式[{id: 款式编号, price:价格, meas:单位}], thumbnail:缩略图[\'url\',\'url\',\'url\'], ',
           'detail:商品详情, img:商品图片[\'url\',\'url\',\'url\']}'
         ],
         accepts: [
@@ -227,7 +227,7 @@ module.exports = function (Goods) {
         data: [{
           id: 0,
           name: '方便面',
-          unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+          styles: [{id: 1, price: '5元', meas: '包'}, {id: 2, price: '50元', meas: '箱'}],
           thumbnail: [],
           detail: '',
           img: []
@@ -240,7 +240,7 @@ module.exports = function (Goods) {
       {
         description: [
           '商品搜索.返回结果-count:商品总数, data:该次搜索的商品数组[{',
-          'id:商品编号, name:商品名, unitPrice:商品价格, url:商品图片url}]'
+          'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
           {arg: 'keys', type: 'string', required: true, description: '搜索关键字数组'},
@@ -260,7 +260,7 @@ module.exports = function (Goods) {
         data: [{
           id: 0,
           name: '方便面',
-          unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+          styles: [{id: 1, price: '5元', meas: '包'}, {id: 2, price: '50元', meas: '箱'}],
           thumbnail: [],
           detail: '',
           img: []
@@ -273,7 +273,7 @@ module.exports = function (Goods) {
       {
         description: [
           '新商品搜索.返回结果-count:商品总数, data:该次搜索的商品数组[{',
-          'id:商品编号, name:商品名, unitPrice:商品价格, url:商品图片url}]'
+          'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
           {arg: 'keys', type: 'string', required: true, description: '搜索关键字数组'},
@@ -294,7 +294,7 @@ module.exports = function (Goods) {
         data: [{
           id: 0,
           name: '方便面',
-          unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+          styles: [{id: 1, price: '5元', meas: '包'}, {id: 2, price: '50元', meas: '箱'}],
           thumbnail: [],
           detail: '',
           img: []
@@ -307,7 +307,7 @@ module.exports = function (Goods) {
       {
         description: [
           '特卖活动商品搜索.返回结果-saleId:特卖/活动编号, count:商品总数, data:该次搜索的商品数组[{',
-          'id:商品编号, name:商品名, unitPrice:商品价格, url:商品图片url}]'
+          'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
           {arg: 'keys', type: 'string', required: true, description: '搜索关键字数组'},
@@ -331,7 +331,7 @@ module.exports = function (Goods) {
         data: [{
           id: 0,
           name: '方便面',
-          unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+          styles: [{id: 1, price: '5元', meas: '包'}, {id: 2, price: '50元', meas: '箱'}],
           thumbnail: [],
           detail: '',
           img: []
@@ -344,7 +344,7 @@ module.exports = function (Goods) {
       {
         description: [
           '已收藏商品搜索.返回结果-count:商品总数, data:该次搜索的商品数组[{',
-          'id:商品编号, name:商品名, unitPrice:商品价格, url:商品图片url}]'
+          'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
           {arg: 'keys', type: 'string', required: true, description: '搜索关键字数组'},
@@ -397,7 +397,7 @@ module.exports = function (Goods) {
               data: [{
                 id: 0,
                 name: '方便面',
-                unitPrice: [{price: '5元', meas: '包'}, {price: '50元', meas: '箱'}],
+                styles: [{id: 1, price: '5元', meas: '包'}, {id: 2, price: '50元', meas: '箱'}],
                 url: 'https://docs.strongloop.com/'
               }]
             });
@@ -423,7 +423,7 @@ module.exports = function (Goods) {
       {
         description: [
           '商品分类.返回结果-numInCart:购物车商品数量, count:类别总数, data:该次查询的分类数组[{',
-          'id:分类编号, name:分类名, img:分类图片url}]'
+          'id:分类编号, name:分类名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], img:分类图片url}]'
         ],
         accepts: [
           {arg: 'categoryId', type: 'number', required: true, description: '商品分类id'},

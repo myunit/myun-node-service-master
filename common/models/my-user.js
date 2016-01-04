@@ -44,7 +44,7 @@ module.exports = function (MYUser) {
       {
         description: ['获取验证码.返回结果-status:操作结果 0 成功 -1 失败, verifyCode:验证码'],
         accepts: [
-          {arg: 'phone', type: 'string', required: true, description: '手机号'}
+          {arg: 'phone', type: 'string', required: true, http: { source: 'query' }, description: '手机号'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-verify-code', verb: 'get'}

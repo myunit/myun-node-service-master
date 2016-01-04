@@ -14,9 +14,9 @@ module.exports = function (Address) {
       {
         description: ['获取街道信息.返回结果-id:街道编号, name:街道名'],
         accepts: [
-          {arg: 'province', type: 'number', required: true, description: '省份'},
-          {arg: 'city', type: 'number', required: true, description: '城市'},
-          {arg: 'region', type: 'number', required: true, description: '行政区'}
+          {arg: 'province', type: 'number', required: true, http: { source: 'query' }, description: '省份'},
+          {arg: 'city', type: 'number', required: true, http: { source: 'query' }, description: '城市'},
+          {arg: 'region', type: 'number', required: true, http: { source: 'query' }, description: '行政区'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-road', verb: 'get'}
@@ -44,8 +44,8 @@ module.exports = function (Address) {
           'id:地址编号, default:是否默认, province:省份编号, city:城市编号, region:行政区编号, road:街道编号, detail:详细地址}]'
         ],
         accepts: [
-          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
-          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+          {arg: 'pageId', type: 'number', required: true, http: { source: 'query' }, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, http: { source: 'query' }, description: '每页记录数'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-user-address', verb: 'get'}
@@ -115,10 +115,10 @@ module.exports = function (Address) {
       {
         description: ['删除用户地址信息(access token).返回结果-status:操作结果 0 成功 -1 失败, id:删除的地址编号, msg:附带信息'],
         accepts: [
-          {arg: 'id', type: 'number', required: true, description: '地址编号'}
+          {arg: 'id', type: 'number', required: true, http: { source: 'path' }, description: '地址编号'}
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/del-user-address', verb: 'delete'}
+        http: {path: '/del-user-address/:id', verb: 'delete'}
       }
     );
 

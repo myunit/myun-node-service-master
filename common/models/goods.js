@@ -47,9 +47,9 @@ module.exports = function (Goods) {
           'id:收藏编号, goodsId:商品编号, goodsName:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
-          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
-          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'},
-          {arg: 'queryCart', type: 'boolean', required: false, default: true, description: '是否查询购物车'}
+          {arg: 'pageId', type: 'number', required: true, http: { source: 'query' }, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, http: { source: 'query' }, description: '每页记录数'},
+          {arg: 'queryCart', type: 'boolean', required: false, http: { source: 'query' }, default: true, description: '是否查询购物车'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-user-collection', verb: 'get'}
@@ -130,9 +130,9 @@ module.exports = function (Goods) {
           'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
-          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
-          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'},
-          {arg: 'queryCart', type: 'boolean', required: false, default: true, description: '是否查询购物车'}
+          {arg: 'pageId', type: 'number', required: true, http: { source: 'query' }, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, http: { source: 'query' }, description: '每页记录数'},
+          {arg: 'queryCart', type: 'boolean', required: false, http: { source: 'query' }, default: true, description: '是否查询购物车'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-new-goods', verb: 'get'}
@@ -180,13 +180,13 @@ module.exports = function (Goods) {
           'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
-          {arg: 'saleId', type: 'number', required: true, description: '特卖/活动编号'},
-          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
-          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'},
-          {arg: 'queryCart', type: 'boolean', required: false, default: true, description: '是否查询购物车'}
+          {arg: 'saleId', type: 'number', required: true, http: { source: 'path' }, description: '特卖/活动编号'},
+          {arg: 'pageId', type: 'number', required: true, http: { source: 'query' }, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, http: { source: 'query' }, description: '每页记录数'},
+          {arg: 'queryCart', type: 'boolean', required: false, http: { source: 'query' }, default: true, description: '是否查询购物车'}
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/get-sale-goods', verb: 'get'}
+        http: {path: '/get-sale-goods/:saleId', verb: 'get'}
       }
     );
 
@@ -212,10 +212,10 @@ module.exports = function (Goods) {
           'detail:商品详情, img:商品图片[\'url\',\'url\',\'url\']}'
         ],
         accepts: [
-          {arg: 'id', type: 'number', required: true, description: '商品编号'}
+          {arg: 'id', type: 'number', required: true, http: { source: 'path' }, description: '商品编号'}
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/get-goods-detail', verb: 'get'}
+        http: {path: '/get-goods-detail/:id', verb: 'get'}
       }
     );
 
@@ -243,9 +243,9 @@ module.exports = function (Goods) {
           'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
-          {arg: 'keys', type: 'string', required: true, description: '搜索关键字数组'},
-          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
-          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+          {arg: 'keys', type: 'string', required: true, http: { source: 'query' }, description: '搜索关键字数组'},
+          {arg: 'pageId', type: 'number', required: true, http: { source: 'query' }, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, http: { source: 'query' }, description: '每页记录数'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/search-goods', verb: 'get'}
@@ -276,9 +276,9 @@ module.exports = function (Goods) {
           'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
-          {arg: 'keys', type: 'string', required: true, description: '搜索关键字数组'},
-          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
-          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+          {arg: 'keys', type: 'string', required: true, http: { source: 'query' }, description: '搜索关键字数组'},
+          {arg: 'pageId', type: 'number', required: true, http: { source: 'query' }, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, http: { source: 'query' }, description: '每页记录数'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/search-new-goods', verb: 'get'}
@@ -310,10 +310,10 @@ module.exports = function (Goods) {
           'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
-          {arg: 'keys', type: 'string', required: true, description: '搜索关键字数组'},
-          {arg: 'saleId', type: 'number', required: true, description: '特卖/活动编号'},
-          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
-          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+          {arg: 'saleId', type: 'number', required: true, http: { source: 'path' }, description: '特卖/活动编号'},
+          {arg: 'keys', type: 'string', required: true, http: { source: 'query' }, description: '搜索关键字数组'},
+          {arg: 'pageId', type: 'number', required: true, http: { source: 'query' }, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, http: { source: 'query' }, description: '每页记录数'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/search-sale-goods', verb: 'get'}
@@ -347,9 +347,9 @@ module.exports = function (Goods) {
           'id:商品编号, name:商品名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], url:商品图片url}]'
         ],
         accepts: [
-          {arg: 'keys', type: 'string', required: true, description: '搜索关键字数组'},
-          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
-          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+          {arg: 'keys', type: 'string', required: true, http: { source: 'query' }, description: '搜索关键字数组'},
+          {arg: 'pageId', type: 'number', required: true, http: { source: 'query' }, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, http: { source: 'query' }, description: '每页记录数'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/search-collection-goods', verb: 'get'}
@@ -377,12 +377,13 @@ module.exports = function (Goods) {
           'id:分类编号, name:分类名, img:分类图片url}]'
         ],
         accepts: [
-          {arg: 'parentId', type: 'number', required: false, default: -1, description: '父类id,顶级类别无改字段'},
-          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
-          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'}
+          {arg: 'parentId', type: 'any', required: false, http: { source: 'path' }, default: undefined,
+            description: '父类id,顶级类别无该字段'},
+          {arg: 'pageId', type: 'number', required: true, http: { source: 'query' }, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, http: { source: 'query' }, description: '每页记录数'}
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/get-goods-category', verb: 'get'}
+        http: {path: '/get-goods-category/:parentId', verb: 'get'}
       }
     );
 
@@ -426,13 +427,13 @@ module.exports = function (Goods) {
           'id:分类编号, name:分类名, styles:商品款式[{id: 款式编号, price:价格, meas:单位}], img:分类图片url}]'
         ],
         accepts: [
-          {arg: 'categoryId', type: 'number', required: true, description: '商品分类id'},
-          {arg: 'pageId', type: 'number', required: true, description: '第几页'},
-          {arg: 'pageSize', type: 'number', required: true, description: '每页记录数'},
-          {arg: 'queryCart', type: 'boolean', required: false, default: true, description: '是否查询购物车'}
+          {arg: 'categoryId', type: 'number', required: true, http: { source: 'path' }, description: '商品分类id'},
+          {arg: 'pageId', type: 'number', required: true, http: { source: 'query' }, description: '第几页'},
+          {arg: 'pageSize', type: 'number', required: true, http: { source: 'query' }, description: '每页记录数'},
+          {arg: 'queryCart', type: 'boolean', required: false, http: { source: 'query' }, default: true, description: '是否查询购物车'}
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/get-goods-by-category', verb: 'get'}
+        http: {path: '/get-goods-by-category/:categoryId', verb: 'get'}
       }
     );
   });

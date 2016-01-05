@@ -124,7 +124,7 @@ module.exports = function (Goods) {
           function (goodsObj, cb) {
             //TODO get number of shopping cart
             goodsInter.getNumInCart(function (err, num) {
-              if (!err){
+              if (!err) {
                 goodsObj['numInCart'] = num;
               }
               cb(err, goodsObj);
@@ -476,6 +476,64 @@ module.exports = function (Goods) {
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-goods-by-category/:categoryId', verb: 'get'}
+      }
+    );
+
+
+    //获取首页宣传片
+    Goods.getPromo = function (cb) {
+      //TODO: cloud logic
+      cb(null, {promo: ['https://docs.strongloop.com/', 'https://docs.strongloop.com/']});
+    };
+
+    Goods.remoteMethod(
+      'getPromo',
+      {
+        description: '获取首页宣传片.返回结果-promo:宣传片url数组[]',
+        accepts: [],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-promo', verb: 'get'}
+      }
+    );
+
+    //获取新品宣传片
+    Goods.getNewPromo = function (cb) {
+      //TODO: cloud logic
+      cb(null, {newPromo: 'https://docs.strongloop.com/'});
+    };
+
+    Goods.remoteMethod(
+      'getNewPromo',
+      {
+        description: '获取首页宣传片.返回结果-newPromo:新品宣传片url',
+        accepts: [],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-new-promo', verb: 'get'}
+      }
+    );
+
+    //获取特卖/活动宣传片
+    Goods.getSalePromo = function (cb) {
+      //TODO: cloud logic
+      cb(null, {
+        salePromo: [
+          {
+            id: 1, name: '特卖入口一', url: 'https://docs.strongloop.com/'
+          },
+          {
+            id: 2, name: '特卖入口二', url: 'https://docs.strongloop.com/'
+          }
+        ]
+      });
+    };
+
+    Goods.remoteMethod(
+      'getSalePromo',
+      {
+        description: '获取首页宣传片.返回结果-salePromo:新品宣传片数组[{id:活动id,name:活动名, url:活动图片}]',
+        accepts: [],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-sale-promo', verb: 'get'}
       }
     );
   });

@@ -6,6 +6,7 @@
 var utils = require('../../util/utils');
 
 exports.createRegisterXML = function (regObj) {
+  regObj.Name = regObj.Name || '';
   regObj.Gender = regObj.Gender || 'Male';
   regObj.BirthDay = regObj.BirthDay || utils.formatByT(new Date());
   regObj.CustomerFrom = regObj.CustomerFrom || '';

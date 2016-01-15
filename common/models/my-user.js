@@ -11,10 +11,27 @@ module.exports = function (MYUser) {
     var customerIFS = new CustomerIFS(app);
     //注册用户
     MYUser.register = function (data, cb) {
+      if (data.CellPhoneNo === undefined || data.CellPhoneNo === '') {
+        cb(null, {status:0, msg: '手机号不能为空'});
+        return;
+      }
+      if (data.LoginPassword === undefined || data.LoginPassword === '') {
+        cb(null, {status:0, msg: '密码不能为空'});
+        return;
+      }
       customerIFS.register(data, function (err, res) {
-        cb(null, {status: 0, msg: '成功'});
-      })
+        if (err) {
+          console.log('register err: ' + err);
+          cb(null, {status:0, msg: '操作异常'});
+          return;
+        }
 
+        if (res.RegisterResult.HasError === 'true') {
+          cb(null, {status:0, msg: res.RegisterResult.Faults.MessageFault.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: '注册成功'});
+        }
+      })
     };
 
     MYUser.remoteMethod(
@@ -25,7 +42,7 @@ module.exports = function (MYUser) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '用户注册信息(JSON string) {"Name":"string", "LoginPassword":"string", "CellPhoneNo":"string",' +
+              '用户注册信息(JSON string) {"CellPhoneNo":"string", "LoginPassword":"string", "Name(Optional)":"string",' +
               '"Gender(Optional)":"string(All, Male, Famale)", "BirthDay(Optional)":"string", ' +
               '"CustomerFrom(Optional)":"string", "CustomerLevel(Optional)":int, "CustomerSource(Optional)":int' +
               '"HeadPicture(Optional)":"string", "StoreName(Optional)":"string", "WangwangNo(Optional)":"string", ' +

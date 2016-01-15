@@ -18,8 +18,7 @@ CustomerIFS.prototype.register = function (regObj, callback) {
   var Customer = this.DS.models.Customer;
   var regXml = CustomerObj.createRegisterXML(regObj);
   Customer.Register(regXml, function (err, response) {
-    console.log('err: '+ JSON.stringify(err));
-    console.log('response: '+ JSON.stringify(response));
+    callback(err, response);
   });
 };
 

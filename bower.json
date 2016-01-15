@@ -20,6 +20,5 @@
     "tests"
   ],
   "dependencies": {
-    "myun-common-lib-js": "git@github.com:myunit/myun-common-lib-js.git"
   }
 }

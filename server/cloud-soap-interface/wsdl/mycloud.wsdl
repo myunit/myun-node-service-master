@@ -1,0 +1,1200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="CustomerActionService" targetNamespace="http://tempuri.org/">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data"/>
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/MYun.Framework.Service"/>
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+      <xs:element name="Register">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data" minOccurs="0" name="registerInfo" nillable="true" type="q1:CustomerAction.CustomerRegister"/>
+            <xs:element minOccurs="0" name="invitationCode" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RegisterResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="RegisterResult" nillable="true" type="q2:ResponseMessageOfCustomeroTVnLC3b"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Login">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="cellPhone" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LoginResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="LoginResult" nillable="true" type="q3:ResponseMessageOfCustomeroTVnLC3b"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ModifyPassword">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="customerSysNo" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ModifyPasswordResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="ModifyPasswordResult" nillable="true" type="q4:ResponseMessage"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetAllReceiveAddresses">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="customerSysNo" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetAllReceiveAddressesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="GetAllReceiveAddressesResult" nillable="true" type="q5:ResponseMessageOfArrayOfCustomerReceiveAddressoTVnLC3b"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetDefaultReceiveAddresses">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="customerSysNo" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetDefaultReceiveAddressesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="GetDefaultReceiveAddressesResult" nillable="true" type="q6:ResponseMessageOfCustomerReceiveAddressoTVnLC3b"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddNewReceiveAddress">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data" minOccurs="0" name="data" nillable="true" type="q7:CustomerReceiveAddress"/>
+            <xs:element minOccurs="0" name="customerSysNo" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddNewReceiveAddressResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="AddNewReceiveAddressResult" nillable="true" type="q8:ResponseMessageOfCustomerReceiveAddressoTVnLC3b"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ModifyReceiveAddress">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data" minOccurs="0" name="data" nillable="true" type="q9:CustomerReceiveAddress"/>
+            <xs:element minOccurs="0" name="receiveAddressSysNo" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ModifyReceiveAddressResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="ModifyReceiveAddressResult" nillable="true" type="q10:ResponseMessageOfCustomerReceiveAddressoTVnLC3b"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RemoveReceiveAddress">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="receiveAddressSysNo" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RemoveReceiveAddressResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="RemoveReceiveAddressResult" nillable="true" type="q11:ResponseMessage"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetDefaultReceiveAddresses">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="receiveAddressSysNo" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetDefaultReceiveAddressesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="SetDefaultReceiveAddressesResult" nillable="true" type="q12:ResponseMessage"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetCaptcha">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="CellPhoneNo" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="FailureSeconds" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetCaptchaResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="SetCaptchaResult" nillable="true" type="q13:ResponseMessageOfCustomerCaptchaoTVnLC3b"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCaptcha">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="CellPhoneNo" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCaptchaResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="GetCaptchaResult" nillable="true" type="q14:ResponseMessageOfCustomerCaptchaoTVnLC3b"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SaveWeixinOpenID">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="CellPhoneNo" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="wixinOpenID" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SaveWeixinOpenIDResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="SaveWeixinOpenIDResult" nillable="true" type="q15:ResponseMessage"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LoginByWeixinOpenID">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="wixinOpenID" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LoginByWeixinOpenIDResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="LoginByWeixinOpenIDResult" nillable="true" type="q16:ResponseMessageOfCustomeroTVnLC3b"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetCustomerImg">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="message" nillable="true" type="q17:RequestMessage"/>
+            <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data" minOccurs="0" name="imgs" nillable="true" type="q18:ArrayOfCustomerImg"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetCustomerImgResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="SetCustomerImgResult" nillable="true" type="q19:ResponseMessageOfArrayOfCustomerImgoTVnLC3b"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteCustomerImg">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="message" nillable="true" type="q20:RequestMessage"/>
+            <xs:element xmlns:q21="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="sysNos" nillable="true" type="q21:ArrayOfint"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteCustomerImgResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="DeleteCustomerImgResult" nillable="true" type="q22:ResponseMessage"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetCustomerGroup">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="message" nillable="true" type="q23:RequestMessage"/>
+            <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data" minOccurs="0" name="groupList" nillable="true" type="q24:ArrayOfCustomerGroup"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetCustomerGroupResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="SetCustomerGroupResult" nillable="true" type="q25:ResponseMessage"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RegisterByWeixinOpenID">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="message" nillable="true" type="q26:RequestMessage"/>
+            <xs:element minOccurs="0" name="wixinOpenID" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RegisterByWeixinOpenIDResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" minOccurs="0" name="RegisterByWeixinOpenIDResult" nillable="true" type="q27:ResponseMessageOfint"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/">
+      <xs:element name="anyType" nillable="true" type="xs:anyType"/>
+      <xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+      <xs:element name="boolean" nillable="true" type="xs:boolean"/>
+      <xs:element name="byte" nillable="true" type="xs:byte"/>
+      <xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+      <xs:element name="decimal" nillable="true" type="xs:decimal"/>
+      <xs:element name="double" nillable="true" type="xs:double"/>
+      <xs:element name="float" nillable="true" type="xs:float"/>
+      <xs:element name="int" nillable="true" type="xs:int"/>
+      <xs:element name="long" nillable="true" type="xs:long"/>
+      <xs:element name="QName" nillable="true" type="xs:QName"/>
+      <xs:element name="short" nillable="true" type="xs:short"/>
+      <xs:element name="string" nillable="true" type="xs:string"/>
+      <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+      <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+      <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+      <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+      <xs:element name="char" nillable="true" type="tns:char"/>
+      <xs:simpleType name="char">
+        <xs:restriction base="xs:int"/>
+      </xs:simpleType>
+      <xs:element name="duration" nillable="true" type="tns:duration"/>
+      <xs:simpleType name="duration">
+        <xs:restriction base="xs:duration">
+          <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+          <xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+          <xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="guid" nillable="true" type="tns:guid"/>
+      <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:attribute name="FactoryType" type="xs:QName"/>
+      <xs:attribute name="Id" type="xs:ID"/>
+      <xs:attribute name="Ref" type="xs:IDREF"/>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/MYun.Framework.Service"/>
+      <xs:complexType name="CustomerAction.CustomerRegister">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BirthDay" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="CellPhoneNo" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="CustomerFrom" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="CustomerLevel" type="xs:int"/>
+          <xs:element minOccurs="0" name="CustomerSource" type="xs:int"/>
+          <xs:element minOccurs="0" name="Gender" type="tns:CustomerGender"/>
+          <xs:element minOccurs="0" name="HeadPicture" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="LoginPassword" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="StoreName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="WangwangNo" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CustomerAction.CustomerRegister" nillable="true" type="tns:CustomerAction.CustomerRegister"/>
+      <xs:simpleType name="CustomerGender">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="All">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">-2147483648</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Male"/>
+          <xs:enumeration value="Famale"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="CustomerGender" nillable="true" type="tns:CustomerGender"/>
+      <xs:complexType name="Customer">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:CustomerBasic">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="ActionLogs" nillable="true" type="tns:ArrayOfCustomerActionLog"/>
+              <xs:element minOccurs="0" name="CustomerFrom" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="CustomerGroup" nillable="true" type="tns:CustomerGroup"/>
+              <xs:element minOccurs="0" name="CustomerManager" nillable="true" type="tns:CustomerManager"/>
+              <xs:element minOccurs="0" name="CustomerNo" type="xs:int"/>
+              <xs:element minOccurs="0" name="CustomerSource" type="xs:int"/>
+              <xs:element minOccurs="0" name="DeliveryConfiguration" nillable="true" type="tns:CustomerDeliveryConfiguration"/>
+              <xs:element minOccurs="0" name="Imgs" nillable="true" type="tns:ArrayOfCustomerImg"/>
+              <xs:element minOccurs="0" name="IsEnable" type="xs:boolean"/>
+              <xs:element minOccurs="0" name="IsIMUser" type="xs:boolean"/>
+              <xs:element minOccurs="0" name="LastOrderDate" type="xs:dateTime"/>
+              <xs:element minOccurs="0" name="LoginPassword" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="ReceiveAddresses" nillable="true" type="tns:ArrayOfCustomerReceiveAddress"/>
+              <xs:element minOccurs="0" name="RegisterStatus" type="tns:CustomerRegisterStatus"/>
+              <xs:element minOccurs="0" name="Sales" nillable="true" type="tns:Sales"/>
+              <xs:element minOccurs="0" name="Store" nillable="true" type="tns:CustomerStore"/>
+              <xs:element minOccurs="0" name="TrackingRecords" nillable="true" type="tns:ArrayOfCustomerTracking"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="Customer" nillable="true" type="tns:Customer"/>
+      <xs:complexType name="CustomerBasic">
+        <xs:complexContent mixed="false">
+          <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" base="q1:DataEntityBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Agent" nillable="true" type="tns:Agent"/>
+              <xs:element minOccurs="0" name="BirthDay" type="xs:dateTime"/>
+              <xs:element minOccurs="0" name="CellPhoneNo" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="ContactAddress" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="CustoemrCode" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="CustomerLevel" type="xs:int"/>
+              <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="Gender" type="tns:CustomerGender"/>
+              <xs:element minOccurs="0" name="HeadPicture" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="IsHighRMA" type="xs:boolean"/>
+              <xs:element minOccurs="0" name="Memo" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="PCDCode" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="PCDDescription" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="QQNo" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="TrackingSysNo" type="xs:int"/>
+              <xs:element minOccurs="0" name="TrackingTel" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="WangwangNo" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="WeixinOpenID" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="WexinNo" nillable="true" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="CustomerBasic" nillable="true" type="tns:CustomerBasic"/>
+      <xs:complexType name="Agent">
+        <xs:complexContent mixed="false">
+          <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" base="q2:DataEntityBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="SysNo" type="xs:int"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="Agent" nillable="true" type="tns:Agent"/>
+      <xs:complexType name="ArrayOfCustomerActionLog">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomerActionLog" nillable="true" type="tns:CustomerActionLog"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCustomerActionLog" nillable="true" type="tns:ArrayOfCustomerActionLog"/>
+      <xs:complexType name="CustomerActionLog">
+        <xs:complexContent mixed="false">
+          <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" base="q3:DataEntityBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="ActionDescription" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="ActionType" type="tns:CustomerActionType"/>
+              <xs:element minOccurs="0" name="CustomerNo" type="xs:int"/>
+              <xs:element minOccurs="0" name="SysNo" type="xs:int"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="CustomerActionLog" nillable="true" type="tns:CustomerActionLog"/>
+      <xs:simpleType name="CustomerActionType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="CustomerRegister">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Audit">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CancelAudit">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Enable">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Disable">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SetGroup">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AssignCustomerManager">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AssignSales">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SaveCustomerBasic">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SaveCustomerStore">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ReSetPassword">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">11</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="CustomerActionType" nillable="true" type="tns:CustomerActionType"/>
+      <xs:complexType name="CustomerGroup">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CostPercent" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="SysNo" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CustomerGroup" nillable="true" type="tns:CustomerGroup"/>
+      <xs:complexType name="CustomerManager">
+        <xs:complexContent mixed="false">
+          <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" base="q4:DataEntityBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="AgentSysNo" type="xs:int"/>
+              <xs:element minOccurs="0" name="CellPhoneNo" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="QQNo" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="SysNo" type="xs:int"/>
+              <xs:element minOccurs="0" name="UserSysNo" type="xs:int"/>
+              <xs:element minOccurs="0" name="WangwangNo" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="WexinNo" nillable="true" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="CustomerManager" nillable="true" type="tns:CustomerManager"/>
+      <xs:complexType name="CustomerDeliveryConfiguration">
+        <xs:complexContent mixed="false">
+          <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" base="q5:DataEntityBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="CustomerNo" type="xs:int"/>
+              <xs:element minOccurs="0" name="IsPrintLogo" type="xs:boolean"/>
+              <xs:element minOccurs="0" name="IsPrintPrice" type="xs:boolean"/>
+              <xs:element minOccurs="0" name="PCDNo" type="xs:int"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="CustomerDeliveryConfiguration" nillable="true" type="tns:CustomerDeliveryConfiguration"/>
+      <xs:complexType name="ArrayOfCustomerImg">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomerImg" nillable="true" type="tns:CustomerImg"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCustomerImg" nillable="true" type="tns:ArrayOfCustomerImg"/>
+      <xs:complexType name="CustomerImg">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ImgKey" type="xs:int"/>
+          <xs:element minOccurs="0" name="ImgType" type="xs:int"/>
+          <xs:element minOccurs="0" name="ImgValue" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="SysNo" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CustomerImg" nillable="true" type="tns:CustomerImg"/>
+      <xs:complexType name="ArrayOfCustomerReceiveAddress">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomerReceiveAddress" nillable="true" type="tns:CustomerReceiveAddress"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCustomerReceiveAddress" nillable="true" type="tns:ArrayOfCustomerReceiveAddress"/>
+      <xs:complexType name="CustomerReceiveAddress">
+        <xs:complexContent mixed="false">
+          <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" base="q6:DataEntityBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="CustomerNo" type="xs:int"/>
+              <xs:element minOccurs="0" name="IsDefault" type="xs:boolean"/>
+              <xs:element minOccurs="0" name="PCDCode" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="PCDDescription" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="ReceiverCellPhone" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="ReceiverName" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="ReceiverTel" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="SysNo" type="xs:int"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="CustomerReceiveAddress" nillable="true" type="tns:CustomerReceiveAddress"/>
+      <xs:simpleType name="CustomerRegisterStatus">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="UnRegister"/>
+          <xs:enumeration value="WaitAudit"/>
+          <xs:enumeration value="AuditPassed"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="CustomerRegisterStatus" nillable="true" type="tns:CustomerRegisterStatus"/>
+      <xs:complexType name="Sales">
+        <xs:complexContent mixed="false">
+          <xs:extension xmlns:q7="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" base="q7:DataEntityBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="AgentSysNo" type="xs:int"/>
+              <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="SysNo" type="xs:int"/>
+              <xs:element minOccurs="0" name="UserSysNo" type="xs:int"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="Sales" nillable="true" type="tns:Sales"/>
+      <xs:complexType name="CustomerStore">
+        <xs:complexContent mixed="false">
+          <xs:extension xmlns:q8="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" base="q8:DataEntityBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="CustomerNo" type="xs:int"/>
+              <xs:element minOccurs="0" name="ProductMaterial" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="PurchaseAmountPerMonth" nillable="true" type="tns:PurchaseAmount"/>
+              <xs:element minOccurs="0" name="PurchaseChannel" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="PurchaseFrequency" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="PurchasePolicy" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="SellingPrice" nillable="true" type="tns:SellingPrice"/>
+              <xs:element minOccurs="0" name="StoreArea" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StoreBossBirthDay" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StoreBossBirthPlace" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StoreBossName" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StoreBossQQ" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StoreBossWeixin" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StoreCategory" nillable="true" type="tns:StoreCategory"/>
+              <xs:element minOccurs="0" name="StoreContactAddress" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StoreContactName" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StoreContactPhoneNo" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StoreDetailCategory" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StoreName" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StoreNeedProductCategory" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StorePCDCode" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StorePCDDescription" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StorePicture" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StoreTableCount" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StoreType" type="xs:int"/>
+              <xs:element minOccurs="0" name="StoreUrl" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="StoreYears" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="SysNo" type="xs:int"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="CustomerStore" nillable="true" type="tns:CustomerStore"/>
+      <xs:complexType name="PurchaseAmount">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="SysNo" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="PurchaseAmount" nillable="true" type="tns:PurchaseAmount"/>
+      <xs:complexType name="SellingPrice">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="SysNo" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SellingPrice" nillable="true" type="tns:SellingPrice"/>
+      <xs:complexType name="StoreCategory">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="SysNo" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="StoreCategory" nillable="true" type="tns:StoreCategory"/>
+      <xs:complexType name="ArrayOfCustomerTracking">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomerTracking" nillable="true" type="tns:CustomerTracking"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCustomerTracking" nillable="true" type="tns:ArrayOfCustomerTracking"/>
+      <xs:complexType name="CustomerTracking">
+        <xs:complexContent mixed="false">
+          <xs:extension xmlns:q9="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" base="q9:DataEntityBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Content" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="CustomerNo" type="xs:int"/>
+              <xs:element minOccurs="0" name="SysNo" type="xs:int"/>
+              <xs:element minOccurs="0" name="TrackingMethod" nillable="true" type="tns:CustomerTrackingMethod"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="CustomerTracking" nillable="true" type="tns:CustomerTracking"/>
+      <xs:complexType name="CustomerTrackingMethod">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="SysNo" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CustomerTrackingMethod" nillable="true" type="tns:CustomerTrackingMethod"/>
+      <xs:complexType name="CustomerCaptcha">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Captcha" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="CellPhoneNo" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="CustomerNo" type="xs:int"/>
+          <xs:element minOccurs="0" name="FailureDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="InDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="SysNo" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CustomerCaptcha" nillable="true" type="tns:CustomerCaptcha"/>
+      <xs:complexType name="ArrayOfCustomerGroup">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomerGroup" nillable="true" type="tns:CustomerGroup"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCustomerGroup" nillable="true" type="tns:ArrayOfCustomerGroup"/>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/MYun.Framework.Service" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/MYun.Framework.Service">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data"/>
+      <xs:complexType name="ResponseMessageOfCustomeroTVnLC3b">
+        <xs:annotation>
+          <xs:appinfo>
+            <GenericType xmlns="http://schemas.microsoft.com/2003/10/Serialization/" Name="ResponseMessageOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/MYun.Framework.Service">
+              <GenericParameter Name="Customer" Namespace="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data"/>
+            </GenericType>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:ResponseMessage">
+            <xs:sequence>
+              <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data" minOccurs="0" name="Body" nillable="true" type="q1:Customer"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="ResponseMessageOfCustomeroTVnLC3b" nillable="true" type="tns:ResponseMessageOfCustomeroTVnLC3b"/>
+      <xs:complexType name="ResponseMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Faults" nillable="true" type="tns:MessageFaultCollection"/>
+          <xs:element minOccurs="0" name="HasError" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ResponseMessage" nillable="true" type="tns:ResponseMessage"/>
+      <xs:complexType name="MessageFaultCollection">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="MessageFault" nillable="true" type="tns:MessageFault"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="MessageFaultCollection" nillable="true" type="tns:MessageFaultCollection"/>
+      <xs:complexType name="MessageFault">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ErrorCode" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ErrorDescription" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="MessageFault" nillable="true" type="tns:MessageFault"/>
+      <xs:complexType name="DataEntityBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="EditDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="EditUser" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="EditUserSysno" type="xs:int"/>
+          <xs:element minOccurs="0" name="InDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="InUser" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="InUserSysno" type="xs:int"/>
+          <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="DataEntityBase" nillable="true" type="tns:DataEntityBase"/>
+      <xs:complexType name="ResponseMessageOfArrayOfCustomerReceiveAddressoTVnLC3b">
+        <xs:annotation>
+          <xs:appinfo>
+            <GenericType xmlns="http://schemas.microsoft.com/2003/10/Serialization/" Name="ResponseMessageOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/MYun.Framework.Service">
+              <GenericParameter Name="ArrayOfCustomerReceiveAddress" Namespace="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data"/>
+            </GenericType>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:ResponseMessage">
+            <xs:sequence>
+              <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data" minOccurs="0" name="Body" nillable="true" type="q2:ArrayOfCustomerReceiveAddress"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="ResponseMessageOfArrayOfCustomerReceiveAddressoTVnLC3b" nillable="true" type="tns:ResponseMessageOfArrayOfCustomerReceiveAddressoTVnLC3b"/>
+      <xs:complexType name="ResponseMessageOfCustomerReceiveAddressoTVnLC3b">
+        <xs:annotation>
+          <xs:appinfo>
+            <GenericType xmlns="http://schemas.microsoft.com/2003/10/Serialization/" Name="ResponseMessageOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/MYun.Framework.Service">
+              <GenericParameter Name="CustomerReceiveAddress" Namespace="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data"/>
+            </GenericType>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:ResponseMessage">
+            <xs:sequence>
+              <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data" minOccurs="0" name="Body" nillable="true" type="q3:CustomerReceiveAddress"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="ResponseMessageOfCustomerReceiveAddressoTVnLC3b" nillable="true" type="tns:ResponseMessageOfCustomerReceiveAddressoTVnLC3b"/>
+      <xs:complexType name="ResponseMessageOfCustomerCaptchaoTVnLC3b">
+        <xs:annotation>
+          <xs:appinfo>
+            <GenericType xmlns="http://schemas.microsoft.com/2003/10/Serialization/" Name="ResponseMessageOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/MYun.Framework.Service">
+              <GenericParameter Name="CustomerCaptcha" Namespace="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data"/>
+            </GenericType>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:ResponseMessage">
+            <xs:sequence>
+              <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data" minOccurs="0" name="Body" nillable="true" type="q4:CustomerCaptcha"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="ResponseMessageOfCustomerCaptchaoTVnLC3b" nillable="true" type="tns:ResponseMessageOfCustomerCaptchaoTVnLC3b"/>
+      <xs:complexType name="RequestMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Header" nillable="true" type="tns:MessageHeader"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="RequestMessage" nillable="true" type="tns:RequestMessage"/>
+      <xs:complexType name="MessageHeader">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="OperationUser" nillable="true" type="tns:OperationUser"/>
+          <xs:element minOccurs="0" name="Sender" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="MessageHeader" nillable="true" type="tns:MessageHeader"/>
+      <xs:complexType name="OperationUser">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="UserSysNo" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="OperationUser" nillable="true" type="tns:OperationUser"/>
+      <xs:complexType name="ResponseMessageOfArrayOfCustomerImgoTVnLC3b">
+        <xs:annotation>
+          <xs:appinfo>
+            <GenericType xmlns="http://schemas.microsoft.com/2003/10/Serialization/" Name="ResponseMessageOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/MYun.Framework.Service">
+              <GenericParameter Name="ArrayOfCustomerImg" Namespace="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data"/>
+            </GenericType>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:ResponseMessage">
+            <xs:sequence>
+              <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data" minOccurs="0" name="Body" nillable="true" type="q5:ArrayOfCustomerImg"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="ResponseMessageOfArrayOfCustomerImgoTVnLC3b" nillable="true" type="tns:ResponseMessageOfArrayOfCustomerImgoTVnLC3b"/>
+      <xs:complexType name="ResponseMessageOfint">
+        <xs:annotation>
+          <xs:appinfo>
+            <GenericType xmlns="http://schemas.microsoft.com/2003/10/Serialization/" Name="ResponseMessageOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/MYun.Framework.Service">
+              <GenericParameter Name="int" Namespace="http://www.w3.org/2001/XMLSchema"/>
+            </GenericType>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:ResponseMessage">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Body" type="xs:int"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="ResponseMessageOfint" nillable="true" type="tns:ResponseMessageOfint"/>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+      <xs:complexType name="ArrayOfint">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="int" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfint" nillable="true" type="tns:ArrayOfint"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="ICustomerActionService_Register_InputMessage">
+    <wsdl:part name="parameters" element="tns:Register"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_Register_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_ModifyPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:ModifyPassword"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_ModifyPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ModifyPasswordResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_GetAllReceiveAddresses_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllReceiveAddresses"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_GetAllReceiveAddresses_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllReceiveAddressesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_GetDefaultReceiveAddresses_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDefaultReceiveAddresses"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_GetDefaultReceiveAddresses_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDefaultReceiveAddressesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_AddNewReceiveAddress_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddNewReceiveAddress"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_AddNewReceiveAddress_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddNewReceiveAddressResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_ModifyReceiveAddress_InputMessage">
+    <wsdl:part name="parameters" element="tns:ModifyReceiveAddress"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_ModifyReceiveAddress_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ModifyReceiveAddressResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_RemoveReceiveAddress_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveReceiveAddress"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_RemoveReceiveAddress_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveReceiveAddressResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_SetDefaultReceiveAddresses_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetDefaultReceiveAddresses"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_SetDefaultReceiveAddresses_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetDefaultReceiveAddressesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_SetCaptcha_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetCaptcha"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_SetCaptcha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetCaptchaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_GetCaptcha_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCaptcha"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_GetCaptcha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCaptchaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_SaveWeixinOpenID_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveWeixinOpenID"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_SaveWeixinOpenID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveWeixinOpenIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_LoginByWeixinOpenID_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoginByWeixinOpenID"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_LoginByWeixinOpenID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginByWeixinOpenIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_SetCustomerImg_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetCustomerImg"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_SetCustomerImg_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetCustomerImgResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_DeleteCustomerImg_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCustomerImg"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_DeleteCustomerImg_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCustomerImgResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_SetCustomerGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetCustomerGroup"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_SetCustomerGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetCustomerGroupResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_RegisterByWeixinOpenID_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterByWeixinOpenID"/>
+  </wsdl:message>
+  <wsdl:message name="ICustomerActionService_RegisterByWeixinOpenID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterByWeixinOpenIDResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="ICustomerActionService">
+    <wsdl:operation name="Register">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/Register" message="tns:ICustomerActionService_Register_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/RegisterResponse" message="tns:ICustomerActionService_Register_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/Login" message="tns:ICustomerActionService_Login_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/LoginResponse" message="tns:ICustomerActionService_Login_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/ModifyPassword" message="tns:ICustomerActionService_ModifyPassword_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/ModifyPasswordResponse" message="tns:ICustomerActionService_ModifyPassword_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllReceiveAddresses">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/GetAllReceiveAddresses" message="tns:ICustomerActionService_GetAllReceiveAddresses_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/GetAllReceiveAddressesResponse" message="tns:ICustomerActionService_GetAllReceiveAddresses_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetDefaultReceiveAddresses">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/GetDefaultReceiveAddresses" message="tns:ICustomerActionService_GetDefaultReceiveAddresses_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/GetDefaultReceiveAddressesResponse" message="tns:ICustomerActionService_GetDefaultReceiveAddresses_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="AddNewReceiveAddress">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/AddNewReceiveAddress" message="tns:ICustomerActionService_AddNewReceiveAddress_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/AddNewReceiveAddressResponse" message="tns:ICustomerActionService_AddNewReceiveAddress_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyReceiveAddress">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/ModifyReceiveAddress" message="tns:ICustomerActionService_ModifyReceiveAddress_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/ModifyReceiveAddressResponse" message="tns:ICustomerActionService_ModifyReceiveAddress_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveReceiveAddress">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/RemoveReceiveAddress" message="tns:ICustomerActionService_RemoveReceiveAddress_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/RemoveReceiveAddressResponse" message="tns:ICustomerActionService_RemoveReceiveAddress_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="SetDefaultReceiveAddresses">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/SetDefaultReceiveAddresses" message="tns:ICustomerActionService_SetDefaultReceiveAddresses_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/SetDefaultReceiveAddressesResponse" message="tns:ICustomerActionService_SetDefaultReceiveAddresses_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="SetCaptcha">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/SetCaptcha" message="tns:ICustomerActionService_SetCaptcha_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/SetCaptchaResponse" message="tns:ICustomerActionService_SetCaptcha_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetCaptcha">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/GetCaptcha" message="tns:ICustomerActionService_GetCaptcha_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/GetCaptchaResponse" message="tns:ICustomerActionService_GetCaptcha_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="SaveWeixinOpenID">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/SaveWeixinOpenID" message="tns:ICustomerActionService_SaveWeixinOpenID_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/SaveWeixinOpenIDResponse" message="tns:ICustomerActionService_SaveWeixinOpenID_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="LoginByWeixinOpenID">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/LoginByWeixinOpenID" message="tns:ICustomerActionService_LoginByWeixinOpenID_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/LoginByWeixinOpenIDResponse" message="tns:ICustomerActionService_LoginByWeixinOpenID_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="SetCustomerImg">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/SetCustomerImg" message="tns:ICustomerActionService_SetCustomerImg_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/SetCustomerImgResponse" message="tns:ICustomerActionService_SetCustomerImg_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCustomerImg">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/DeleteCustomerImg" message="tns:ICustomerActionService_DeleteCustomerImg_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/DeleteCustomerImgResponse" message="tns:ICustomerActionService_DeleteCustomerImg_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="SetCustomerGroup">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/SetCustomerGroup" message="tns:ICustomerActionService_SetCustomerGroup_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/SetCustomerGroupResponse" message="tns:ICustomerActionService_SetCustomerGroup_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterByWeixinOpenID">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerActionService/RegisterByWeixinOpenID" message="tns:ICustomerActionService_RegisterByWeixinOpenID_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerActionService/RegisterByWeixinOpenIDResponse" message="tns:ICustomerActionService_RegisterByWeixinOpenID_OutputMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ICustomerActionService" type="tns:ICustomerActionService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Register">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/Register" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/Login" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyPassword">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/ModifyPassword" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllReceiveAddresses">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/GetAllReceiveAddresses" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDefaultReceiveAddresses">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/GetDefaultReceiveAddresses" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddNewReceiveAddress">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/AddNewReceiveAddress" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModifyReceiveAddress">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/ModifyReceiveAddress" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveReceiveAddress">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/RemoveReceiveAddress" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetDefaultReceiveAddresses">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/SetDefaultReceiveAddresses" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCaptcha">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/SetCaptcha" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCaptcha">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/GetCaptcha" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveWeixinOpenID">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/SaveWeixinOpenID" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginByWeixinOpenID">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/LoginByWeixinOpenID" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCustomerImg">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/SetCustomerImg" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCustomerImg">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/DeleteCustomerImg" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetCustomerGroup">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/SetCustomerGroup" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterByWeixinOpenID">
+      <soap:operation soapAction="http://tempuri.org/ICustomerActionService/RegisterByWeixinOpenID" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CustomerActionService">
+    <wsdl:port name="BasicHttpBinding_ICustomerActionService" binding="tns:BasicHttpBinding_ICustomerActionService">
+      <soap:address location="http://10.10.5.120:1189/CM/CustomerActionService.svc"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

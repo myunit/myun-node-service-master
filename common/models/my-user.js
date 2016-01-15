@@ -1,34 +1,35 @@
 var loopback = require('loopback');
 var async = require('async');
+var CustomerIFS = require('../../server/cloud-soap-interface/customer-ifs');
 
 module.exports = function (MYUser) {
   MYUser.getApp(function (err, app) {
     if (err) {
       throw err;
-      return;
     }
     var app_self = app;
+    var customerIFS = new CustomerIFS(app);
     //注册用户
     MYUser.register = function (data, cb) {
-      var user = data.user,
-        password = data.password,
-        verifyCode = data.verifyCode,
-        address = data.address;
-      //TODO: cloud logic-add user && save address(default)
-      cb(null, {status: 0, msg: '成功'});
+      customerIFS.register(data, function (err, res) {
+        cb(null, {status: 0, msg: '成功'});
+      })
+
     };
 
     MYUser.remoteMethod(
       'register',
       {
-        description: ['注册一个新用户.返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
+        description: ['注册一个新用户.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'],
         accepts: [
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '用户注册信息(JSON string) {"realm(optional)":"string", "user":"string", "password":"string","verifyCode":"string",',
-              '"address(optional)":{"receiver":"string","phone":"string","province":number,"city":number,',
-              '"region":number,"road":number,"addDetail":"string"}}'
+              '用户注册信息(JSON string) {"Name":"string", "LoginPassword":"string", "CellPhoneNo":"string",' +
+              '"Gender(Optional)":"string(All, Male, Famale)", "BirthDay(Optional)":"string", ' +
+              '"CustomerFrom(Optional)":"string", "CustomerLevel(Optional)":int, "CustomerSource(Optional)":int' +
+              '"HeadPicture(Optional)":"string", "StoreName(Optional)":"string", "WangwangNo(Optional)":"string", ' +
+              '"invitationCode(Optional)":"string"}'
             ]
           }
         ],

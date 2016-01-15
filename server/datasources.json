@@ -29,5 +29,11 @@
         }
       }
     ]
+  },
+  "CustomerSoap": {
+    "name": "CustomerSoap",
+    "connector": "soap",
+    "wsdl": "http://10.10.5.120:1189/CM/CustomerActionService.svc?WSDL",
+    "url": "http://10.10.5.120:1189/CM/CustomerActionService.svc"
   }
 }

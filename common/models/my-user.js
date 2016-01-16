@@ -76,7 +76,7 @@ module.exports = function (MYUser) {
         myToken = app_self.models.MYToken;
 
       if (!data.phone || !data.password) {
-        cb(null, {status:0, msg: '手机号和密码不能为空'});
+        loginCb(null, {status:0, msg: '手机号和密码不能为空'});
         return;
       }
 
@@ -182,12 +182,12 @@ module.exports = function (MYUser) {
       customerIFS.modifyPW(data, function (err, res) {
         if (err) {
           console.log('modifyPW err: ' + err);
-          cb({status:0, msg: '操作异常'});
+          cb(null, {status:0, msg: '操作异常'});
           return;
         }
 
         if (res.ModifyPasswordResult.HasError === 'true') {
-          cb({status:0, msg: '密码设置失败'});
+          cb(null, {status:0, msg: '密码设置失败'});
         } else {
           cb(null, {status: 1, msg: '密码设置成功'});
         }

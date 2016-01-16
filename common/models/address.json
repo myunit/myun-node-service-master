@@ -53,7 +53,7 @@
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "delUserAddress"
+      "property": "removeReceiveAddress"
     },
     {
       "accessType": "EXECUTE",

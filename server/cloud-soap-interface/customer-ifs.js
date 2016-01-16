@@ -70,5 +70,13 @@ CustomerIFS.prototype.modifyReceiveAddress = function (obj, callback) {
   });
 };
 
+CustomerIFS.prototype.removeReceiveAddress = function (sysNo, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.removeReceiveAddressXML(sysNo);
+  Customer.RemoveReceiveAddress(xml, function (err, response) {
+    callback(err, response);
+  });
+};
+
 
 exports = module.exports = CustomerIFS;

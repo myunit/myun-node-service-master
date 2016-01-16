@@ -241,3 +241,21 @@ exports.modifyReceiveAddressXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.removeReceiveAddressXML = function (sysNo) {
+
+  var xmlObj = [{
+    RemoveReceiveAddress: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        receiveAddressSysNo: sysNo
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

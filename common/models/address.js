@@ -31,7 +31,6 @@ module.exports = function (Address) {
 
     //获取用户收货地址
     Address.getReceiveAddresses = function (customerNo, cb) {
-      //TODO: cloud logic
       if (!customerNo) {
         cb(null, {status: 0, msg: '操作异常'});
         return;
@@ -40,12 +39,12 @@ module.exports = function (Address) {
       customerIFS.getReceiveAddresses(customerNo, function (err, res) {
         if (err) {
           console.log('getReceiveAddresses err: ' + err);
-          cb({status: 0, msg: '操作异常'});
+          cb(null, {status: 0, msg: '操作异常'});
           return;
         }
 
         if (res.GetAllReceiveAddressesResult.HasError === 'true') {
-          cb({status: 0, msg: '获取地址失败'});
+          cb(null, {status: 0, msg: '获取地址失败'});
         } else {
 
           var addresses = res.GetAllReceiveAddressesResult.Body.CustomerReceiveAddress;
@@ -95,12 +94,12 @@ module.exports = function (Address) {
       customerIFS.getDefaultReceiveAddress(customerNo, function (err, res) {
         if (err) {
           console.log('getDefaultReceiveAddress err: ' + err);
-          cb({status: 0, msg: '操作异常'});
+          cb(null, {status: 0, msg: '操作异常'});
           return;
         }
 
         if (res.GetDefaultReceiveAddressesResult.HasError === 'true') {
-          cb({status: 0, msg: '获取地址失败'});
+          cb(null, {status: 0, msg: '获取地址失败'});
         } else {
 
           var body = res.GetDefaultReceiveAddressesResult.Body;
@@ -142,12 +141,12 @@ module.exports = function (Address) {
       customerIFS.addReceiveAddress(data, function (err, res) {
         if (err) {
           console.log('addReceiveAddress err: ' + err);
-          cb({status: 0, msg: '操作异常'});
+          cb(null, {status: 0, msg: '操作异常'});
           return;
         }
 
         if (res.AddNewReceiveAddressResult.HasError === 'true') {
-          cb({status: 0, msg: '新增地址失败'});
+          cb(null, {status: 0, msg: '新增地址失败'});
         } else {
 
           var body = res.AddNewReceiveAddressResult.Body;
@@ -195,12 +194,12 @@ module.exports = function (Address) {
       customerIFS.modifyReceiveAddress(data, function (err, res) {
         if (err) {
           console.log('modifyReceiveAddress err: ' + err);
-          cb({status: 0, msg: '操作异常'});
+          cb(null, {status: 0, msg: '操作异常'});
           return;
         }
 
         if (res.ModifyReceiveAddressResult.HasError === 'true') {
-          cb({status: 0, msg: '编辑地址失败'});
+          cb(null, {status: 0, msg: '编辑失败'});
         } else {
 
           var body = res.ModifyReceiveAddressResult.Body;
@@ -238,23 +237,37 @@ module.exports = function (Address) {
       }
     );
 
-    //删除用户地址
-    Address.delUserAddress = function (id, cb) {
-      //TODO: cloud logic
-      var ctx = loopback.getCurrentContext();
-      var token = ctx.get('accessToken');
-      cb(null, {status: 0, id: 1, msg: '成功'});
+    //删除用户收货地址
+    Address.removeReceiveAddress = function (sysNo, cb) {
+      if (!sysNo) {
+        cb(null, {status: 0, msg: '操作异常'});
+        return;
+      }
+
+      customerIFS.removeReceiveAddress(sysNo, function (err, res) {
+        if (err) {
+          console.log('removeReceiveAddress err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (res.RemoveReceiveAddressResult.HasError === 'true') {
+          cb(null, {status: 0, msg: '删除失败'});
+        } else {
+          cb(null, {status: 1, msg: '删除成功'});
+        }
+      });
     };
 
     Address.remoteMethod(
-      'delUserAddress',
+      'removeReceiveAddress',
       {
-        description: ['删除用户地址信息(access token).返回结果-status:操作结果 0 成功 -1 失败, id:删除的地址id, msg:附带信息'],
+        description: ['删除用户收货信息(access token).返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
         accepts: [
-          {arg: 'id', type: 'number', required: true, http: {source: 'path'}, description: '地址id'}
+          {arg: 'sysNo', type: 'number', required: true, http: {source: 'path'}, description: '地址id'}
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/del-user-address/:id', verb: 'delete'}
+        http: {path: '/remove-receive-address/:sysNo', verb: 'delete'}
       }
     );
 

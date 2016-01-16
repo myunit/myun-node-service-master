@@ -277,3 +277,21 @@ exports.setDefaultReceiveAddressXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.getCaptchaXML = function (phone) {
+
+  var xmlObj = [{
+    GetCaptcha: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        CellPhoneNo: phone
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

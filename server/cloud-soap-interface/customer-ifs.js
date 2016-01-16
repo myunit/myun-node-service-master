@@ -86,6 +86,14 @@ CustomerIFS.prototype.setDefaultReceiveAddress = function (obj, callback) {
   });
 };
 
+CustomerIFS.prototype.getCaptcha = function (phone, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.getCaptchaXML(phone);
+  Customer.GetCaptcha(xml, function (err, response) {
+    callback(err, response);
+  });
+};
+
 
 
 exports = module.exports = CustomerIFS;

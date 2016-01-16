@@ -30,7 +30,7 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
-      "property": "getVerifyCode"
+      "property": "getCaptcha"
     },
     {
       "accessType": "EXECUTE",

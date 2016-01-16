@@ -53,20 +53,36 @@ module.exports = function (MYUser) {
     );
 
     //获取验证码
-    MYUser.getVerifyCode = function (phone, cb) {
-      //TODO: cloud logic
-      cb(null, {status: 0, verifyCode: '123'});
+    MYUser.getCaptcha = function (phone, cb) {
+      if (!phone) {
+        cb(null, {status: 0, msg: '操作异常'});
+        return;
+      }
+
+      customerIFS.getCaptcha(phone, function (err, res) {
+        if (err) {
+          console.log('getCaptcha err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (res.GetCaptchaResult.HasError === 'true') {
+          cb(null, {status: 0, msg: '发送失败'});
+        } else {
+          cb(null, {status: 1, msg: '发送成功'});
+        }
+      });
     };
 
     MYUser.remoteMethod(
-      'getVerifyCode',
+      'getCaptcha',
       {
         description: ['获取验证码.返回结果-status:操作结果 0 成功 -1 失败, verifyCode:验证码'],
         accepts: [
           {arg: 'phone', type: 'string', required: true, http: {source: 'query'}, description: '手机号'}
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/get-verify-code', verb: 'get'}
+        http: {path: '/get-captcha', verb: 'get'}
       }
     );
 

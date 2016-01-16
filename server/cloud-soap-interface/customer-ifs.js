@@ -14,10 +14,18 @@ var CustomerIFS = function (app) {
 };
 util.inherits(CustomerIFS, Object);
 
-CustomerIFS.prototype.register = function (regObj, callback) {
+CustomerIFS.prototype.register = function (obj, callback) {
   var Customer = this.DS.models.Customer;
-  var regXml = CustomerObj.createRegisterXML(regObj);
-  Customer.Register(regXml, function (err, response) {
+  var xml = CustomerObj.createRegisterXML(obj);
+  Customer.Register(xml, function (err, response) {
+    callback(err, response);
+  });
+};
+
+CustomerIFS.prototype.login = function (obj, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.createLoginXML(obj);
+  Customer.Login(xml, function (err, response) {
     callback(err, response);
   });
 };

@@ -11,14 +11,11 @@ module.exports = function (MYUser) {
     var customerIFS = new CustomerIFS(app);
     //注册用户
     MYUser.register = function (data, cb) {
-      if (data.CellPhoneNo === undefined || data.CellPhoneNo === '') {
-        cb(null, {status:0, msg: '手机号不能为空'});
+      if (!data.phone || !data.password) {
+        cb(null, {status:0, msg: '手机号和密码不能为空'});
         return;
       }
-      if (data.LoginPassword === undefined || data.LoginPassword === '') {
-        cb(null, {status:0, msg: '密码不能为空'});
-        return;
-      }
+
       customerIFS.register(data, function (err, res) {
         if (err) {
           console.log('register err: ' + err);
@@ -31,7 +28,7 @@ module.exports = function (MYUser) {
         } else {
           cb(null, {status: 1, msg: '注册成功'});
         }
-      })
+      });
     };
 
     MYUser.remoteMethod(
@@ -42,10 +39,10 @@ module.exports = function (MYUser) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '用户注册信息(JSON string) {"CellPhoneNo":"string", "LoginPassword":"string", "Name(Optional)":"string",' +
-              '"Gender(Optional)":"string(All, Male, Famale)", "BirthDay(Optional)":"string", ' +
-              '"CustomerFrom(Optional)":"string", "CustomerLevel(Optional)":int, "CustomerSource(Optional)":int' +
-              '"HeadPicture(Optional)":"string", "StoreName(Optional)":"string", "WangwangNo(Optional)":"string", ' +
+              '用户注册信息(JSON string) {"phone":"string", "password":"string", "name(Optional)":"string",' +
+              '"gender(Optional)":"string(All, Male, Famale)", "birthday(Optional)":"string", ' +
+              '"from(Optional)":"string", "level(Optional)":int, "source(Optional)":int' +
+              '"picture(Optional)":"string", "storeName(Optional)":"string", "WangWang(Optional)":"string", ' +
               '"invitationCode(Optional)":"string"}'
             ]
           }
@@ -74,30 +71,58 @@ module.exports = function (MYUser) {
     );
 
     //登录
-    MYUser.login = function (credentials, loginCb) {
-      var user = credentials.user,
-        password = credentials.password,
+    MYUser.login = function (data, loginCb) {
+      var user = data.phone,
+        password = data.password,
         myToken = app_self.models.MYToken;
+
+      if (!data.phone || !data.password) {
+        cb(null, {status:0, msg: '手机号和密码不能为空'});
+        return;
+      }
 
       //TODO: cloud logic
       async.waterfall(
         [
           function (cb) {
             myToken.destroyAll({userId: user}, function (err) {
-              cb(err);
+              if (err) {
+                cb({status:0, msg: '操作异常'});
+              } else {
+                cb(null);
+              }
+            });
+          },
+          function (cb) {
+            customerIFS.login(data, function (err, res) {
+              if (err) {
+                console.log('register err: ' + err);
+                cb({status:0, msg: '操作异常'});
+                return;
+              }
+
+              if (!res.LoginResult.Body) {
+                cb({status:0, msg: '手机号或密码错误'});
+              } else {
+                cb(null);
+              }
             });
           },
           function (cb) {
             myToken.create({userId: user}, function (err, token) {
-              cb(err, token);
+              if (err) {
+                cb({status:0, msg: '操作异常'});
+              } else {
+                cb(null, {status: 1, token: token, msg: '登录成功'});
+              }
             });
           }
         ],
-        function (err, token) {
+        function (err, msg) {
           if (err) {
-            loginCb(null, {status: -1, token: '', msg: '登录失败'});
+            loginCb(null, err);
           } else {
-            loginCb(null, {status: 0, token: token.id, msg: '登录成功'});
+            loginCb(null, msg);
           }
         }
       );
@@ -106,12 +131,12 @@ module.exports = function (MYUser) {
     MYUser.remoteMethod(
       'login',
       {
-        description: ['用户登录.返回结果-status:操作结果 0 成功 -1 失败, token:用户token, msg:附带信息'],
+        description: ['用户登录.返回结果-status:操作结果 0 失败 -1 成功, token:用户token, msg:附带信息'],
         accepts: [
           {
             arg: 'credentials', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '用户登录信息(JSON string) {"realm(optional)":"string", "user":"string", "password":"string"}'
+              '用户登录信息(JSON string) {"phone":"string", "password":"string"}'
             ]
           }
         ],

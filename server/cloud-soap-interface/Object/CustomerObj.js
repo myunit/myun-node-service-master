@@ -6,19 +6,19 @@
 var utils = require('../../util/utils');
 var xml = require('xml');
 
-exports.createRegisterXML = function (regObj) {
-  regObj.Name = regObj.Name || '';
-  regObj.Gender = regObj.Gender || 'Male';
-  regObj.BirthDay = regObj.BirthDay || utils.formatByT(new Date());
-  regObj.CustomerFrom = regObj.CustomerFrom || '';
-  regObj.CustomerLevel = regObj.CustomerLevel || 0;
-  regObj.CustomerSource = regObj.CustomerSource || 0;
-  regObj.HeadPicture = regObj.HeadPicture || '';
-  regObj.StoreName = regObj.StoreName || '';
-  regObj.WangwangNo = regObj.WangwangNo || '';
-  regObj.invitationCode = regObj.invitationCode || '';
+exports.createRegisterXML = function (obj) {
+  obj.name = obj.name || '';
+  obj.gender = obj.gender || 'Male';
+  obj.birthday = obj.birthday || utils.formatByT(new Date());
+  obj.from = obj.from || '';
+  obj.level = obj.level || 0;
+  obj.source = obj.source || 0;
+  obj.picture = obj.picture || '';
+  obj.storeName = obj.storeName || '';
+  obj.WangWang = obj.WangWang || '';
+  obj.invitationCode = obj.invitationCode || '';
 
-  var regXML = [{
+  var xmlObj = [{
     Register: [
       {
         _attr: {
@@ -33,35 +33,57 @@ exports.createRegisterXML = function (regObj) {
               'xmlns:i': 'http://www.w3.org/2001/XMLSchema-instance'
             }
           }, {
-            'd4p1:BirthDay': regObj.BirthDay
+            'd4p1:BirthDay': obj.birthday
           }, {
-            'd4p1:CellPhoneNo': regObj.CellPhoneNo
+            'd4p1:CellPhoneNo': obj.phone
           }, {
-            'd4p1:CustomerFrom': regObj.CustomerFrom
+            'd4p1:CustomerFrom': obj.from
           }, {
-            'd4p1:CustomerLevel': regObj.CustomerLevel
+            'd4p1:CustomerLevel': obj.level
           }, {
-            'd4p1:CustomerSource': regObj.CustomerSource
+            'd4p1:CustomerSource': obj.source
           }, {
-            'd4p1:Gender': regObj.Gender
+            'd4p1:Gender': obj.gender
           }, {
-            'd4p1:HeadPicture': regObj.HeadPicture
+            'd4p1:HeadPicture': obj.picture
           }, {
-            'd4p1:LoginPassword': regObj.LoginPassword
+            'd4p1:LoginPassword': obj.password
           }, {
-            'd4p1:Name': regObj.Name
+            'd4p1:Name': obj.name
           }, {
-            'd4p1:StoreName': regObj.StoreName
+            'd4p1:StoreName': obj.storeName
           }, {
-            'd4p1:WangwangNo': regObj.WangwangNo
+            'd4p1:WangwangNo': obj.WangWang
           }
         ]
       },
       {
-        invitationCode: regObj.invitationCode
+        invitationCode: obj.invitationCode
       }
     ]
   }];
 
-  return xml(regXML, true);
+  return xml(xmlObj, true);
+};
+
+
+exports.createLoginXML = function (obj) {
+
+  var xmlObj = [{
+    Login: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        cellPhone: obj.phone
+      },
+      {
+        password: obj.password
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
 };

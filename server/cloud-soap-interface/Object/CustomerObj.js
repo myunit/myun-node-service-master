@@ -6,7 +6,7 @@
 var utils = require('../../util/utils');
 var xml = require('xml');
 
-exports.createRegisterXML = function (obj) {
+exports.registerXML = function (obj) {
   obj.name = obj.name || '';
   obj.gender = obj.gender || 'Male';
   obj.birthday = obj.birthday || utils.formatByT(new Date());
@@ -67,7 +67,7 @@ exports.createRegisterXML = function (obj) {
 };
 
 
-exports.createLoginXML = function (obj) {
+exports.loginXML = function (obj) {
 
   var xmlObj = [{
     Login: [
@@ -81,6 +81,27 @@ exports.createLoginXML = function (obj) {
       },
       {
         password: obj.password
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+exports.modifyPWXML = function (obj) {
+
+  var xmlObj = [{
+    ModifyPassword: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        password: obj.newPassword
+      },
+      {
+        customerSysNo: obj.customerNo
       }
     ]
   }];

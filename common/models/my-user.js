@@ -73,7 +73,6 @@ module.exports = function (MYUser) {
     //登录
     MYUser.login = function (data, loginCb) {
       var user = data.phone,
-        password = data.password,
         myToken = app_self.models.MYToken;
 
       if (!data.phone || !data.password) {
@@ -96,7 +95,7 @@ module.exports = function (MYUser) {
           function (cb) {
             customerIFS.login(data, function (err, res) {
               if (err) {
-                console.log('register err: ' + err);
+                console.log('login err: ' + err);
                 cb({status:0, msg: '操作异常'});
                 return;
               }
@@ -104,16 +103,17 @@ module.exports = function (MYUser) {
               if (!res.LoginResult.Body) {
                 cb({status:0, msg: '手机号或密码错误'});
               } else {
-                cb(null);
+                cb(null, {status: 1, customerNo: parseInt(res.LoginResult.Body.CustomerNo), msg: '登录成功'});
               }
             });
           },
-          function (cb) {
+          function (msg, cb) {
             myToken.create({userId: user}, function (err, token) {
               if (err) {
                 cb({status:0, msg: '操作异常'});
               } else {
-                cb(null, {status: 1, token: token, msg: '登录成功'});
+                msg.token = token;
+                cb(null, msg);
               }
             });
           }
@@ -174,23 +174,35 @@ module.exports = function (MYUser) {
 
     //修改密码
     MYUser.modifyPassword = function (data, cb) {
-      var oldPassword = data.oldPassword,
-        newPassword = data.newPassword;
-      //TODO: cloud logic
-      var ctx = loopback.getCurrentContext();
-      var token = ctx.get('accessToken');
-      cb(null, {status: 0, msg: '密码修改成功'});
+      if (!data.customerNo || !data.newPassword) {
+        cb(null, {status:0, msg: '新密码不能为空'});
+        return;
+      }
+
+      customerIFS.modifyPW(data, function (err, res) {
+        if (err) {
+          console.log('modifyPW err: ' + err);
+          cb({status:0, msg: '操作异常'});
+          return;
+        }
+
+        if (res.ModifyPasswordResult.HasError === 'true') {
+          cb({status:0, msg: '密码设置失败'});
+        } else {
+          cb(null, {status: 1, msg: '密码设置成功'});
+        }
+      });
     };
 
     MYUser.remoteMethod(
       'modifyPassword',
       {
-        description: ['修改密码(access token).返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
+        description: ['修改密码(access token).返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'],
         accepts: [
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '密码信息(JSON string) {"oldPassword":"string", "newPassword":"string"}'
+              '密码信息(JSON string) {"customerNo":int, "newPassword":"string"}'
             ]
           }
         ],

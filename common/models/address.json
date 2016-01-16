@@ -60,7 +60,7 @@
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "setDefaultAddress"
+      "property": "setDefaultReceiveAddress"
     }
   ],
   "methods": {}

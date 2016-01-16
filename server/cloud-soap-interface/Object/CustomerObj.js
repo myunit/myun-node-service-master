@@ -259,3 +259,21 @@ exports.removeReceiveAddressXML = function (sysNo) {
 
   return xml(xmlObj, true);
 };
+
+exports.setDefaultReceiveAddressXML = function (obj) {
+
+  var xmlObj = [{
+    SetDefaultReceiveAddresses: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        receiveAddressSysNo: obj.sysNo
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

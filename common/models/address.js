@@ -262,7 +262,7 @@ module.exports = function (Address) {
     Address.remoteMethod(
       'removeReceiveAddress',
       {
-        description: ['删除用户收货信息(access token).返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
+        description: ['删除用户收货信息(access token).返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'],
         accepts: [
           {arg: 'sysNo', type: 'number', required: true, http: {source: 'path'}, description: '地址id'}
         ],
@@ -272,27 +272,41 @@ module.exports = function (Address) {
     );
 
     //设置默认地址
-    Address.setDefaultAddress = function (data, cb) {
-      //TODO: cloud logic
-      var ctx = loopback.getCurrentContext();
-      var token = ctx.get('accessToken');
-      cb(null, {status: 0, id: 1, msg: '成功'});
+    Address.setDefaultReceiveAddress = function (data, cb) {
+      if (!data.sysNo) {
+        cb(null, {status: 0, msg: '操作异常'});
+        return;
+      }
+
+      customerIFS.setDefaultReceiveAddress(data, function (err, res) {
+        if (err) {
+          console.log('setDefaultReceiveAddress err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (res.SetDefaultReceiveAddressesResult.HasError === 'true') {
+          cb(null, {status: 0, msg: '设置失败'});
+        } else {
+          cb(null, {status: 1, msg: '设置成功'});
+        }
+      });
     };
 
     Address.remoteMethod(
-      'setDefaultAddress',
+      'setDefaultReceiveAddress',
       {
-        description: ['设置用户默认地址(access token).返回结果-status:操作结果 0 成功 -1 失败, id:默认的地址id, msg:附带信息'],
+        description: ['设置用户默认地址(access token).返回结果-status:操作结果 0 失败 1 成功, id:默认的地址id, msg:附带信息'],
         accepts: [
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '地址信息(JSON string) {"id":"number"}'
+              '地址信息(JSON string) {"sysNo":"number"}'
             ]
           }
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/set-default-address', verb: 'post'}
+        http: {path: '/set-default-receive-address', verb: 'post'}
       }
     );
   });

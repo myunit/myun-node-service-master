@@ -78,5 +78,14 @@ CustomerIFS.prototype.removeReceiveAddress = function (sysNo, callback) {
   });
 };
 
+CustomerIFS.prototype.setDefaultReceiveAddress = function (obj, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.setDefaultReceiveAddressXML(obj);
+  Customer.SetDefaultReceiveAddresses(xml, function (err, response) {
+    callback(err, response);
+  });
+};
+
+
 
 exports = module.exports = CustomerIFS;

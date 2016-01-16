@@ -145,3 +145,51 @@ exports.getDefaultReceiveAddressXML = function (customerNo) {
 
   return xml(xmlObj, true);
 };
+
+exports.addReceiveAddressXML = function (obj) {
+  obj.isDefault = obj.IsDefault || false;
+  obj.sysNo = obj.SysNo || 0;
+  obj.PCD = obj.provinceId + '-' + obj.cityId + '-' + obj.regionId;
+  obj.PCDDes = obj.provinceStr + '-' + obj.cityStr + '-' + obj.regionStr;
+
+  var xmlObj = [{
+    AddNewReceiveAddress: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        data: [
+          {
+            _attr: {
+              'xmlns:d4p1': 'http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data',
+              'xmlns:i': 'http://www.w3.org/2001/XMLSchema-instance'
+            }
+          }, {
+            'd4p1:Address': obj.address
+          }, {
+            'd4p1:CustomerNo': obj.customerNo
+          }, {
+            'd4p1:IsDefault': obj.isDefault
+          }, {
+            'd4p1:PCDCode': obj.PCD
+          }, {
+            'd4p1:PCDDescription': obj.PCDDes
+          }, {
+            'd4p1:ReceiverCellPhone': obj.phone
+          }, {
+            'd4p1:ReceiverName': obj.name
+          }, {
+            'd4p1:SysNo': obj.sysNo
+          }
+        ]
+      },
+      {
+        customerSysNo: obj.customerNo
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

@@ -66,7 +66,6 @@ module.exports = function (Address) {
           cb(null, {status: 1, data: addressList, msg: ''});
           addressList = null;
           address = null;
-          console.log('释放');
         }
       });
     };
@@ -87,7 +86,6 @@ module.exports = function (Address) {
 
     //获取用户默认收货地址
     Address.getDefaultReceiveAddress = function (customerNo, cb) {
-      //TODO: cloud logic
       if (!customerNo) {
         cb(null, {status: 0, msg: '操作异常'});
         return;
@@ -132,29 +130,55 @@ module.exports = function (Address) {
       }
     );
 
-    //新增用户地址
-    Address.addUserAddress = function (data, cb) {
-      //TODO: cloud logic
-      var ctx = loopback.getCurrentContext();
-      var token = ctx.get('accessToken');
-      cb(null, {status: 0, id: 1, msg: '成功'});
+    //新增用户收货地址
+    Address.addReceiveAddress = function (data, cb) {
+      if (!data.customerNo || !data.address) {
+        cb(null, {status: 0, msg: '操作异常'});
+        return;
+      }
+
+      customerIFS.addReceiveAddress(data, function (err, res) {
+        if (err) {
+          console.log('addReceiveAddress err: ' + err);
+          cb({status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (res.AddNewReceiveAddressResult.HasError === 'true') {
+          cb({status: 0, msg: '新增地址失败'});
+        } else {
+
+          var body = res.AddNewReceiveAddressResult.Body;
+          var address = {};
+          address.Address = body.Address;
+          address.IsDefault = body.IsDefault === 'true'? true:false;
+          address.PCD = body.PCDCode.split('-');;
+          address.PCDDes = body.PCDDescription.split('-');;
+          address.ReceiverCellPhone = body.ReceiverCellPhone;
+          address.ReceiverName = body.ReceiverName;
+          cb(null, {status: 1, data: address, msg: ''});
+          address = null;
+        }
+      });
     };
 
     Address.remoteMethod(
-      'addUserAddress',
+      'addReceiveAddress',
       {
         description: ['新增用户地址信息(access token).返回结果-status:操作结果 0 成功 -1 失败, id:新增的地址id, msg:附带信息'],
         accepts: [
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '地址信息(JSON string) {"province":"number", "city":"number", ',
-              '"region":"number", "road":"number", "detail":"string"}'
+              '地址信息(JSON string) {"customerNo":"number", "address":"string", ',
+              '"provinceId":"number", "provinceStr":"string", "cityId":"number", ' +
+              '"cityStr":"string", "regionId":"number", "regionStr":"string", ' +
+              '"phone":"string", "name":"string"}'
             ]
           }
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/add-user-address', verb: 'post'}
+        http: {path: '/add-receive-address', verb: 'post'}
       }
     );
 

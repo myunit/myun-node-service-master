@@ -39,7 +39,7 @@
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "addUserAddress"
+      "property": "addReceiveAddress"
     },
     {
       "accessType": "EXECUTE",

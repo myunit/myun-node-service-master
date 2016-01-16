@@ -38,5 +38,13 @@ CustomerIFS.prototype.modifyPW = function (obj, callback) {
   });
 };
 
+CustomerIFS.prototype.getReceiveAddresses = function (customerNo, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.getAllReceiveAddressesXML(customerNo);
+  Customer.GetAllReceiveAddresses(xml, function (err, response) {
+    callback(err, response);
+  });
+};
+
 
 exports = module.exports = CustomerIFS;

@@ -108,3 +108,22 @@ exports.modifyPWXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+
+exports.getAllReceiveAddressesXML = function (customerNo) {
+
+  var xmlObj = [{
+    GetAllReceiveAddresses: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        customerSysNo: customerNo
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

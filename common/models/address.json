@@ -46,7 +46,7 @@
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "modifyUserAddress"
+      "property": "modifyReceiveAddress"
     },
     {
       "accessType": "EXECUTE",

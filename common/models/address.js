@@ -53,6 +53,7 @@ module.exports = function (Address) {
           var address = {};
           for (var i = 0; i < addresses.length; i++) {
 
+            address.SysNo = addresses[i].SysNo;
             address.Address = addresses[i].Address;
             address.IsDefault = addresses[i].IsDefault === 'true'? true:false;
             address.PCD = addresses[i].PCDCode.split('-');
@@ -74,7 +75,7 @@ module.exports = function (Address) {
       'getReceiveAddresses',
       {
         description: [
-          '获取用户收货地址信息(access token).返回结果,data该次查询的地址数组, msg:附带信息'
+          '获取用户收货地址信息(access token).返回结果 status 0 失败 1 成功,data该次查询的地址数组, msg:附带信息'
         ],
         accepts: [
           {arg: 'customerNo', type: 'number', required: true, http: {source: 'query'}, description: '用户no'}
@@ -104,6 +105,7 @@ module.exports = function (Address) {
 
           var body = res.GetDefaultReceiveAddressesResult.Body;
           var address = {};
+          address.SysNo = body.SysNo;
           address.Address = body.Address;
           address.IsDefault = body.IsDefault === 'true'? true:false;
           address.PCD = body.PCDCode.split('-');
@@ -120,7 +122,7 @@ module.exports = function (Address) {
       'getDefaultReceiveAddress',
       {
         description: [
-          '获取用户收货地址信息(access token).返回结果,data该次查询的地址数据, msg:附带信息'
+          '获取用户收货地址信息(access token).返回结果 status 0 失败 1 成功,data该次查询的地址数据, msg:附带信息'
         ],
         accepts: [
           {arg: 'customerNo', type: 'number', required: true, http: {source: 'query'}, description: '用户no'}
@@ -150,6 +152,7 @@ module.exports = function (Address) {
 
           var body = res.AddNewReceiveAddressResult.Body;
           var address = {};
+          address.SysNo = body.SysNo;
           address.Address = body.Address;
           address.IsDefault = body.IsDefault === 'true'? true:false;
           address.PCD = body.PCDCode.split('-');;
@@ -165,7 +168,7 @@ module.exports = function (Address) {
     Address.remoteMethod(
       'addReceiveAddress',
       {
-        description: ['新增用户地址信息(access token).返回结果-status:操作结果 0 成功 -1 失败, id:新增的地址id, msg:附带信息'],
+        description: ['新增用户地址信息(access token).返回结果-status:操作结果 0 失败 1 成功, data:新增的地址信息, msg:附带信息'],
         accepts: [
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
@@ -183,28 +186,55 @@ module.exports = function (Address) {
     );
 
     //编辑用户地址
-    Address.modifyUserAddress = function (data, cb) {
-      //TODO: cloud logic
-      var ctx = loopback.getCurrentContext();
-      var token = ctx.get('accessToken');
-      cb(null, {status: 0, id: 1, msg: '成功'});
+    Address.modifyReceiveAddress = function (data, cb) {
+      if (!data.customerNo || !data.sysNo) {
+        cb(null, {status: 0, msg: '操作异常'});
+        return;
+      }
+
+      customerIFS.modifyReceiveAddress(data, function (err, res) {
+        if (err) {
+          console.log('modifyReceiveAddress err: ' + err);
+          cb({status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (res.ModifyReceiveAddressResult.HasError === 'true') {
+          cb({status: 0, msg: '编辑地址失败'});
+        } else {
+
+          var body = res.ModifyReceiveAddressResult.Body;
+          var address = {};
+          address.SysNo = body.SysNo;
+          address.Address = body.Address;
+          address.IsDefault = body.IsDefault === 'true'? true:false;
+          address.PCD = body.PCDCode.split('-');;
+          address.PCDDes = body.PCDDescription.split('-');;
+          address.ReceiverCellPhone = body.ReceiverCellPhone;
+          address.ReceiverName = body.ReceiverName;
+          cb(null, {status: 1, data: address, msg: ''});
+          address = null;
+        }
+      });
     };
 
     Address.remoteMethod(
-      'modifyUserAddress',
+      'modifyReceiveAddress',
       {
-        description: ['编辑用户地址信息(access token).返回结果-status:操作结果 0 成功 -1 失败, id:编辑的地址id, msg:附带信息'],
+        description: ['编辑用户地址信息(access token).返回结果-status:操作结果 0 失败 1 成功, data:编辑的地址信息, msg:附带信息'],
         accepts: [
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '地址信息(JSON string) {"id":"number", "province":"number", "city":"number", ',
-              '"region":"number", "road":"number", "detail":"string"}'
+              '地址信息(JSON string) {"customerNo":"number", "address":"string", "sysNo":"number"',
+              '"provinceId":"number", "provinceStr":"string", "cityId":"number", ' +
+              '"cityStr":"string", "regionId":"number", "regionStr":"string", ' +
+              '"phone":"string", "name":"string"}'
             ]
           }
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/modify-user-address', verb: 'post'}
+        http: {path: '/modify-receive-address', verb: 'post'}
       }
     );
 

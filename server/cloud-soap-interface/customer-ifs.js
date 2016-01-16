@@ -62,5 +62,13 @@ CustomerIFS.prototype.addReceiveAddress = function (obj, callback) {
   });
 };
 
+CustomerIFS.prototype.modifyReceiveAddress = function (obj, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.modifyReceiveAddressXML(obj);
+  Customer.ModifyReceiveAddress(xml, function (err, response) {
+    callback(err, response);
+  });
+};
+
 
 exports = module.exports = CustomerIFS;

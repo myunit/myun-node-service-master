@@ -127,3 +127,21 @@ exports.getAllReceiveAddressesXML = function (customerNo) {
 
   return xml(xmlObj, true);
 };
+
+exports.getDefaultReceiveAddressXML = function (customerNo) {
+
+  var xmlObj = [{
+    GetDefaultReceiveAddresses: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        customerSysNo: customerNo
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

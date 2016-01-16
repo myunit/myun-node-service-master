@@ -49,7 +49,6 @@ module.exports = function (Address) {
         } else {
 
           var addresses = res.GetAllReceiveAddressesResult.Body.CustomerReceiveAddress;
-          console.log('address:' + JSON.stringify(addresses));
           var addressList = [];
           var address = {};
           for (var i = 0; i < addresses.length; i++) {
@@ -65,6 +64,9 @@ module.exports = function (Address) {
 
           }
           cb(null, {status: 1, data: addressList, msg: ''});
+          addressList = null;
+          address = null;
+          console.log('释放');
         }
       });
     };
@@ -80,6 +82,53 @@ module.exports = function (Address) {
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-receive-address', verb: 'get'}
+      }
+    );
+
+    //获取用户默认收货地址
+    Address.getDefaultReceiveAddress = function (customerNo, cb) {
+      //TODO: cloud logic
+      if (!customerNo) {
+        cb(null, {status: 0, msg: '操作异常'});
+        return;
+      }
+
+      customerIFS.getDefaultReceiveAddress(customerNo, function (err, res) {
+        if (err) {
+          console.log('getDefaultReceiveAddress err: ' + err);
+          cb({status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (res.GetDefaultReceiveAddressesResult.HasError === 'true') {
+          cb({status: 0, msg: '获取地址失败'});
+        } else {
+
+          var body = res.GetDefaultReceiveAddressesResult.Body;
+          var address = {};
+          address.Address = body.Address;
+          address.IsDefault = body.IsDefault === 'true'? true:false;
+          address.PCD = body.PCDCode.split('-');
+          address.PCDDes = body.PCDDescription.split('-');
+          address.ReceiverCellPhone = body.ReceiverCellPhone;
+          address.ReceiverName = body.ReceiverName;
+          cb(null, {status: 1, data: address, msg: ''});
+          address = null;
+        }
+      });
+    };
+
+    Address.remoteMethod(
+      'getDefaultReceiveAddress',
+      {
+        description: [
+          '获取用户收货地址信息(access token).返回结果,data该次查询的地址数据, msg:附带信息'
+        ],
+        accepts: [
+          {arg: 'customerNo', type: 'number', required: true, http: {source: 'query'}, description: '用户no'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-default-receive-address', verb: 'get'}
       }
     );
 

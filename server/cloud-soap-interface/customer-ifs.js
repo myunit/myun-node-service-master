@@ -46,5 +46,13 @@ CustomerIFS.prototype.getReceiveAddresses = function (customerNo, callback) {
   });
 };
 
+CustomerIFS.prototype.getDefaultReceiveAddress = function (customerNo, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.getDefaultReceiveAddressXML(customerNo);
+  Customer.GetDefaultReceiveAddresses(xml, function (err, response) {
+    callback(err, response);
+  });
+};
+
 
 exports = module.exports = CustomerIFS;

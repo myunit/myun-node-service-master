@@ -257,7 +257,7 @@ module.exports = function (Customer) {
               }
 
               if (!res.IsSuccess) {
-                cb({status:0, msg: res.ErrorDescription});
+                cb(null, {status:0, msg: res.ErrorDescription});
               } else {
                 cb(null, {status: 1, data: res.Customer, msg: ''});
               }
@@ -299,6 +299,46 @@ module.exports = function (Customer) {
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/login-by-weixin', verb: 'post'}
+      }
+    );
+
+    //微信注册用户
+    Customer.registerByWeiXin = function (data, cb) {
+      if (!data.phone || !data.openId) {
+        cb(null, {status:0, msg: '手机号和微信号不能为空'});
+        return;
+      }
+
+      customerIFS.registerByWeiXin(data, function (err, res) {
+        if (err) {
+          console.log('register err: ' + err);
+          cb(null, {status:0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status:0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, data: res.Customer, msg: ''});
+        }
+      });
+    };
+
+    Customer.remoteMethod(
+      'registerByWeiXin',
+      {
+        description: ['通过微信注册一个新用户.返回结果-status:操作结果 0 失败 1 成功, data:用户信息, msg:附带信息'],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '用户注册信息(JSON string) {"phone":"string", "openId":"string", "name":"string",' +
+              '"picture":"string"}'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/register-by-weixin', verb: 'post'}
       }
     );
   });

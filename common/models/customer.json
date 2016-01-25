@@ -50,6 +50,12 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "loginByWeiXin"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "registerByWeiXin"
     }
   ],
   "methods": {}

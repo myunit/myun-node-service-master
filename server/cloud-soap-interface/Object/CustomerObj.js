@@ -313,3 +313,31 @@ exports.loginByWeiXinXML = function (openId) {
 
   return xml(xmlObj, true);
 };
+
+exports.registerByWeiXinXML = function (obj) {
+  var register = {};
+  register.CellPhoneNo = obj.phone;
+  register.CustomerLevel = 1;
+  register.CustomerSource = 2;
+  register.HeadPicture = obj.picture;
+  register.LoginPassword = '123456';
+  register.Name = obj.name;
+  register.WeixinOpenID = obj.openId;
+  register.WeixinNo = obj.name;
+
+
+  var xmlObj = [{
+    RegisterByWechatForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(register)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

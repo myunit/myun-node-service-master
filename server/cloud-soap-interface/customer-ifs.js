@@ -102,4 +102,12 @@ CustomerIFS.prototype.loginByWeiXin = function (openId, callback) {
   });
 };
 
+CustomerIFS.prototype.registerByWeiXin = function (openId, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.registerByWeiXinXML(openId);
+  Customer.RegisterByWechatForApp(xml, function (err, response) {
+    callback(err, JSON.parse(response.RegisterByWechatForAppResult));
+  });
+};
+
 exports = module.exports = CustomerIFS;

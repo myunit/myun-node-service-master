@@ -110,4 +110,20 @@ CustomerIFS.prototype.registerByWeiXin = function (openId, callback) {
   });
 };
 
+CustomerIFS.prototype.AddIdentityAudit = function (openId, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.addIdentityAuditXML(openId);
+  Customer.AddCustomerIdentityAuditForApp(xml, function (err, response) {
+    callback(err, JSON.parse(response.AddCustomerIdentityAuditForAppResult));
+  });
+};
+
+CustomerIFS.prototype.ModifyIdentityAudit = function (openId, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.modifyIdentityAuditXML(openId);
+  Customer.AddCustomerIdentityAuditForApp(xml, function (err, response) {
+    callback(err, JSON.parse(response.AddCustomerIdentityAuditForAppResult));
+  });
+};
+
 exports = module.exports = CustomerIFS;

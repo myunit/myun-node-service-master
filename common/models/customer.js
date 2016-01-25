@@ -341,5 +341,47 @@ module.exports = function (Customer) {
         http: {path: '/register-by-weixin', verb: 'post'}
       }
     );
+
+    //新增用户审核认证
+    Customer.AddIdentityAudit = function (data, cb) {
+      if (!data.userNo || !data.phone) {
+        cb(null, {status:0, msg: '手机号和用户不能为空'});
+        return;
+      }
+
+      customerIFS.registerByWeiXin(data, function (err, res) {
+        if (err) {
+          console.log('register err: ' + err);
+          cb(null, {status:0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status:0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, auditNo: res.SysNo, msg: ''});
+        }
+      });
+    };
+
+    Customer.remoteMethod(
+      'AddIdentityAudit',
+      {
+        description: ['新增用户审核认证.返回结果-status:操作结果 0 失败 1 成功, data:用户信息, msg:附带信息'],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '用户认证信息(JSON string) {"userNo":"string", "realName":"string", "name":"string",' +
+              '"cardId":"string", "captcha":"string", "identityImgs":array, "phone":"string"} ' + '' +
+              'identityImgs:["ImgKey":int, "ImgType":int, "ImgValue":"string"]'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/add-identity-audit', verb: 'post'}
+      }
+    );
+
   });
 };

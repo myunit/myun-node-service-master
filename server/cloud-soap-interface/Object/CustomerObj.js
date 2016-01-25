@@ -341,3 +341,62 @@ exports.registerByWeiXinXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.addIdentityAuditXML = function (obj) {
+  var audit = {};
+  audit.Body = {};
+  audit.Body.Code = obj.captcha;
+  audit.Body.CustomerID = obj.cardId;
+  audit.Body.CustomerNo = obj.userNo;
+  audit.Body.CustomerRealName = obj.realName;
+  audit.Body.IdentityImgs = obj.identityImgs;
+  audit.Body.IsFullModify = true;
+  audit.Body.MobileNo = obj.phone;
+  audit.UserId = obj.userNo;
+  audit.UserName = obj.name;
+
+  var xmlObj = [{
+    AddCustomerIdentityForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(audit)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+exports.modifyIdentityAuditXML = function (obj) {
+  var audit = {};
+  audit.Body = {};
+  audit.Body.Code = obj.captcha || '';
+  audit.Body.CustomerID = obj.id;
+  audit.Body.CustomerNo = obj.userNo;
+  audit.Body.CustomerRealName = obj.realName;
+  audit.Body.IdentityImgs = obj.identityImgs;
+  audit.Body.IsFullModify = obj.captcha ? true : false;
+  audit.Body.MobileNo = obj.phone;
+  audit.Body.SysNo = obj.auditNo;
+  audit.UserId = obj.userNo;
+  audit.UserName = obj.name;
+
+  var xmlObj = [{
+    AddCustomerIdentityForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(audit)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

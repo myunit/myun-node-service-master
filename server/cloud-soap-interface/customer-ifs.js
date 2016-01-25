@@ -94,6 +94,12 @@ CustomerIFS.prototype.getCaptcha = function (phone, callback) {
   });
 };
 
-
+CustomerIFS.prototype.loginByWeiXin = function (openId, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.loginByWeiXinXML(openId);
+  Customer.LoginByWeixinOpenID(xml, function (err, response) {
+    callback(err, JSON.parse(response.LoginByWeixinOpenIDResult));
+  });
+};
 
 exports = module.exports = CustomerIFS;

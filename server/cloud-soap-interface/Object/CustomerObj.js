@@ -295,3 +295,21 @@ exports.getCaptchaXML = function (phone) {
 
   return xml(xmlObj, true);
 };
+
+exports.loginByWeiXinXML = function (openId) {
+
+  var xmlObj = [{
+    LoginByWeixinOpenID: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        openid: openId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

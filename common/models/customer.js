@@ -227,5 +227,79 @@ module.exports = function (Customer) {
       }
     );
 
+    //微信账号登录
+    Customer.loginByWeiXin = function (data, loginCb) {
+      var openId = data.openId,
+        myToken = app_self.models.MYToken;
+
+      if (!data.openId) {
+        loginCb(null, {status:0, msg: '微信号不能为空'});
+        return;
+      }
+
+      async.waterfall(
+        [
+          function (cb) {
+            myToken.destroyAll({userId: openId}, function (err) {
+              if (err) {
+                cb({status:0, msg: '操作异常'});
+              } else {
+                cb(null);
+              }
+            });
+          },
+          function (cb) {
+            customerIFS.loginByWeiXin(openId, function (err, res) {
+              if (err) {
+                console.log('login err: ' + err);
+                cb({status:0, msg: '操作异常'});
+                return;
+              }
+
+              if (!res.IsSuccess) {
+                cb({status:0, msg: res.ErrorDescription});
+              } else {
+                cb(null, {status: 1, data: res.Customer, msg: ''});
+              }
+
+            });
+          },
+          function (msg, cb) {
+            myToken.create({userId: openId}, function (err, token) {
+              if (err) {
+                cb({status:0, msg: '操作异常'});
+              } else {
+                msg.token = token;
+                cb(null, msg);
+              }
+            });
+          }
+        ],
+        function (err, msg) {
+          if (err) {
+            loginCb(null, err);
+          } else {
+            loginCb(null, msg);
+          }
+        }
+      );
+    };
+
+    Customer.remoteMethod(
+      'loginByWeiXin',
+      {
+        description: ['用微信账号登录.返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息, data:用户相关信息'],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '密码信息(JSON string) {"realm(optional)":"string", "openId":"string"}'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/login-by-weixin', verb: 'post'}
+      }
+    );
   });
 };

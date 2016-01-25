@@ -2,15 +2,15 @@ var loopback = require('loopback');
 var async = require('async');
 var CustomerIFS = require('../../server/cloud-soap-interface/customer-ifs');
 
-module.exports = function (MYUser) {
-  MYUser.getApp(function (err, app) {
+module.exports = function (Customer) {
+  Customer.getApp(function (err, app) {
     if (err) {
       throw err;
     }
     var app_self = app;
     var customerIFS = new CustomerIFS(app);
     //注册用户
-    MYUser.register = function (data, cb) {
+    Customer.register = function (data, cb) {
       if (!data.phone || !data.password) {
         cb(null, {status:0, msg: '手机号和密码不能为空'});
         return;
@@ -31,7 +31,7 @@ module.exports = function (MYUser) {
       });
     };
 
-    MYUser.remoteMethod(
+    Customer.remoteMethod(
       'register',
       {
         description: ['注册一个新用户.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'],
@@ -53,7 +53,7 @@ module.exports = function (MYUser) {
     );
 
     //获取验证码
-    MYUser.getCaptcha = function (phone, cb) {
+    Customer.getCaptcha = function (phone, cb) {
       if (!phone) {
         cb(null, {status: 0, msg: '操作异常'});
         return;
@@ -74,7 +74,7 @@ module.exports = function (MYUser) {
       });
     };
 
-    MYUser.remoteMethod(
+    Customer.remoteMethod(
       'getCaptcha',
       {
         description: ['获取验证码.返回结果-status:操作结果 0 成功 -1 失败, verifyCode:验证码'],
@@ -87,7 +87,7 @@ module.exports = function (MYUser) {
     );
 
     //登录
-    MYUser.login = function (data, loginCb) {
+    Customer.login = function (data, loginCb) {
       var user = data.phone,
         myToken = app_self.models.MYToken;
 
@@ -144,7 +144,7 @@ module.exports = function (MYUser) {
       );
     };
 
-    MYUser.remoteMethod(
+    Customer.remoteMethod(
       'login',
       {
         description: ['用户登录.返回结果-status:操作结果 0 失败 -1 成功, token:用户token, msg:附带信息'],
@@ -162,7 +162,7 @@ module.exports = function (MYUser) {
     );
 
     //退出登录
-    MYUser.logout = function (cb) {
+    Customer.logout = function (cb) {
       //TODO: cloud logic
       var ctx = loopback.getCurrentContext(),
         token = ctx.get('accessToken'),
@@ -179,7 +179,7 @@ module.exports = function (MYUser) {
 
     };
 
-    MYUser.remoteMethod(
+    Customer.remoteMethod(
       'logout',
       {
         description: ['用户退出登录(access token).返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
@@ -189,7 +189,7 @@ module.exports = function (MYUser) {
     );
 
     //修改密码
-    MYUser.modifyPassword = function (data, cb) {
+    Customer.modifyPassword = function (data, cb) {
       if (!data.customerNo || !data.newPassword) {
         cb(null, {status:0, msg: '新密码不能为空'});
         return;
@@ -210,7 +210,7 @@ module.exports = function (MYUser) {
       });
     };
 
-    MYUser.remoteMethod(
+    Customer.remoteMethod(
       'modifyPassword',
       {
         description: ['修改密码(access token).返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'],
@@ -227,76 +227,5 @@ module.exports = function (MYUser) {
       }
     );
 
-    //忘记密码
-    MYUser.forgetPassword = function (data, cb) {
-      var user = data.user,
-        verifyCode = data.verifyCode,
-        newPassword = data.newPassword;
-      //TODO: cloud logic
-      cb(null, {status: 0, msg: '密码重设成功'});
-    };
-
-    MYUser.remoteMethod(
-      'forgetPassword',
-      {
-        description: ['忘记密码.返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
-        accepts: [
-          {
-            arg: 'data', type: 'object', required: true, http: {source: 'body'},
-            description: [
-              '密码信息(JSON string) {"realm(optional)":"string", "user":"string", "verifyCode":"string", "newPassword":"string"}'
-            ]
-          }
-        ],
-        returns: {arg: 'repData', type: 'string'},
-        http: {path: '/forget-password', verb: 'post'}
-      }
-    );
-
-    //获取首页
-    MYUser.getHome = function (homeCb) {
-      //TODO: cloud logic
-      var goods = app_self.models.Goods;
-      var home = {};
-      async.waterfall(
-        [
-          function (cb) {
-            goods.getPromo(function (err , promo) {
-              home['promo'] = promo['promo'];
-              cb(err, home);
-            });
-          },
-          function (home, cb) {
-            goods.getNewPromo(function (err , newPromo) {
-              home['newPromo'] = newPromo['newPromo'];
-              cb(err, home);
-            });
-          },
-          function (home, cb) {
-            goods.getSalePromo(function (err , salePromo) {
-              home['salePromo'] = salePromo['salePromo'];
-              cb(err, home);
-            });
-          }
-        ],
-        function (err, home) {
-          if (err) {
-            homeCb(null, home);
-          } else {
-            homeCb(null, home);
-          }
-        }
-      );
-    };
-
-    MYUser.remoteMethod(
-      'getHome',
-      {
-        description: ['获取首页.返回结果-promo:主宣传片, newPromo:新品宣传片, salePromo:特卖/活动宣传片'],
-        accepts: [],
-        returns: {arg: 'repData', type: 'string'},
-        http: {path: '/get-home', verb: 'get'}
-      }
-    );
   });
 };

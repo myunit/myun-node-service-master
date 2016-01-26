@@ -233,7 +233,7 @@ module.exports = function (Customer) {
         myToken = app_self.models.MYToken;
 
       if (!data.openId) {
-        loginCb(null, {status:0, msg: '微信号不能为空'});
+        loginCb(null, {status:0, msg: '参数错误'});
         return;
       }
 
@@ -304,8 +304,8 @@ module.exports = function (Customer) {
 
     //微信注册用户
     Customer.registerByWeiXin = function (data, cb) {
-      if (!data.phone || !data.openId) {
-        cb(null, {status:0, msg: '手机号和微信号不能为空'});
+      if (!data.phone || !data.openId || !data.name || !data.picture) {
+        cb(null, {status:0, msg: '参数错误'});
         return;
       }
 
@@ -344,12 +344,12 @@ module.exports = function (Customer) {
 
     //新增用户审核认证
     Customer.AddIdentityAudit = function (data, cb) {
-      if (!data.userNo || !data.phone) {
-        cb(null, {status:0, msg: '手机号和用户不能为空'});
+      if (!data.userNo || !data.realName || !data.name || !data.cardId || data.identityImgs.length === 0 || !data.phone) {
+        cb(null, {status:0, msg: '参数错误'});
         return;
       }
 
-      customerIFS.registerByWeiXin(data, function (err, res) {
+      customerIFS.AddIdentityAudit(data, function (err, res) {
         if (err) {
           console.log('register err: ' + err);
           cb(null, {status:0, msg: '操作异常'});
@@ -372,7 +372,7 @@ module.exports = function (Customer) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '用户认证信息(JSON string) {"userNo":"string", "realName":"string", "name":"string",' +
+              '用户认证信息(JSON string) {"userNo":int, "realName":"string", "name":"string",' +
               '"cardId":"string", "captcha":"string", "identityImgs":array, "phone":"string"} ' + '' +
               'identityImgs:["ImgKey":int, "ImgType":int, "ImgValue":"string"]'
             ]
@@ -380,6 +380,48 @@ module.exports = function (Customer) {
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/add-identity-audit', verb: 'post'}
+      }
+    );
+
+    //修改用户审核认证
+    Customer.ModifyIdentityAudit = function (data, cb) {
+      if (!data.userNo || !data.realName || !data.name || !data.cardId || data.identityImgs.length === 0 || !data.phone
+        || !data.auditNo) {
+        cb(null, {status:0, msg: '参数错误'});
+        return;
+      }
+
+      customerIFS.ModifyIdentityAudit(data, function (err, res) {
+        if (err) {
+          console.log('register err: ' + err);
+          cb(null, {status:0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status:0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, auditNo: res.SysNo, msg: ''});
+        }
+      });
+    };
+
+    Customer.remoteMethod(
+      'ModifyIdentityAudit',
+      {
+        description: ['新增用户审核认证.返回结果-status:操作结果 0 失败 1 成功, data:用户信息, msg:附带信息'],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '用户认证信息(JSON string) {"userNo":int, "realName":"string", "name":"string",' +
+              '"cardId":"string", "captcha":"string", "identityImgs":array, "phone":"string","auditNo":int} ' + '' +
+              'identityImgs:["ImgKey":int, "ImgType":int, "ImgValue":"string"]'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/modify-identity-audit', verb: 'post'}
       }
     );
 

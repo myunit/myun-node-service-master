@@ -8,8 +8,8 @@ module.exports = function (Goods) {
     }
     var productIFS = new ProductIFS(app);
 
-    //获取新商品列表
-    Goods.getAllGoods = function (userNo, status, pcdCode, pageId, pageSize, name, cb) {
+    //获取商品列表
+    Goods.getAllProduct = function (userNo, status, pcdCode, pageId, pageSize, name, cb) {
       var product = {};
       product.CustomerNo = userNo;
       product.GroupStatus = status;
@@ -34,13 +34,13 @@ module.exports = function (Goods) {
     };
 
     Goods.remoteMethod(
-      'getAllGoods',
+      'getAllProduct',
       {
         description: [
           '获取商品列表(根据条件查询商品).返回结果-status:操作结果 0 失败 1 成功, data:商品列表信息, msg:附带信息'
         ],
         accepts: [
-          {arg: 'userNo', type: 'number', default: 0, http: {source: 'query'}, description: '商品所有者标识符'},
+          {arg: 'userNo', type: 'number', default: 0, http: {source: 'query'}, description: '商品所有者编号'},
           {arg: 'status', type: 'number', default: 2, http: {source: 'query'}, description: '商品状态'},
           {arg: 'pcdCode', type: 'string', default: '', http: {source: 'query'}, description: '商品所在地pcd'},
           {arg: 'pageId', type: 'number', default: 0, http: {source: 'query'}, description: '第几页'},
@@ -48,10 +48,39 @@ module.exports = function (Goods) {
           {arg: 'name', type: 'string', default: '', http: {source: 'query'}, description: '商品名'}
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/get-all-goods', verb: 'get'}
+        http: {path: '/get-all-product', verb: 'get'}
       }
     );
 
+    //获取商品详情
+    Goods.getProductDetail = function (productNo, cb) {
+        productIFS.getProductDetail(productNo, function (err, res) {
+        if (err) {
+          console.log('getProductDetail err: ' + err);
+          cb(null, {status:0, msg: '操作异常'});
+          return;
+        }
 
+        if (!res.IsSuccess) {
+          cb(null, {status:0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, data: res.Datas, msg: ''});
+        }
+      });
+    };
+
+    Goods.remoteMethod(
+      'getProductDetail',
+      {
+        description: [
+          '获取商品详情.返回结果-status:操作结果 0 失败 1 成功, data:商品信息, msg:附带信息'
+        ],
+        accepts: [
+          {arg: 'productNo', type: 'number', require: true, http: {source: 'query'}, description: '商品编号'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-product-detail', verb: 'get'}
+      }
+    );
   });
 };

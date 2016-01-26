@@ -24,4 +24,16 @@ ProductIFS.prototype.getAllProduct = function (obj, callback) {
   });
 };
 
+ProductIFS.prototype.getProductDetail = function (obj, callback) {
+  var Product = this.DS.models.Product;
+  var xml = ProductObj.getProductDetailXML(obj);
+  Product.GetProductDetailBySysno(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.GetProductDetailBySysnoResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = ProductIFS;

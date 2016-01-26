@@ -21,3 +21,20 @@ exports.getAllProductXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.getProductDetailXML = function (productNo) {
+  var xmlObj = [{
+    GetProductDetailBySysno: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        sysno: productNo
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

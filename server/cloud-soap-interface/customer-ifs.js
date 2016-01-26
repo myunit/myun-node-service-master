@@ -86,9 +86,9 @@ CustomerIFS.prototype.setDefaultReceiveAddress = function (obj, callback) {
   });
 };
 
-CustomerIFS.prototype.getCaptcha = function (phone, callback) {
+CustomerIFS.prototype.getCaptcha = function (phone, interval, callback) {
   var Customer = this.DS.models.Customer;
-  var xml = CustomerObj.getCaptchaXML(phone);
+  var xml = CustomerObj.getCaptchaXML(phone, interval);
   Customer.SendSmsCaptchaForApp(xml, function (err, response) {
     callback(err, JSON.parse(response.SendSmsCaptchaForAppResult));
   });
@@ -110,17 +110,18 @@ CustomerIFS.prototype.registerByWeiXin = function (openId, callback) {
   });
 };
 
-CustomerIFS.prototype.AddIdentityAudit = function (openId, callback) {
+CustomerIFS.prototype.AddIdentityAudit = function (obj, callback) {
   var Customer = this.DS.models.Customer;
-  var xml = CustomerObj.addIdentityAuditXML(openId);
+  var xml = CustomerObj.addIdentityAuditXML(obj);
+  console.log('xml: ' + xml);
   Customer.AddCustomerIdentityAuditForApp(xml, function (err, response) {
     callback(err, JSON.parse(response.AddCustomerIdentityAuditForAppResult));
   });
 };
 
-CustomerIFS.prototype.ModifyIdentityAudit = function (openId, callback) {
+CustomerIFS.prototype.ModifyIdentityAudit = function (obj, callback) {
   var Customer = this.DS.models.Customer;
-  var xml = CustomerObj.modifyIdentityAuditXML(openId);
+  var xml = CustomerObj.modifyIdentityAuditXML(obj);
   Customer.AddCustomerIdentityAuditForApp(xml, function (err, response) {
     callback(err, JSON.parse(response.AddCustomerIdentityAuditForAppResult));
   });

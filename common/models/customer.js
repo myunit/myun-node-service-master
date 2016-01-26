@@ -53,13 +53,13 @@ module.exports = function (Customer) {
     );
 
     //获取验证码
-    Customer.getCaptcha = function (phone, cb) {
+    Customer.getCaptcha = function (phone, interval, cb) {
       if (!phone) {
         cb(null, {status: 0, msg: '参数错误'});
         return;
       }
 
-      customerIFS.getCaptcha(phone, function (err, res) {
+      customerIFS.getCaptcha(phone, interval, function (err, res) {
         if (err) {
           console.log('getCaptcha err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
@@ -79,7 +79,8 @@ module.exports = function (Customer) {
       {
         description: ['获取验证码.返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
         accepts: [
-          {arg: 'phone', type: 'string', required: true, http: {source: 'query'}, description: '手机号'}
+          {arg: 'phone', type: 'string', required: true, http: {source: 'query'}, description: '手机号'},
+          {arg: 'interval', type: 'number', default:900, http: {source: 'query'}, description: '验证码有效期(秒)'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-captcha', verb: 'get'}

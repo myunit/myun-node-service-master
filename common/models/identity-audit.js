@@ -11,7 +11,7 @@ module.exports = function(IdentityAudit) {
 
     //新增用户审核认证
     IdentityAudit.AddIdentityAudit = function (data, cb) {
-      if (!data.userNo || !data.realName || !data.name || !data.cardId || data.identityImgs.length === 0 || !data.phone) {
+      if (!data.userId || !data.realName || !data.name || !data.cardId || data.identityImgs.length === 0 || !data.phone) {
         cb(null, {status:0, msg: '参数错误'});
         return;
       }
@@ -39,7 +39,7 @@ module.exports = function(IdentityAudit) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '用户认证信息(JSON string) {"userNo":int, "realName":"string", "name":"string",' +
+              '用户认证信息(JSON string) {"userId":int, "realName":"string", "name":"string",' +
               '"cardId":"string", "captcha":"string", "identityImgs":[{"ImgKey":int, "ImgType":int, "ImgValue":"string"}],' +
               ' "phone":"string"}'
             ]
@@ -52,7 +52,7 @@ module.exports = function(IdentityAudit) {
 
     //修改用户审核认证
     IdentityAudit.ModifyIdentityAudit = function (data, cb) {
-      if (!data.userNo || !data.realName || !data.name || !data.cardId || data.identityImgs.length === 0 || !data.phone
+      if (!data.userId || !data.realName || !data.name || !data.cardId || data.identityImgs.length === 0 || !data.phone
         || !data.auditNo) {
         cb(null, {status:0, msg: '参数错误'});
         return;
@@ -81,7 +81,7 @@ module.exports = function(IdentityAudit) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '用户认证信息(JSON string) {"userNo":int, "realName":"string", "name":"string",' +
+              '用户认证信息(JSON string) {"userId":int, "realName":"string", "name":"string",' +
               '"cardId":"string", "captcha":"string", "identityImgs":[{"ImgKey":int, "ImgType":int, "ImgValue":"string"}],' +
               ' "phone":"string","auditNo":int} '
             ]
@@ -93,13 +93,13 @@ module.exports = function(IdentityAudit) {
     );
 
     //获取用户认证信息
-    IdentityAudit.GetIdentityAudit = function (userNo, cb) {
-      if (!userNo) {
+    IdentityAudit.GetIdentityAudit = function (userId, cb) {
+      if (!userId) {
         cb(null, {status:0, msg: '参数错误'});
         return;
       }
 
-      customerIFS.getIdentityAudit(userNo, function (err, res) {
+      customerIFS.getIdentityAudit(userId, function (err, res) {
         if (err) {
           console.log('GetIdentityAudit err: ' + err);
           cb(null, {status:0, msg: '操作异常'});
@@ -119,7 +119,7 @@ module.exports = function(IdentityAudit) {
       {
         description: ['获取用户认证信息(access token).返回结果-status:操作结果 0 失败 1 成功, data:用户认证信息, msg:附带信息'],
         accepts: [
-          {arg: 'userNo', type: 'number', required: true, http: {source: 'query'}, description: '用户标识符'}
+          {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户标识符'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-identity-audit', verb: 'get'}

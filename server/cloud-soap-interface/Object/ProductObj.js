@@ -53,3 +53,21 @@ exports.getProductCategoryXML = function () {
   return xml(xmlObj, true);
 };
 
+exports.deleteProductImageXML = function (obj) {
+  var xmlObj = [{
+    DeleteProductImgForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(obj)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+

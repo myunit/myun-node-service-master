@@ -9,9 +9,9 @@ module.exports = function (Goods) {
     var productIFS = new ProductIFS(app);
 
     //获取商品列表
-    Goods.getAllProduct = function (userNo, status, pcdCode, pageId, pageSize, name, cb) {
+    Goods.getAllProduct = function (userId, status, pcdCode, pageId, pageSize, name, cb) {
       var product = {};
-      product.CustomerNo = userNo;
+      product.CustomerNo = userId;
       product.GroupStatus = status;
       product.PCDCode = pcdCode;
       product.Page = pageId;
@@ -40,7 +40,7 @@ module.exports = function (Goods) {
           '获取商品列表(根据条件查询商品).返回结果-status:操作结果 0 失败 1 成功, data:商品列表信息, msg:附带信息'
         ],
         accepts: [
-          {arg: 'userNo', type: 'number', default: 0, http: {source: 'query'}, description: '商品所有者编号'},
+          {arg: 'userId', type: 'number', default: 0, http: {source: 'query'}, description: '商品所有者编号'},
           {arg: 'status', type: 'number', default: 2, http: {source: 'query'}, description: '商品状态'},
           {arg: 'pcdCode', type: 'string', default: '', http: {source: 'query'}, description: '商品所在地pcd'},
           {arg: 'pageId', type: 'number', default: 0, http: {source: 'query'}, description: '第几页'},
@@ -109,6 +109,49 @@ module.exports = function (Goods) {
         accepts: [],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-product-category', verb: 'get'}
+      }
+    );
+
+    //删除商品
+    Goods.deleteProductImg = function (data, cb) {
+      var imgObj = {};
+      imgObj.Body = data.imgNo;
+      imgObj.UserId = data.userId;
+      imgObj.UserName = data.userName;
+
+      console.log('img: ' + JSON.stringify(imgObj));
+
+      productIFS.deleteProductImage(imgObj, function (err, res) {
+        if (err) {
+          console.log('getProductCategory err: ' + err);
+          cb(null, {status:0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status:0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: '删除成功'});
+        }
+      });
+    };
+
+    Goods.remoteMethod(
+      'deleteProductImg',
+      {
+        description: [
+          '删除商品.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '删除商品信息(JSON string) {"imgNo":int array, "userId":int, "userName":"string"}'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/del-product-img', verb: 'delete'}
       }
     );
 

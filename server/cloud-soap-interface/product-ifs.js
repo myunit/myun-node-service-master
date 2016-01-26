@@ -48,4 +48,16 @@ ProductIFS.prototype.getProductCategory = function (callback) {
   });
 };
 
+ProductIFS.prototype.deleteProductImage = function (obj, callback) {
+  var Product = this.DS.models.Product;
+  var xml = ProductObj.deleteProductImageXML(obj);
+  Product.DeleteProductImgForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.DeleteProductImgForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = ProductIFS;

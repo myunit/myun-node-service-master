@@ -312,7 +312,7 @@ module.exports = function (Address) {
 
     //保存用户家乡和现居住地
     Address.setCurrentAddress = function (data, cb) {
-      if (!data.userNo || !data.homeTown || !data.domicile) {
+      if (!data.userId || !data.homeTown || !data.domicile) {
         cb(null, {status: 0, msg: '操作异常'});
         return;
       }
@@ -340,7 +340,7 @@ module.exports = function (Address) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '地址信息(JSON string) {"userNo":int, "homeTown":"string", "domicile":"string"',
+              '地址信息(JSON string) {"userId":int, "homeTown":"string", "domicile":"string"',
               '"openId(optional)":"string"}'
             ]
           }

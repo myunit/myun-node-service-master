@@ -395,7 +395,7 @@ exports.modifyIdentityAuditXML = function (obj) {
   audit.UserName = obj.name;
 
   var xmlObj = [{
-    AddCustomerIdentityForApp: [
+    AddCustomerIdentityAuditForApp: [
       {
         _attr: {
           xmlns: 'http://tempuri.org/'

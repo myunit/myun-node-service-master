@@ -90,7 +90,11 @@ CustomerIFS.prototype.getCaptcha = function (phone, interval, callback) {
   var Customer = this.DS.models.Customer;
   var xml = CustomerObj.getCaptchaXML(phone, interval);
   Customer.SendSmsCaptchaForApp(xml, function (err, response) {
-    callback(err, JSON.parse(response.SendSmsCaptchaForAppResult));
+    try {
+      callback(err, JSON.parse(response.SendSmsCaptchaForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
   });
 };
 
@@ -98,7 +102,11 @@ CustomerIFS.prototype.loginByWeiXin = function (openId, callback) {
   var Customer = this.DS.models.Customer;
   var xml = CustomerObj.loginByWeiXinXML(openId);
   Customer.LoginByWeixinOpenID(xml, function (err, response) {
-    callback(err, JSON.parse(response.LoginByWeixinOpenIDResult));
+    try {
+      callback(err, JSON.parse(response.LoginByWeixinOpenIDResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
   });
 };
 
@@ -106,7 +114,11 @@ CustomerIFS.prototype.registerByWeiXin = function (openId, callback) {
   var Customer = this.DS.models.Customer;
   var xml = CustomerObj.registerByWeiXinXML(openId);
   Customer.RegisterByWechatForApp(xml, function (err, response) {
-    callback(err, JSON.parse(response.RegisterByWechatForAppResult));
+    try {
+      callback(err, JSON.parse(response.RegisterByWechatForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
   });
 };
 
@@ -115,7 +127,11 @@ CustomerIFS.prototype.AddIdentityAudit = function (obj, callback) {
   var xml = CustomerObj.addIdentityAuditXML(obj);
   console.log('xml: ' + xml);
   Customer.AddCustomerIdentityAuditForApp(xml, function (err, response) {
-    callback(err, JSON.parse(response.AddCustomerIdentityAuditForAppResult));
+    try {
+      callback(err, JSON.parse(response.AddCustomerIdentityAuditForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
   });
 };
 
@@ -123,7 +139,11 @@ CustomerIFS.prototype.ModifyIdentityAudit = function (obj, callback) {
   var Customer = this.DS.models.Customer;
   var xml = CustomerObj.modifyIdentityAuditXML(obj);
   Customer.AddCustomerIdentityAuditForApp(xml, function (err, response) {
-    callback(err, JSON.parse(response.AddCustomerIdentityAuditForAppResult));
+    try {
+      callback(err, JSON.parse(response.AddCustomerIdentityAuditForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
   });
 };
 

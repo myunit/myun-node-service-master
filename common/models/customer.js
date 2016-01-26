@@ -55,7 +55,7 @@ module.exports = function (Customer) {
     //获取验证码
     Customer.getCaptcha = function (phone, cb) {
       if (!phone) {
-        cb(null, {status: 0, msg: '操作异常'});
+        cb(null, {status: 0, msg: '参数错误'});
         return;
       }
 
@@ -66,7 +66,7 @@ module.exports = function (Customer) {
           return;
         }
 
-        if (res.GetCaptchaResult.HasError === 'true') {
+        if (!res.IsSuccess) {
           cb(null, {status: 0, msg: '发送失败'});
         } else {
           cb(null, {status: 1, msg: '发送成功'});
@@ -77,7 +77,7 @@ module.exports = function (Customer) {
     Customer.remoteMethod(
       'getCaptcha',
       {
-        description: ['获取验证码.返回结果-status:操作结果 0 成功 -1 失败, verifyCode:验证码'],
+        description: ['获取验证码.返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
         accepts: [
           {arg: 'phone', type: 'string', required: true, http: {source: 'query'}, description: '手机号'}
         ],

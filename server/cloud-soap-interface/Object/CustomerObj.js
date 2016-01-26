@@ -281,14 +281,19 @@ exports.setDefaultReceiveAddressXML = function (obj) {
 exports.getCaptchaXML = function (phone) {
 
   var xmlObj = [{
-    GetCaptcha: [
+    SendSmsCaptchaForApp: [
       {
         _attr: {
           xmlns: 'http://tempuri.org/'
         }
       },
       {
-        CellPhoneNo: phone
+        Password: '123',
+        PszMobis: phone,
+        PszMsg: '尊敬的用户，您申请的实名认证审核验证码是：{0},。验证码很重要，如非本人操作，请联系客服。【乡货圈】',
+        SMSType: 4,
+        UserId: '496',
+        iMobiCount: 1
       }
     ]
   }];

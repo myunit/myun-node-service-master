@@ -409,3 +409,20 @@ exports.modifyIdentityAuditXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.getIdentityAuditXML = function (uId) {
+  var xmlObj = [{
+    GetCustomerIdentityAudit: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        uId: uId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

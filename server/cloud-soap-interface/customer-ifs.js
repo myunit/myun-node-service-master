@@ -4,9 +4,7 @@
  * @description 针对云端的customer对象的访问接口，支持soap协议
  */
 var util = require('util');
-var async = require('async');
 var CustomerObj = require('./Object/CustomerObj');
-var fs = require('fs');
 
 var CustomerIFS = function (app) {
   this.DS = app.datasources.CustomerSoap;
@@ -145,5 +143,18 @@ CustomerIFS.prototype.ModifyIdentityAudit = function (obj, callback) {
     }
   });
 };
+
+CustomerIFS.prototype.getIdentityAudit = function (uId, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.getIdentityAuditXML(uId);
+  Customer.GetCustomerIdentityAudit(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.GetCustomerIdentityAuditResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 
 exports = module.exports = CustomerIFS;

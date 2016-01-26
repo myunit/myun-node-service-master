@@ -25,6 +25,12 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "ModifyIdentityAudit"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "GetIdentityAudit"
     }
   ],
   "methods": {}

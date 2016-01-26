@@ -1,5 +1,4 @@
 var loopback = require('loopback');
-var async = require('async');
 var CustomerIFS = require('../../server/cloud-soap-interface/customer-ifs');
 
 module.exports = function(IdentityAudit) {
@@ -7,7 +6,7 @@ module.exports = function(IdentityAudit) {
     if (err) {
       throw err;
     }
-    var app_self = app;
+
     var customerIFS = new CustomerIFS(app);
 
     //新增用户审核认证
@@ -19,7 +18,7 @@ module.exports = function(IdentityAudit) {
 
       customerIFS.AddIdentityAudit(data, function (err, res) {
         if (err) {
-          console.log('register err: ' + err);
+          console.log('AddIdentityAudit err: ' + err);
           cb(null, {status:0, msg: '操作异常'});
           return;
         }
@@ -61,7 +60,7 @@ module.exports = function(IdentityAudit) {
 
       customerIFS.ModifyIdentityAudit(data, function (err, res) {
         if (err) {
-          console.log('register err: ' + err);
+          console.log('ModifyIdentityAudit err: ' + err);
           cb(null, {status:0, msg: '操作异常'});
           return;
         }
@@ -93,5 +92,38 @@ module.exports = function(IdentityAudit) {
       }
     );
 
+    //获取用户认证信息
+    IdentityAudit.GetIdentityAudit = function (userNo, cb) {
+      if (!userNo) {
+        cb(null, {status:0, msg: '参数错误'});
+        return;
+      }
+
+      customerIFS.getIdentityAudit(userNo, function (err, res) {
+        if (err) {
+          console.log('GetIdentityAudit err: ' + err);
+          cb(null, {status:0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status:0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, data:res.Data, msg: ''});
+        }
+      });
+    };
+
+    IdentityAudit.remoteMethod(
+      'GetIdentityAudit',
+      {
+        description: ['获取用户认证信息.返回结果-status:操作结果 0 失败 1 成功, data:用户认证信息, msg:附带信息'],
+        accepts: [
+          {arg: 'userNo', type: 'number', required: true, http: {source: 'query'}, description: '用户标识符'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-identity-audit', verb: 'get'}
+      }
+    );
   });
 };

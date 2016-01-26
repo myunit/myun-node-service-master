@@ -340,7 +340,7 @@ module.exports = function (Address) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '地址信息(JSON string) {"userNo":"number", "homeTown":"string", "domicile":"string"',
+              '地址信息(JSON string) {"userNo":int, "homeTown":"string", "domicile":"string"',
               '"openId(optional)":"string"}'
             ]
           }

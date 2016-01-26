@@ -8,4 +8,9 @@ module.exports = function (app) {
     console.log('Customer interface is connected');
     app.datasources.CustomerSoap.createModel('Customer', {});
   });
+
+  app.datasources.ProductSoap.once('connected', function () {
+    console.log('Product interface is connected');
+    app.datasources.ProductSoap.createModel('Product', {});
+  });
 };

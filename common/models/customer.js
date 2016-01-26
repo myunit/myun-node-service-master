@@ -359,7 +359,7 @@ module.exports = function (Customer) {
         if (!res.IsSuccess) {
           cb(null, {status:0, msg: res.ErrorDescription});
         } else {
-          cb(null, {status: 1, auditNo: res.SysNo, msg: ''});
+          cb(null, {status: 1, msg: '认证资料已提交,请等待审核！'});
         }
       });
     };
@@ -401,7 +401,7 @@ module.exports = function (Customer) {
         if (!res.IsSuccess) {
           cb(null, {status:0, msg: res.ErrorDescription});
         } else {
-          cb(null, {status: 1, auditNo: res.SysNo, msg: ''});
+          cb(null, {status: 1, msg: '认证资料已提交,请等待审核！'});
         }
       });
     };

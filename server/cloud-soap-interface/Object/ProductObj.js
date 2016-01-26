@@ -38,3 +38,18 @@ exports.getProductDetailXML = function (productNo) {
 
   return xml(xmlObj, true);
 };
+
+exports.getProductCategoryXML = function () {
+  var xmlObj = [{
+    GetCategoryTableSimple: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+

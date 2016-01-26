@@ -27,6 +27,13 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "getProductDetail"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "getProductCategory"
     }
   ],
   "methods": {}

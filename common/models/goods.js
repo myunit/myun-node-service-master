@@ -82,5 +82,35 @@ module.exports = function (Goods) {
         http: {path: '/get-product-detail', verb: 'get'}
       }
     );
+
+    //获取商品分类
+    Goods.getProductCategory = function (cb) {
+      productIFS.getProductCategory(function (err, res) {
+        if (err) {
+          console.log('getProductCategory err: ' + err);
+          cb(null, {status:0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status:0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, data: res.Datas, msg: ''});
+        }
+      });
+    };
+
+    Goods.remoteMethod(
+      'getProductCategory',
+      {
+        description: [
+          '获取商品详情.返回结果-status:操作结果 0 失败 1 成功, data:商品信息, msg:附带信息'
+        ],
+        accepts: [],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-product-category', verb: 'get'}
+      }
+    );
+
   });
 };

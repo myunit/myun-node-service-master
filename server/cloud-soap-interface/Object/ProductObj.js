@@ -70,4 +70,21 @@ exports.deleteProductImageXML = function (obj) {
   return xml(xmlObj, true);
 };
 
+exports.setProductOffShelvesXML = function (obj) {
+  var xmlObj = [{
+    SetProductOffShelvesForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(obj)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
 

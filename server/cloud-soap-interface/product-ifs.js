@@ -60,4 +60,16 @@ ProductIFS.prototype.deleteProductImage = function (obj, callback) {
   });
 };
 
+ProductIFS.prototype.setProductOffShelves = function (obj, callback) {
+  var Product = this.DS.models.Product;
+  var xml = ProductObj.setProductOffShelvesXML(obj);
+  Product.SetProductOffShelvesForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.SetProductOffShelvesForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = ProductIFS;

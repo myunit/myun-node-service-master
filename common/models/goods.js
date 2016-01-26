@@ -112,18 +112,16 @@ module.exports = function (Goods) {
       }
     );
 
-    //删除商品
+    //删除商品图片
     Goods.deleteProductImg = function (data, cb) {
       var imgObj = {};
       imgObj.Body = data.imgNo;
       imgObj.UserId = data.userId;
       imgObj.UserName = data.userName;
 
-      console.log('img: ' + JSON.stringify(imgObj));
-
       productIFS.deleteProductImage(imgObj, function (err, res) {
         if (err) {
-          console.log('getProductCategory err: ' + err);
+          console.log('deleteProductImage err: ' + err);
           cb(null, {status:0, msg: '操作异常'});
           return;
         }
@@ -140,18 +138,59 @@ module.exports = function (Goods) {
       'deleteProductImg',
       {
         description: [
-          '删除商品.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
+          '删除商品图片.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
         ],
         accepts: [
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '删除商品信息(JSON string) {"imgNo":int array, "userId":int, "userName":"string"}'
+              '删除商品图片信息(JSON string) {"imgNo":int array, "userId":int, "userName":"string"}'
             ]
           }
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/del-product-img', verb: 'delete'}
+      }
+    );
+
+    //设置商品下架
+    Goods.setProductOffShelves = function (data, cb) {
+      var product = {};
+      product.Body = data.productId;
+      product.UserId = data.userId;
+      product.UserName = data.userName;
+
+      productIFS.setProductOffShelves(product, function (err, res) {
+        if (err) {
+          console.log('setProductOffShelves err: ' + err);
+          cb(null, {status:0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status:0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: '下架成功'});
+        }
+      });
+    };
+
+    Goods.remoteMethod(
+      'setProductOffShelves',
+      {
+        description: [
+          '设置商品下架.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '设置商品下架信息(JSON string) {"productId":int, "userId":int, "userName":"string"}'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/set-product-off-shelves', verb: 'post'}
       }
     );
 

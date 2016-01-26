@@ -156,5 +156,16 @@ CustomerIFS.prototype.getIdentityAudit = function (uId, callback) {
   });
 };
 
+CustomerIFS.prototype.setCurrentAddress = function (obj, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.setCurrentAddressXML(obj);
+  Customer.SaveUserCurrentAddrForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.SaveUserCurrentAddrForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
 
 exports = module.exports = CustomerIFS;

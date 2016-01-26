@@ -34,7 +34,7 @@ module.exports = function(IdentityAudit) {
     IdentityAudit.remoteMethod(
       'AddIdentityAudit',
       {
-        description: ['新增用户审核认证.返回结果-status:操作结果 0 失败 1 成功, data:用户信息, msg:附带信息'],
+        description: ['新增用户审核认证(access token).返回结果-status:操作结果 0 失败 1 成功, data:用户信息, msg:附带信息'],
         accepts: [
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
@@ -76,7 +76,7 @@ module.exports = function(IdentityAudit) {
     IdentityAudit.remoteMethod(
       'ModifyIdentityAudit',
       {
-        description: ['新增用户审核认证.返回结果-status:操作结果 0 失败 1 成功, data:用户信息, msg:附带信息'],
+        description: ['新增用户审核认证(access token).返回结果-status:操作结果 0 失败 1 成功, data:用户信息, msg:附带信息'],
         accepts: [
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
@@ -117,7 +117,7 @@ module.exports = function(IdentityAudit) {
     IdentityAudit.remoteMethod(
       'GetIdentityAudit',
       {
-        description: ['获取用户认证信息.返回结果-status:操作结果 0 失败 1 成功, data:用户认证信息, msg:附带信息'],
+        description: ['获取用户认证信息(access token).返回结果-status:操作结果 0 失败 1 成功, data:用户认证信息, msg:附带信息'],
         accepts: [
           {arg: 'userNo', type: 'number', required: true, http: {source: 'query'}, description: '用户标识符'}
         ],

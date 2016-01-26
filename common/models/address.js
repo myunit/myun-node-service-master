@@ -6,7 +6,7 @@ module.exports = function (Address) {
     if (err) {
       throw err;
     }
-    var app_self = app;
+
     var customerIFS = new CustomerIFS(app);
 
     //获取行政区
@@ -54,7 +54,7 @@ module.exports = function (Address) {
 
             address.SysNo = addresses[i].SysNo;
             address.Address = addresses[i].Address;
-            address.IsDefault = addresses[i].IsDefault === 'true'? true:false;
+            address.IsDefault = addresses[i].IsDefault === 'true';
             address.PCD = addresses[i].PCDCode.split('-');
             address.PCDDes = addresses[i].PCDDescription.split('-');
             address.ReceiverCellPhone = addresses[i].ReceiverCellPhone;
@@ -106,7 +106,7 @@ module.exports = function (Address) {
           var address = {};
           address.SysNo = body.SysNo;
           address.Address = body.Address;
-          address.IsDefault = body.IsDefault === 'true'? true:false;
+          address.IsDefault = body.IsDefault === 'true';
           address.PCD = body.PCDCode.split('-');
           address.PCDDes = body.PCDDescription.split('-');
           address.ReceiverCellPhone = body.ReceiverCellPhone;
@@ -153,9 +153,9 @@ module.exports = function (Address) {
           var address = {};
           address.SysNo = body.SysNo;
           address.Address = body.Address;
-          address.IsDefault = body.IsDefault === 'true'? true:false;
-          address.PCD = body.PCDCode.split('-');;
-          address.PCDDes = body.PCDDescription.split('-');;
+          address.IsDefault = body.IsDefault === 'true';
+          address.PCD = body.PCDCode.split('-');
+          address.PCDDes = body.PCDDescription.split('-');
           address.ReceiverCellPhone = body.ReceiverCellPhone;
           address.ReceiverName = body.ReceiverName;
           cb(null, {status: 1, data: address, msg: ''});
@@ -206,9 +206,9 @@ module.exports = function (Address) {
           var address = {};
           address.SysNo = body.SysNo;
           address.Address = body.Address;
-          address.IsDefault = body.IsDefault === 'true'? true:false;
-          address.PCD = body.PCDCode.split('-');;
-          address.PCDDes = body.PCDDescription.split('-');;
+          address.IsDefault = body.IsDefault === 'true';
+          address.PCD = body.PCDCode.split('-');
+          address.PCDDes = body.PCDDescription.split('-');
           address.ReceiverCellPhone = body.ReceiverCellPhone;
           address.ReceiverName = body.ReceiverName;
           cb(null, {status: 1, data: address, msg: ''});
@@ -307,6 +307,46 @@ module.exports = function (Address) {
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/set-default-receive-address', verb: 'post'}
+      }
+    );
+
+    //保存用户家乡和现居住地
+    Address.setCurrentAddress = function (data, cb) {
+      if (!data.userNo || !data.homeTown || !data.domicile) {
+        cb(null, {status: 0, msg: '操作异常'});
+        return;
+      }
+
+      customerIFS.setCurrentAddress(data, function (err, res) {
+        if (err) {
+          console.log('setCurrentAddress err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: '保存成功'});
+        }
+      });
+    };
+
+    Address.remoteMethod(
+      'setCurrentAddress',
+      {
+        description: ['保存用户家乡和现居住地(access token).返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '地址信息(JSON string) {"userNo":"number", "homeTown":"string", "domicile":"string"',
+              '"openId(optional)":"string"}'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/set-current-address', verb: 'post'}
       }
     );
   });

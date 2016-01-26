@@ -426,3 +426,26 @@ exports.getIdentityAuditXML = function (uId) {
 
   return xml(xmlObj, true);
 };
+
+exports.setCurrentAddressXML = function (obj) {
+  var address = {};
+  address.ContactAddress = obj.homeTown;
+  address.PCDDescription = obj.domicile;
+  address.CustomerNo = obj.userNo;
+  address.WeixinOpenID = obj.openId;
+
+  var xmlObj = [{
+    SaveUserCurrentAddrForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(address)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

@@ -31,9 +31,9 @@
     ]
   },
   "CustomerSoap": {
+    "url": "http://10.10.5.130:10008/PC_API/CustomerService.svc",
     "name": "CustomerSoap",
     "connector": "soap",
-    "wsdl": "http://10.10.5.130:10008/PC_API/CustomerService.svc?WSDL",
-    "url": "http://10.10.5.130:10008/PC_API/CustomerService.svc"
+    "wsdl": "http://10.10.5.130:10008/PC_API/CustomerService.svc?WSDL"
   }
 }

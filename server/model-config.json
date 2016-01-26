@@ -56,5 +56,9 @@
   "Book": {
     "dataSource": null,
     "public": true
+  },
+  "IdentityAudit": {
+    "dataSource": null,
+    "public": true
   }
 }

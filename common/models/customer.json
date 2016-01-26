@@ -56,18 +56,6 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "registerByWeiXin"
-    },
-    {
-      "principalType": "ROLE",
-      "principalId": "$authenticated",
-      "permission": "ALLOW",
-      "property": "AddIdentityAudit"
-    },
-    {
-      "principalType": "ROLE",
-      "principalId": "$authenticated",
-      "permission": "ALLOW",
-      "property": "ModifyIdentityAudit"
     }
   ],
   "methods": {}

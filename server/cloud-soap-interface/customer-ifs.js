@@ -125,7 +125,6 @@ CustomerIFS.prototype.registerByWeiXin = function (openId, callback) {
 CustomerIFS.prototype.AddIdentityAudit = function (obj, callback) {
   var Customer = this.DS.models.Customer;
   var xml = CustomerObj.addIdentityAuditXML(obj);
-  console.log('xml: ' + xml);
   Customer.AddCustomerIdentityAuditForApp(xml, function (err, response) {
     try {
       callback(err, JSON.parse(response.AddCustomerIdentityAuditForAppResult));

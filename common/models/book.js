@@ -23,7 +23,7 @@ module.exports = function (Book) {
         if (!res.IsSuccess) {
           cb(null, {status: 0, msg: res.ErrorDescription});
         } else {
-          cb(null, {status: 1, data: res, msg: '操作成功'});
+          cb(null, {status: 1, data: res, msg: ''});
         }
       });
     };
@@ -47,7 +47,7 @@ module.exports = function (Book) {
     Book.getOrderList = function (userId, page, pageSize, ownerId, orderType, cb) {
       orderIFS.getOrderList(userId, page, pageSize, ownerId, orderType, function (err, res) {
         if (err) {
-          console.log('getOrderDetail err: ' + err);
+          console.log('getOrderList err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
           return;
         }
@@ -55,7 +55,7 @@ module.exports = function (Book) {
         if (!res.IsSuccess) {
           cb(null, {status: 0, msg: res.ErrorDescription});
         } else {
-          cb(null, {status: 1, data: res, msg: '操作成功'});
+          cb(null, {status: 1, count: res.Counts, data: res.Datas, msg: ''});
         }
       });
     };
@@ -64,7 +64,7 @@ module.exports = function (Book) {
       'getOrderList',
       {
         description: [
-          '获取订单详情(access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
+          '查询订单(access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
         ],
         accepts: [
           {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户编号'},
@@ -79,5 +79,38 @@ module.exports = function (Book) {
       }
     );
 
+    //查询包团订单
+    Book.getPackageOrderList = function (userId, page, pageSize, cb) {
+      orderIFS.getPackageOrderList(userId, page, pageSize, function (err, res) {
+        if (err) {
+          console.log('getPackageOrderList err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, count: res.Counts, data: res.Datas, msg: ''});
+        }
+      });
+    };
+
+    Book.remoteMethod(
+      'getPackageOrderList',
+      {
+        description: [
+          '查询包团订单(access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
+        ],
+        accepts: [
+          {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户编号'},
+          {arg: 'page', type: 'number', required: true, http: {source: 'query'}, description: '页码'},
+          {arg: 'pageSize', type: 'number', required: true, http: {source: 'query'}, description: '每页记录数'}
+
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-package-order-list', verb: 'get'}
+      }
+    );
   });
 };

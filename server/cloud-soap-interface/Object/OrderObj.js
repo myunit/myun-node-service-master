@@ -48,3 +48,26 @@ exports.getOrderListXML = function (userId, page, pageSize, ownerId, orderType) 
 
   return xml(xmlObj, true);
 };
+
+exports.getPackageOrderListXML = function (userId, page, pageSize) {
+  var obj = {};
+  obj.Page = page;
+  obj.PageSize = pageSize;
+  obj.UID = userId;
+
+  var xmlObj = [{
+    GetAllProductPackageForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(obj)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+

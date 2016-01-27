@@ -36,4 +36,16 @@ OrderIFS.prototype.getOrderList = function (userId, page, pageSize, ownerId, ord
   });
 };
 
+OrderIFS.prototype.getPackageOrderList = function (userId, page, pageSize, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.getPackageOrderListXML(userId, page, pageSize);
+  Order.GetAllProductPackageForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.GetAllProductPackageForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = OrderIFS;

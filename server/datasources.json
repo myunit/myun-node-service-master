@@ -41,5 +41,11 @@
     "name": "ProductSoap",
     "connector": "soap",
     "wsdl": "http://10.10.5.130:10008/PC_API/ItemService.svc?WSDL"
+  },
+  "OrderSoap": {
+    "url": "http://10.10.5.130:10008/PC_API/OrderService.svc",
+    "name": "OrderSoap",
+    "connector": "soap",
+    "wsdl": "http://10.10.5.130:10008/PC_API/OrderService.svc?WSDL"
   }
 }

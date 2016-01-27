@@ -154,4 +154,42 @@ exports.addProductXML = function (obj) {
   return xml(xmlObj, true);
 };
 
+exports.modifyProductXML = function (obj) {
+  var product = {};
+  product.CategoryName = obj.categoryName;
+  product.CategorySysno = obj.categoryId;
+  product.CustomerNo = obj.userId;
+  product.NickName = obj.userName;
+  product.GroupPrice = obj.groupPrice;
+  product.GroupReqCounts = obj.groupCount;
+  product.Memo = obj.memo;
+  product.OriginPCDCode = obj.originPCD;
+  product.OriginPlace = obj.originPlace;
+  product.ProductGroupCode = obj.styleCode;
+  product.ProductName = obj.productName;
+  product.SignlePrice = obj.singlePrice;
+  product.Stock = obj.stock;
+  product.ProductImgs = obj.productImgs;
+  product.ProductSysno = obj.productId;
+  product.SkuSysno = obj.skuId;
+  product.BarCode = obj.barCode;
+  product.ProductSkuSupplyPriceData = obj.skuData;
+
+  console.log('obj: ' + JSON.stringify(product));
+  var xmlObj = [{
+    SetProductForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(product)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
 

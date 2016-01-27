@@ -137,7 +137,7 @@ exports.addProductXML = function (obj) {
   product.SignlePrice = obj.singlePrice;
   product.Stock = obj.stock;
   product.ProductImgs = obj.productImgs;
-  console.log('obj: ' + JSON.stringify(product));
+
   var xmlObj = [{
     SetProductForApp: [
       {
@@ -175,7 +175,6 @@ exports.modifyProductXML = function (obj) {
   product.BarCode = obj.barCode;
   product.ProductSkuSupplyPriceData = obj.skuData;
 
-  console.log('obj: ' + JSON.stringify(product));
   var xmlObj = [{
     SetProductForApp: [
       {

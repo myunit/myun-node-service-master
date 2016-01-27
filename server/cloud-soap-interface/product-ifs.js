@@ -96,4 +96,16 @@ ProductIFS.prototype.setProductStopSale = function (obj, callback) {
   });
 };
 
+ProductIFS.prototype.addProduct = function (obj, callback) {
+  var Product = this.DS.models.Product;
+  var xml = ProductObj.addProductXML(obj);
+  Product.SetProductForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.SetProductForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = ProductIFS;

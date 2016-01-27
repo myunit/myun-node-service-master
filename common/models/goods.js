@@ -21,12 +21,12 @@ module.exports = function (Goods) {
       productIFS.getAllProduct(product, function (err, res) {
         if (err) {
           console.log('getAllProduct err: ' + err);
-          cb(null, {status:0, msg: '操作异常'});
+          cb(null, {status: 0, msg: '操作异常'});
           return;
         }
 
         if (!res.IsSuccess) {
-          cb(null, {status:0, msg: res.ErrorDescription});
+          cb(null, {status: 0, msg: res.ErrorDescription});
         } else {
           cb(null, {status: 1, count: res.Counts, data: res.Datas, msg: ''});
         }
@@ -54,15 +54,15 @@ module.exports = function (Goods) {
 
     //获取商品详情
     Goods.getProductDetail = function (productNo, cb) {
-        productIFS.getProductDetail(productNo, function (err, res) {
+      productIFS.getProductDetail(productNo, function (err, res) {
         if (err) {
           console.log('getProductDetail err: ' + err);
-          cb(null, {status:0, msg: '操作异常'});
+          cb(null, {status: 0, msg: '操作异常'});
           return;
         }
 
         if (!res.IsSuccess) {
-          cb(null, {status:0, msg: res.ErrorDescription});
+          cb(null, {status: 0, msg: res.ErrorDescription});
         } else {
           cb(null, {status: 1, data: res.Datas, msg: ''});
         }
@@ -88,12 +88,12 @@ module.exports = function (Goods) {
       productIFS.getProductCategory(function (err, res) {
         if (err) {
           console.log('getProductCategory err: ' + err);
-          cb(null, {status:0, msg: '操作异常'});
+          cb(null, {status: 0, msg: '操作异常'});
           return;
         }
 
         if (!res.IsSuccess) {
-          cb(null, {status:0, msg: res.ErrorDescription});
+          cb(null, {status: 0, msg: res.ErrorDescription});
         } else {
           cb(null, {status: 1, data: res.Datas, msg: ''});
         }
@@ -122,12 +122,12 @@ module.exports = function (Goods) {
       productIFS.deleteProductImage(imgObj, function (err, res) {
         if (err) {
           console.log('deleteProductImage err: ' + err);
-          cb(null, {status:0, msg: '操作异常'});
+          cb(null, {status: 0, msg: '操作异常'});
           return;
         }
 
         if (!res.IsSuccess) {
-          cb(null, {status:0, msg: res.ErrorDescription});
+          cb(null, {status: 0, msg: res.ErrorDescription});
         } else {
           cb(null, {status: 1, msg: '删除成功'});
         }
@@ -153,7 +153,7 @@ module.exports = function (Goods) {
       }
     );
 
-    //设置商品下架
+    //设置商品状态
     Goods.setProductStatus = function (data, cb) {
       var product = {};
       product.Body = data.productId;
@@ -163,14 +163,14 @@ module.exports = function (Goods) {
       var fn = function (err, res) {
         if (err) {
           console.log('setProductStatus err: ' + err);
-          cb(null, {status:0, msg: '操作异常'});
+          cb(null, {status: 0, msg: '操作异常'});
           return;
         }
 
         if (!res.IsSuccess) {
-          cb(null, {status:0, msg: res.ErrorDescription});
+          cb(null, {status: 0, msg: res.ErrorDescription});
         } else {
-          cb(null, {status: 1, msg: '下架成功'});
+          cb(null, {status: 1, msg: '操作成功'});
         }
       };
 
@@ -181,7 +181,7 @@ module.exports = function (Goods) {
       } else if (data.status === 3) {
         productIFS.setProductStopSale(product, fn);
       } else {
-        cb(null, {status:0, msg: '无效操作'});
+        cb(null, {status: 0, msg: '无效操作'});
       }
     };
 
@@ -205,5 +205,46 @@ module.exports = function (Goods) {
       }
     );
 
+    //增加商品
+    Goods.AddProduct = function (data, cb) {
+      productIFS.addProduct(data, function (err, res) {
+        if (err) {
+          console.log('AddProduct err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, productId: res.SysNo, msg: '操作成功'});
+        }
+      });
+    };
+
+    Goods.remoteMethod(
+      'AddProduct',
+      {
+        description: [
+          '增加商品.返回结果-status:操作结果 0 失败 1 成功, data:商品信息, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '新增商品信息(JSON string) {"userId":int, "userName":"string", "productName":"string", "styleCode":int, ',
+              '"originPCD":"string", "originPlace":"string", "memo":"string", "categoryName":"string", "categoryId":int, ',
+              '"groupCount":int, "singlePrice":float, "groupPrice":float, "stock":int, ',
+              '"productImgs":[{"SysNo":0, "ImgValue":"string"}]}',
+              'userId用户编号, userName用户昵称, productName商品名, styleCode款号, originPCD产地pcd码, originPlace产地名, ',
+              'memo产品简介, categoryName分类名, categoryId分类编号, groupCount包团数量, singlePrice单价, groupPrice包团价,',
+              'stock库存(正数入库, 负数出库), productImgs产品图片数组(SysNo置0, ImgValue图片url)'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/add-product', verb: 'post'}
+      }
+    );
   });
 };

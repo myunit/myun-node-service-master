@@ -149,5 +149,37 @@ module.exports = function (Book) {
       }
     );
 
+    //根据包团子订单id获取订单
+    Book.getOrderByPackageItemId = function (orderId, cb) {
+      orderIFS.getOrderByPackageItemId(orderId, function (err, res) {
+        if (err) {
+          console.log('getOrderByPackageItemId err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, data: res, msg: ''});
+        }
+      });
+    };
+
+    Book.remoteMethod(
+      'getOrderByPackageItemId',
+      {
+        description: [
+          '根据包团订单id获取包团(access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
+        ],
+        accepts: [
+          {arg: 'orderId', type: 'number', required: true, http: {source: 'query'}, description: '包团子订单编号'}
+
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-order-by-packageItemId', verb: 'get'}
+      }
+    );
+
   });
 };

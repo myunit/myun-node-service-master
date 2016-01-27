@@ -87,3 +87,20 @@ exports.getPackageByOrderIdXML = function (orderId) {
 
   return xml(xmlObj, true);
 };
+
+exports.getOrderByPackageItemIdXML = function (orderId) {
+  var xmlObj = [{
+    GetOrderByProductPackageItemSysNo: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        packageItemId: orderId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

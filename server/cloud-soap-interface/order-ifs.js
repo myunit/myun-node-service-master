@@ -60,4 +60,16 @@ OrderIFS.prototype.getPackageByOrderId = function (orderId, callback) {
   });
 };
 
+OrderIFS.prototype.getOrderByPackageItemId = function (orderId, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.getOrderByPackageItemIdXML(orderId);
+  Order.GetOrderByProductPackageItemSysNo(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.GetOrderByProductPackageItemSysNoResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = OrderIFS;

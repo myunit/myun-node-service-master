@@ -41,6 +41,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "getPackageByOrderId"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "getOrderByPackageItemId"
     }
   ],
   "methods": {}

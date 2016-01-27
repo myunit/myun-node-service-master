@@ -154,15 +154,15 @@ module.exports = function (Goods) {
     );
 
     //设置商品下架
-    Goods.setProductOffShelves = function (data, cb) {
+    Goods.setProductStatus = function (data, cb) {
       var product = {};
       product.Body = data.productId;
       product.UserId = data.userId;
       product.UserName = data.userName;
 
-      productIFS.setProductOffShelves(product, function (err, res) {
+      var fn = function (err, res) {
         if (err) {
-          console.log('setProductOffShelves err: ' + err);
+          console.log('setProductStatus err: ' + err);
           cb(null, {status:0, msg: '操作异常'});
           return;
         }
@@ -172,11 +172,21 @@ module.exports = function (Goods) {
         } else {
           cb(null, {status: 1, msg: '下架成功'});
         }
-      });
+      };
+
+      if (data.status === 1) {
+        productIFS.setProductOnSale(product, fn);
+      } else if (data.status === 2) {
+        productIFS.setProductOffShelves(product, fn);
+      } else if (data.status === 3) {
+        productIFS.setProductStopSale(product, fn);
+      } else {
+        cb(null, {status:0, msg: '无效操作'});
+      }
     };
 
     Goods.remoteMethod(
-      'setProductOffShelves',
+      'setProductStatus',
       {
         description: [
           '设置商品下架.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
@@ -185,12 +195,13 @@ module.exports = function (Goods) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '设置商品下架信息(JSON string) {"productId":int, "userId":int, "userName":"string"}'
+              '设置商品下架信息(JSON string) {"productId":int, "userId":int, "userName":"string", "status":int} ',
+              'status:商品状态 1-上架 2-下架 3-停售'
             ]
           }
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/set-product-off-shelves', verb: 'post'}
+        http: {path: '/set-product-status', verb: 'post'}
       }
     );
 

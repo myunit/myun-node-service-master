@@ -72,4 +72,28 @@ ProductIFS.prototype.setProductOffShelves = function (obj, callback) {
   });
 };
 
+ProductIFS.prototype.setProductOnSale = function (obj, callback) {
+  var Product = this.DS.models.Product;
+  var xml = ProductObj.setProductOnSaleXML(obj);
+  Product.SetProductOnSaleForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.SetProductOnSaleForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
+ProductIFS.prototype.setProductStopSale = function (obj, callback) {
+  var Product = this.DS.models.Product;
+  var xml = ProductObj.setProductStopSaleXML(obj);
+  Product.SetProductStopSaleForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.SetProductStopSaleForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = ProductIFS;

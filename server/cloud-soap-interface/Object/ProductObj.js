@@ -87,4 +87,38 @@ exports.setProductOffShelvesXML = function (obj) {
   return xml(xmlObj, true);
 };
 
+exports.setProductOnSaleXML = function (obj) {
+  var xmlObj = [{
+    SetProductOnSaleForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(obj)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+exports.setProductStopSaleXML = function (obj) {
+  var xmlObj = [{
+    SetProductStopSaleForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(obj)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
 

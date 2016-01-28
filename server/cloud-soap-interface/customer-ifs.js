@@ -36,54 +36,6 @@ CustomerIFS.prototype.modifyPW = function (obj, callback) {
   });
 };
 
-CustomerIFS.prototype.getReceiveAddresses = function (customerNo, callback) {
-  var Customer = this.DS.models.Customer;
-  var xml = CustomerObj.getAllReceiveAddressesXML(customerNo);
-  Customer.GetAllReceiveAddresses(xml, function (err, response) {
-    callback(err, response);
-  });
-};
-
-CustomerIFS.prototype.getDefaultReceiveAddress = function (customerNo, callback) {
-  var Customer = this.DS.models.Customer;
-  var xml = CustomerObj.getDefaultReceiveAddressXML(customerNo);
-  Customer.GetDefaultReceiveAddresses(xml, function (err, response) {
-    callback(err, response);
-  });
-};
-
-CustomerIFS.prototype.addReceiveAddress = function (obj, callback) {
-  var Customer = this.DS.models.Customer;
-  var xml = CustomerObj.addReceiveAddressXML(obj);
-  Customer.AddNewReceiveAddress(xml, function (err, response) {
-    callback(err, response);
-  });
-};
-
-CustomerIFS.prototype.modifyReceiveAddress = function (obj, callback) {
-  var Customer = this.DS.models.Customer;
-  var xml = CustomerObj.modifyReceiveAddressXML(obj);
-  Customer.ModifyReceiveAddress(xml, function (err, response) {
-    callback(err, response);
-  });
-};
-
-CustomerIFS.prototype.removeReceiveAddress = function (sysNo, callback) {
-  var Customer = this.DS.models.Customer;
-  var xml = CustomerObj.removeReceiveAddressXML(sysNo);
-  Customer.RemoveReceiveAddress(xml, function (err, response) {
-    callback(err, response);
-  });
-};
-
-CustomerIFS.prototype.setDefaultReceiveAddress = function (obj, callback) {
-  var Customer = this.DS.models.Customer;
-  var xml = CustomerObj.setDefaultReceiveAddressXML(obj);
-  Customer.SetDefaultReceiveAddresses(xml, function (err, response) {
-    callback(err, response);
-  });
-};
-
 CustomerIFS.prototype.getCaptcha = function (phone, interval, callback) {
   var Customer = this.DS.models.Customer;
   var xml = CustomerObj.getCaptchaXML(phone, interval);

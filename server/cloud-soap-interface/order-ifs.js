@@ -108,4 +108,16 @@ OrderIFS.prototype.finishPackage = function (obj, callback) {
   });
 };
 
+OrderIFS.prototype.modifyPackage = function (obj, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.modifyPackageXML(obj);
+  Order.ModifyProductPackageForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.ModifyProductPackageForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = OrderIFS;

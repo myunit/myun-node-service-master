@@ -167,3 +167,30 @@ exports.finishPackageXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.modifyPackageXML = function (obj) {
+  var packageObj = {};
+  packageObj.SharePrice = obj.sharePrice;
+  packageObj.PackageQuantity = obj.quantity;
+  packageObj.SysNo = obj.packageId;
+  packageObj.PackagePayAmount = obj.payAmount;
+  packageObj.PerCustomerBuyLimit = obj.buyLimit;
+  packageObj.RetentionQuantity = obj.retentionQuantity;
+  packageObj.ShareEndDate = obj.shareEndDate;
+  packageObj.EstimateDeliveryDate = obj.deliverDate;
+  packageObj.PackagePrice = obj.packagePrice;
+  var xmlObj = [{
+    ModifyProductPackageForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(packageObj)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

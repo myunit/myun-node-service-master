@@ -69,6 +69,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "finishPackage"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "modifyPackage"
     }
   ],
   "methods": {}

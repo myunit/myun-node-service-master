@@ -146,5 +146,37 @@ module.exports = function (Address) {
       }
     );
 
+    //获取PCD列表
+    Address.getPCDList = function (type, id, cb) {
+      receiverIFS.getPCDList(type, id, function (err, res) {
+        if (err) {
+          console.log('setDefaultReceiverAddress err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, data: res.Datas, msg: ''});
+        }
+      });
+    };
+
+    Address.remoteMethod(
+      'getPCDList',
+      {
+        description: [
+          '获取PCD列表.返回结果-status:操作结果 0 失败 1 成功, data:pcd数据, msg:附带信息'
+        ],
+        accepts: [
+          {arg: 'type', type: 'number', required: true, http: {source: 'query'}, description: '查询类型(0-省 1-市 2-区)'},
+          {arg: 'id', type: 'number', required: true, http: {source: 'query'}, description: '所查省市区编号'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-pcd-list', verb: 'get'}
+      }
+    );
+
   });
 };

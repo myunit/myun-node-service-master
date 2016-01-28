@@ -48,4 +48,16 @@ ReceiverIFS.prototype.setDefaultReceiverAddress = function (uId, addressId, call
   });
 };
 
+ReceiverIFS.prototype.getPCDList = function (type, id, callback) {
+  var Receiver = this.DS.models.Receiver;
+  var xml = ReceiverObj.getPCDListXML(type, id);
+  Receiver.QueryPCDList(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.QueryPCDListResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = ReceiverIFS;

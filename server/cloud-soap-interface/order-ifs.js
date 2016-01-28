@@ -192,4 +192,17 @@ OrderIFS.prototype.modifyOrderAddress = function (obj, callback) {
   });
 };
 
+OrderIFS.prototype.setMoneyPromotion = function (obj, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.setMoneyPromotionXML(obj);
+  Order.SetShippingPromotionForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.SetShippingPromotionForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
+
 exports = module.exports = OrderIFS;

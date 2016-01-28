@@ -329,3 +329,29 @@ exports.modifyOrderAddressXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.setMoneyPromotionXML = function (obj) {
+  var promotion = {};
+  promotion.UserId = obj.userId;
+  promotion.UserName = obj.userName;
+  promotion.Body = {};
+  promotion.Body.OrderId = obj.orderId;
+  promotion.Body.PromotionCode = 'xhq';
+  promotion.Body.PromotionDescription = obj.des;
+  promotion.Body.PromotionAmount = obj.money;
+  promotion.Body.PromotionType = 0;
+  var xmlObj = [{
+    SetShippingPromotionForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(promotion)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

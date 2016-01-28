@@ -125,6 +125,13 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "modifyOrderAddress"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "setMoneyPromotion"
     }
   ],
   "methods": {}

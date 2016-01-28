@@ -268,3 +268,23 @@ exports.wantAllPackageProductXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.cancelPickUpForUnPayXML = function (obj) {
+  var xmlObj = [{
+    CancelPickUpFor15MinituesUnPay: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        packageId: obj.packageId
+      },
+      {
+        packageItemId: obj.packageItemId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

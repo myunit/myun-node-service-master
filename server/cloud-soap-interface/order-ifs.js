@@ -156,12 +156,12 @@ OrderIFS.prototype.cancelOrder = function (obj, callback) {
   });
 };
 
-OrderIFS.prototype.wantAllPackageProduct = function (obj, callback) {
+OrderIFS.prototype.cancelPickUpForUnPay = function (obj, callback) {
   var Order = this.DS.models.Order;
-  var xml = OrderObj.wantAllPackageProductXML(obj);
-  Order.WantAllProductPackage(xml, function (err, response) {
+  var xml = OrderObj.cancelPickUpForUnPayXML(obj);
+  Order.CancelPickUpFor15MinituesUnPay(xml, function (err, response) {
     try {
-      callback(err, JSON.parse(response.WantAllProductPackageResult));
+      callback(err, JSON.parse(response.CancelPickUpFor15MinituesUnPayResult));
     } catch (e) {
       callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
     }

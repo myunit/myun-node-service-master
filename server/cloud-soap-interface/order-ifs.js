@@ -156,4 +156,16 @@ OrderIFS.prototype.cancelOrder = function (obj, callback) {
   });
 };
 
+OrderIFS.prototype.wantAllPackageProduct = function (obj, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.wantAllPackageProductXML(obj);
+  Order.WantAllProductPackage(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.WantAllProductPackageResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = OrderIFS;

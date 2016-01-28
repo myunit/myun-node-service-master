@@ -490,5 +490,42 @@ module.exports = function (Book) {
       }
     );
 
+    //获取所有包团商品,不分享
+    Book.wantAllPackageProduct = function (data, cb) {
+      orderIFS.wantAllPackageProduct(data, function (err, res) {
+        if (err) {
+          console.log('wantAllPackageProduct err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: ''});
+        }
+      });
+    };
+
+    Book.remoteMethod(
+      'wantAllPackageProduct',
+      {
+        description: [
+          '获取所有包团商品,不分享                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            (access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '包团信息(JSON string) {"packageId":int}'
+            ]
+          }
+
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/want-all-package-product', verb: 'post'}
+      }
+    );
+
   });
 };

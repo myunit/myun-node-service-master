@@ -97,6 +97,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "cancelOrder"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "wantAllPackageProduct"
     }
   ],
   "methods": {}

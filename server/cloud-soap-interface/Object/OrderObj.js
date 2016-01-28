@@ -251,3 +251,20 @@ exports.cancelOrderXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.wantAllPackageProductXML = function (obj) {
+  var xmlObj = [{
+    WantAllProductPackage: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        packageId: obj.packageId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

@@ -150,3 +150,20 @@ exports.cancelPackageXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.finishPackageXML = function (obj) {
+  var xmlObj = [{
+    FinishProductPackage: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        packageId: obj.packageId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

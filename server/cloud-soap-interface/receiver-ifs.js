@@ -36,4 +36,16 @@ ReceiverIFS.prototype.delReceiverAddress = function (uId, addressId, callback) {
   });
 };
 
+ReceiverIFS.prototype.setDefaultReceiverAddress = function (uId, addressId, callback) {
+  var Receiver = this.DS.models.Receiver;
+  var xml = ReceiverObj.setDefaultReceiverAddressXML(uId, addressId);
+  Receiver.ReceiverForSetDefault(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.ReceiverForSetDefaultResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = ReceiverIFS;

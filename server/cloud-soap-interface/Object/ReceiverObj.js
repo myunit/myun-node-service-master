@@ -41,3 +41,23 @@ exports.delReceiverAddressXML = function (userId, addressId) {
 
   return xml(xmlObj, true);
 };
+
+exports.setDefaultReceiverAddressXML = function (userId, addressId) {
+  var xmlObj = [{
+    ReceiverForSetDefault: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        uId: userId
+      },
+      {
+        rId: addressId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

@@ -302,3 +302,30 @@ exports.getAllTrackCompanyXML = function () {
 
   return xml(xmlObj, true);
 };
+
+exports.modifyOrderAddressXML = function (obj) {
+  var order = {};
+  order.UserId = obj.userId;
+  order.UserName = obj.userName;
+  order.Body = {};
+  order.Body.OrderId = obj.orderId;
+  order.Body.PCDCode = obj.pcdCode;
+  order.Body.PCDDescription = obj.pcdDes;
+  order.Body.ReceiverName = obj.name;
+  order.Body.ReceiverPhone = obj.phone;
+  order.Body.ShippingAddress = obj.address;
+  var xmlObj = [{
+    ModifyOrderDetailForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(order)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

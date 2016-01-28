@@ -118,6 +118,13 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "getAllTrackCompany"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "modifyOrderAddress"
     }
   ],
   "methods": {}

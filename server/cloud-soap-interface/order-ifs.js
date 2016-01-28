@@ -180,4 +180,16 @@ OrderIFS.prototype.getAllTrackCompany = function (callback) {
   });
 };
 
+OrderIFS.prototype.modifyOrderAddress = function (obj, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.modifyOrderAddressXML(obj);
+  Order.ModifyOrderDetailForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.ModifyOrderDetailForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = OrderIFS;

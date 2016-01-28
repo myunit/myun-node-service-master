@@ -153,7 +153,7 @@ module.exports = function (Goods) {
       }
     );
 
-    //设置商品状态
+    //设置商品状态(上架 下架 停售)
     Goods.setProductStatus = function (data, cb) {
       var product = {};
       product.Body = data.productId;
@@ -189,13 +189,13 @@ module.exports = function (Goods) {
       'setProductStatus',
       {
         description: [
-          '设置商品下架.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
+          '设置商品状态(上架 下架 停售).返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
         ],
         accepts: [
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '设置商品下架信息(JSON string) {"productId":int, "userId":int, "userName":"string", "status":int} ',
+              '设置商品状态信息(JSON string) {"productId":int, "userId":int, "userName":"string", "status":int} ',
               'status:商品状态 1-上架 2-下架 3-停售'
             ]
           }

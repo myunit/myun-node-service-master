@@ -355,3 +355,28 @@ exports.setMoneyPromotionXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.setOrderTrackDeliveryXML = function (obj) {
+  var track = {};
+  track.UserId = obj.userId;
+  track.UserName = obj.userName;
+  track.Body = {};
+  track.Body.OrderId = obj.orderId;
+  track.Body.RealTrackingCode = obj.trackCode;
+  track.Body.RealTrackingNo = obj.trackNo;
+  track.Body.ShippingMethod = obj.method;
+  var xmlObj = [{
+    SetOrderTrackingDeliveryVoucherForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(track)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

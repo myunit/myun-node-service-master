@@ -204,5 +204,17 @@ OrderIFS.prototype.setMoneyPromotion = function (obj, callback) {
   });
 };
 
+OrderIFS.prototype.setOrderTrackDelivery = function (obj, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.setOrderTrackDeliveryXML(obj);
+  Order.SetOrderTrackingDeliveryVoucherForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.SetOrderTrackingDeliveryVoucherForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 
 exports = module.exports = OrderIFS;

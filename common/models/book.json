@@ -132,6 +132,13 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "setMoneyPromotion"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "setOrderTrackDelivery"
     }
   ],
   "methods": {}

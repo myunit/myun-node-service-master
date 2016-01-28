@@ -668,5 +668,43 @@ module.exports = function (Book) {
       }
     );
 
+    //设置订单发货
+    Book.setOrderTrackDelivery = function (data, cb) {
+      orderIFS.setOrderTrackDelivery(data, function (err, res) {
+        if (err) {
+          console.log('setOrderTrackDelivery err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: ''});
+        }
+      });
+    };
+
+    Book.remoteMethod(
+      'setOrderTrackDelivery',
+      {
+        description: [
+          '设置订单发货                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            (access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '发货信息(JSON string) {"userId":int, "userName":"string", "orderId":int,',
+              ' "trackCode":"string", "trackNo":"string", "method":int}',
+              'trackCode快递公司代码(对应TrackingCode), trackNo快递单号, method发货方式(0-自提 1-快递)'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/set-order-track-delivery', verb: 'post'}
+      }
+    );
+
   });
 };

@@ -181,5 +181,46 @@ module.exports = function (Book) {
       }
     );
 
+    //创建包团订单
+    Book.createPackageOrder = function (data, cb) {
+      orderIFS.createPackageOrder(data, function (err, res) {
+        if (err) {
+          console.log('createPackageOrder err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, data: res, msg: ''});
+        }
+      });
+    };
+
+    Book.remoteMethod(
+      'createPackageOrder',
+      {
+        description: [
+          '创建包团订单(access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+            '创建包团订单(JSON string) {"userId":int, "sharePrice":float, "quantity":int, "orderId":int, ',
+            '"payAmount":float, "skuId":int, "buyLimit":int, "retentionQuantity":int, "shareEndDate":"string", ',
+            '"deliverDate":"string", "packagePrice":float}',
+            'userId用户编号, sharePrice分享价格, quantity包团数量, orderId包团订单编号, payAmount支付金额, skuId Sku编号, ',
+            'buyLimit购买限制数量, retentionQuantity自留数量, shareEndDate分享结束时间, deliverDate估计交货时间, packagePrice包团价格'
+            ]
+          }
+
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/create-package-order', verb: 'post'}
+      }
+    );
+
   });
 };

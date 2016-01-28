@@ -48,6 +48,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "getOrderByPackageItemId"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "createPackageOrder"
     }
   ],
   "methods": {}

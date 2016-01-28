@@ -72,4 +72,16 @@ OrderIFS.prototype.getOrderByPackageItemId = function (orderId, callback) {
   });
 };
 
+OrderIFS.prototype.createPackageOrder = function (obj, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.createPackageOrderXML(obj);
+  Order.CreateProductPackageForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.CreateProductPackageForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = OrderIFS;

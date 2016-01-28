@@ -120,4 +120,16 @@ OrderIFS.prototype.modifyPackage = function (obj, callback) {
   });
 };
 
+OrderIFS.prototype.pickUpPackageProduct = function (obj, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.pickUpPackageProductXML(obj);
+  Order.PickUpProductForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.PickUpProductForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = OrderIFS;

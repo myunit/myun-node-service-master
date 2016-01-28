@@ -194,3 +194,26 @@ exports.modifyPackageXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.pickUpPackageProductXML = function (obj) {
+  var pickUp = {};
+  pickUp.CustomerSysNo = obj.userId;
+  pickUp.OrderSysNo = obj.orderId;
+  pickUp.ProductPackageSysNo = obj.packageId;
+  pickUp.ReceiveID = obj.receiveId;
+  pickUp.Quantity = obj.quantity;
+  var xmlObj = [{
+    PickUpProductForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(pickUp)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

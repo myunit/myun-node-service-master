@@ -376,5 +376,45 @@ module.exports = function (Book) {
         http: {path: '/modify-package', verb: 'post'}
       }
     );
+
+    //用户领取
+    Book.pickUpPackageProduct = function (data, cb) {
+      orderIFS.pickUpPackageProduct(data, function (err, res) {
+        if (err) {
+          console.log('pickUpPackageProduct err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, data: res.SysNo, msg: ''});
+        }
+      });
+    };
+
+    Book.remoteMethod(
+      'pickUpPackageProduct',
+      {
+        description: [
+          '用户领取                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            (access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '创建包团订单(JSON string) {"userId":int, "orderId":int, ',
+              '"packageId":int, "receiveId":int, "quantity":int}',
+              'userId用户, orderId订单编号, packageId包团编号, receiveId用户收货地址编号, quantity领取数量'
+            ]
+          }
+
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/pickUp-package-product', verb: 'post'}
+      }
+    );
+
   });
 };

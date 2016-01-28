@@ -24,4 +24,16 @@ ReceiverIFS.prototype.getReceiverAddress = function (uId, callback) {
   });
 };
 
+ReceiverIFS.prototype.delReceiverAddress = function (uId, addressId, callback) {
+  var Receiver = this.DS.models.Receiver;
+  var xml = ReceiverObj.delReceiverAddressXML(uId, addressId);
+  Receiver.ReceiverForDelete(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.ReceiverForDeleteResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = ReceiverIFS;

@@ -21,3 +21,23 @@ exports.getReceiverAddressXML = function (userId) {
 
   return xml(xmlObj, true);
 };
+
+exports.delReceiverAddressXML = function (userId, addressId) {
+  var xmlObj = [{
+    ReceiverForDelete: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        uId: userId
+      },
+      {
+        rId: addressId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

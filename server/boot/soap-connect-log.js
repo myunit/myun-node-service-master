@@ -18,4 +18,9 @@ module.exports = function (app) {
     console.log('order interface is connected');
     app.datasources.OrderSoap.createModel('Order', {});
   });
+
+  app.datasources.ReceiverSoap.once('connected', function () {
+    console.log('receiver interface is connected');
+    app.datasources.ReceiverSoap.createModel('Receiver', {});
+  });
 };

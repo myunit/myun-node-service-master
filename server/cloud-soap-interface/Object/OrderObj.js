@@ -288,3 +288,17 @@ exports.cancelPickUpForUnPayXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.getAllTrackCompanyXML = function () {
+  var xmlObj = [{
+    GetAllTrackingCompanyList: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

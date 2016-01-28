@@ -168,4 +168,16 @@ OrderIFS.prototype.cancelPickUpForUnPay = function (obj, callback) {
   });
 };
 
+OrderIFS.prototype.getAllTrackCompany = function (callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.getAllTrackCompanyXML();
+  Order.GetAllTrackingCompanyList(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.GetAllTrackingCompanyListResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = OrderIFS;

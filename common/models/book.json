@@ -111,6 +111,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "cancelPickUpForUnPay"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "getAllTrackCompany"
     }
   ],
   "methods": {}

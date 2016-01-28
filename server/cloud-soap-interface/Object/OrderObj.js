@@ -105,19 +105,19 @@ exports.getOrderByPackageItemIdXML = function (orderId) {
   return xml(xmlObj, true);
 };
 
-exports.createPackageOrderXML = function (obj) {
-  var package = {};
-  package.SharePrice = obj.sharePrice;
-  package.PackageQuantity = obj.quantity;
-  package.CustomerSysNo = obj.userId;
-  package.PackageOrderSysNo = obj.orderId;
-  package.PackagePayAmount = obj.payAmount;
-  package.PerCustomerBuyLimit = obj.buyLimit;
-  package.RetentionQuantity = obj.retentionQuantity;
-  package.ShareEndDate = obj.shareEndDate;
-  package.SkuSysNo = obj.skuId;
-  package.EstimateDeliveryDate = obj.deliverDate;
-  package.PackagePrice = obj.packagePrice;
+exports.createPackageXML = function (obj) {
+  var packageObj = {};
+  packageObj.SharePrice = obj.sharePrice;
+  packageObj.PackageQuantity = obj.quantity;
+  packageObj.CustomerSysNo = obj.userId;
+  packageObj.PackageOrderSysNo = obj.orderId;
+  packageObj.PackagePayAmount = obj.payAmount;
+  packageObj.PerCustomerBuyLimit = obj.buyLimit;
+  packageObj.RetentionQuantity = obj.retentionQuantity;
+  packageObj.ShareEndDate = obj.shareEndDate;
+  packageObj.SkuSysNo = obj.skuId;
+  packageObj.EstimateDeliveryDate = obj.deliverDate;
+  packageObj.PackagePrice = obj.packagePrice;
   var xmlObj = [{
     CreateProductPackageForApp: [
       {
@@ -126,7 +126,24 @@ exports.createPackageOrderXML = function (obj) {
         }
       },
       {
-        queryString: JSON.stringify(package)
+        queryString: JSON.stringify(packageObj)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+exports.cancelPackageXML = function (obj) {
+  var xmlObj = [{
+    CancelProductPackage: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        packageId: obj.packageId
       }
     ]
   }];

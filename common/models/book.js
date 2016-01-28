@@ -181,11 +181,11 @@ module.exports = function (Book) {
       }
     );
 
-    //创建包团订单
-    Book.createPackageOrder = function (data, cb) {
-      orderIFS.createPackageOrder(data, function (err, res) {
+    //创建包团
+    Book.createPackage = function (data, cb) {
+      orderIFS.createPackage(data, function (err, res) {
         if (err) {
-          console.log('createPackageOrder err: ' + err);
+          console.log('createPackage err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
           return;
         }
@@ -199,10 +199,10 @@ module.exports = function (Book) {
     };
 
     Book.remoteMethod(
-      'createPackageOrder',
+      'createPackage',
       {
         description: [
-          '创建包团订单(access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
+          '创建包团(access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
         ],
         accepts: [
           {
@@ -218,7 +218,45 @@ module.exports = function (Book) {
 
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/create-package-order', verb: 'post'}
+        http: {path: '/create-package', verb: 'post'}
+      }
+    );
+
+    //取消包团
+    Book.cancelPackage = function (data, cb) {
+      orderIFS.cancelPackage(data, function (err, res) {
+        if (err) {
+          console.log('cancelPackage err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: '取消成功'});
+        }
+      });
+    };
+
+    Book.remoteMethod(
+      'cancelPackage',
+      {
+        description: [
+          '取消包团(access token).返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '取消包团(JSON string) {"packageId":int}',
+              'packageId 包团编号'
+            ]
+          }
+
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/cancel-package', verb: 'delete'}
       }
     );
 

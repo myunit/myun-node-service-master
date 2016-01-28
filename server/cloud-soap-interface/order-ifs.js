@@ -72,9 +72,9 @@ OrderIFS.prototype.getOrderByPackageItemId = function (orderId, callback) {
   });
 };
 
-OrderIFS.prototype.createPackageOrder = function (obj, callback) {
+OrderIFS.prototype.createPackage = function (obj, callback) {
   var Order = this.DS.models.Order;
-  var xml = OrderObj.createPackageOrderXML(obj);
+  var xml = OrderObj.createPackageXML(obj);
   Order.CreateProductPackageForApp(xml, function (err, response) {
     try {
       callback(err, JSON.parse(response.CreateProductPackageForAppResult));
@@ -83,5 +83,18 @@ OrderIFS.prototype.createPackageOrder = function (obj, callback) {
     }
   });
 };
+
+OrderIFS.prototype.cancelPackage = function (obj, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.cancelPackageXML(obj);
+  Order.CancelProductPackage(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.CancelProductPackageResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 
 exports = module.exports = OrderIFS;

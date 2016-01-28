@@ -416,5 +416,79 @@ module.exports = function (Book) {
       }
     );
 
+    //审核订单
+    Book.auditOrder = function (data, cb) {
+      orderIFS.auditOrder(data, function (err, res) {
+        if (err) {
+          console.log('auditOrder err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: ''});
+        }
+      });
+    };
+
+    Book.remoteMethod(
+      'auditOrder',
+      {
+        description: [
+          '审核订单                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            (access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '审核订单(JSON string) {"orderId":int}'
+            ]
+          }
+
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/audit-order', verb: 'post'}
+      }
+    );
+
+    //取消订单
+    Book.cancelOrder = function (data, cb) {
+      orderIFS.cancelOrder(data, function (err, res) {
+        if (err) {
+          console.log('cancelOrder err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: ''});
+        }
+      });
+    };
+
+    Book.remoteMethod(
+      'cancelOrder',
+      {
+        description: [
+          '取消订单                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            (access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '取消订单(JSON string) {"orderId":int}'
+            ]
+          }
+
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/cancel-order', verb: 'post'}
+      }
+    );
+
   });
 };

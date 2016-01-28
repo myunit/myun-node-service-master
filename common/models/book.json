@@ -83,6 +83,20 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "pickUpPackageProduct"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "auditOrder"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "cancelOrder"
     }
   ],
   "methods": {}

@@ -217,3 +217,37 @@ exports.pickUpPackageProductXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.auditOrderXML = function (obj) {
+  var xmlObj = [{
+    AuditOrder: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        orderId: obj.orderId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+exports.cancelOrderXML = function (obj) {
+  var xmlObj = [{
+    CancelOrder: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        orderId: obj.orderId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

@@ -132,4 +132,28 @@ OrderIFS.prototype.pickUpPackageProduct = function (obj, callback) {
   });
 };
 
+OrderIFS.prototype.auditOrder = function (obj, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.auditOrderXML(obj);
+  Order.AuditOrder(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.AuditOrderResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
+OrderIFS.prototype.cancelOrder = function (obj, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.cancelOrderXML(obj);
+  Order.CancelOrder(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.CancelOrderResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = OrderIFS;

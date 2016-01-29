@@ -178,5 +178,77 @@ module.exports = function (Address) {
       }
     );
 
+    //新增用户收货地址
+    Address.addReceiverAddress = function (data, cb) {
+      receiverIFS.addOrModifyReceiverAddress(data, function (err, res) {
+        if (err) {
+          console.log('addReceiverAddress err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, addressId:res.Id, msg: '保存成功'});
+        }
+      });
+    };
+
+    Address.remoteMethod(
+      'addReceiverAddress',
+      {
+        description: ['新增用户收货地址(access token).返回结果-status:操作结果 0 失败 1 成功, addressId:地址编号, msg:附带信息'],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '地址信息(JSON string) {"userId":int, "name":"string", "phone":"string", "mobile":"string", ',
+              '"provinceId":int, "province":"string", "cityId":int, "city":"string", "districtId":int, ',
+              '"district":"string", "address":"string", "isDefault":boolean}'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/add-receiver-address', verb: 'post'}
+      }
+    );
+
+    //编辑用户收货地址
+    Address.modifyReceiverAddress = function (data, cb) {
+      receiverIFS.addOrModifyReceiverAddress(data, function (err, res) {
+        if (err) {
+          console.log('modifyReceiverAddress err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, addressId:res.Id, msg: '保存成功'});
+        }
+      });
+    };
+
+    Address.remoteMethod(
+      'modifyReceiverAddress',
+      {
+        description: ['编辑用户收货地址(access token).返回结果-status:操作结果 0 失败 1 成功, addressId:地址编号, msg:附带信息'],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '地址信息(JSON string) {"userId":int, "addressId":int, "name":"string", "phone":"string", "mobile":"string", ',
+              '"provinceId":int, "province":"string", "cityId":int, "city":"string", "districtId":int, ',
+              '"district":"string", "address":"string", "isDefault":boolean}'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/modify-receiver-address', verb: 'post'}
+      }
+    );
+
   });
 };

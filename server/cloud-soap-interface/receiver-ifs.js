@@ -48,12 +48,12 @@ ReceiverIFS.prototype.setDefaultReceiverAddress = function (uId, addressId, call
   });
 };
 
-ReceiverIFS.prototype.getPCDList = function (type, id, callback) {
+ReceiverIFS.prototype.addOrModifyReceiverAddress = function (obj, callback) {
   var Receiver = this.DS.models.Receiver;
-  var xml = ReceiverObj.getPCDListXML(type, id);
-  Receiver.QueryPCDList(xml, function (err, response) {
+  var xml = ReceiverObj.addOrModifyReceiverAddressXML(obj);
+  Receiver.ReceiverForInsertAndModify(xml, function (err, response) {
     try {
-      callback(err, JSON.parse(response.QueryPCDListResult));
+      callback(err, JSON.parse(response.ReceiverForInsertAndModifyResult));
     } catch (e) {
       callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
     }

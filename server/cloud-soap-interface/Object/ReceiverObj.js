@@ -89,3 +89,34 @@ exports.getPCDListXML = function (type, id) {
 
   return xml(xmlObj, true);
 };
+
+exports.addOrModifyReceiverAddressXML = function (obj) {
+  var address = {};
+  address.sysNo = obj.addressId || 0;
+  address.address = obj.address;
+  address.receiverName = obj.name;
+  address.receiverMobile = obj.mobile;
+  address.receiverPhone = obj.phone;
+  address.isDefault = obj.isDefault;
+  address.uId = obj.userId;
+  address.provinceId = obj.provinceId;
+  address.cityId = obj.cityId;
+  address.districtId = obj.districtId;
+  address.province = obj.province;
+  address.city = obj.city;
+  address.district = obj.district;
+  var xmlObj = [{
+    ReceiverForInsertAndModify: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        request: JSON.stringify(address)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

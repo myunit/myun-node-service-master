@@ -37,4 +37,17 @@ ShoppingIFS.prototype.submitOrder = function (obj, cartIds, callback) {
   });
 };
 
+ShoppingIFS.prototype.checkOrderForPay = function (obj, callback) {
+  var Shopping = this.DS.models.Shopping;
+  var xml = ShoppingObj.checkOrderForPayXML(obj);
+  Shopping.PayForOrder(xml, function (err, response) {
+    console.log(response);
+    try {
+      callback(err, JSON.parse(response.PayForOrderResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常2'});
+    }
+  });
+};
+
 exports = module.exports = ShoppingIFS;

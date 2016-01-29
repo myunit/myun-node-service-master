@@ -82,5 +82,41 @@ module.exports = function (ShoppingCart) {
       }
     );
 
+    //支付前检查订单
+    ShoppingCart.checkOrderForPay = function (data, cb) {
+      shoppingIFS.checkOrderForPay(data, function (err, res) {
+        if (err) {
+          console.log('checkOrderForPay err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, order: res, msg: ''});
+        }
+      });
+    };
+
+    ShoppingCart.remoteMethod(
+      'checkOrderForPay',
+      {
+        description: [
+          '支付前检查订单(access token).返回结果-status:操作结果 0 失败 1 成功, order:订单信息, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '订单信息(JSON string) {"userId":int, "orderId":int}'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/check-order-forPay', verb: 'post'}
+      }
+    );
+
   });
 };

@@ -57,3 +57,23 @@ exports.submitOrderXML = function (obj, cartIds) {
 
   return xml(xmlObj, true);
 };
+
+exports.checkOrderForPayXML = function (obj) {
+  var xmlObj = [{
+    PayForOrder: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        uId: obj.userId
+      },
+      {
+        orderId: obj.orderId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

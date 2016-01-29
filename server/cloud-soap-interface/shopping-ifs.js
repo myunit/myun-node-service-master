@@ -41,9 +41,20 @@ ShoppingIFS.prototype.checkOrderForPay = function (obj, callback) {
   var Shopping = this.DS.models.Shopping;
   var xml = ShoppingObj.checkOrderForPayXML(obj);
   Shopping.PayForOrder(xml, function (err, response) {
-    console.log(response);
     try {
       callback(err, JSON.parse(response.PayForOrderResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常2'});
+    }
+  });
+};
+
+ShoppingIFS.prototype.createPayRecord = function (obj, callback) {
+  var Shopping = this.DS.models.Shopping;
+  var xml = ShoppingObj.createPayRecordXML(obj);
+  Shopping.PayForCreate(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.PayForCreateResult));
     } catch (e) {
       callback(err, {IsSuccess: false, ErrorDescription:'服务异常2'});
     }

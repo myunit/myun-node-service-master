@@ -77,3 +77,35 @@ exports.checkOrderForPayXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.createPayRecordXML = function (obj) {
+  var xmlObj = [{
+    PayForCreate: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        uId: obj.userId
+      },
+      {
+        buyer: obj.name
+      },
+      {
+        orderId: obj.orderId
+      },
+      {
+        seller: ''
+      },
+      {
+        totalFree: obj.totalFree
+      },
+      {
+        tradeNO: obj.tradeNO
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

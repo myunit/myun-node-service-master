@@ -19,7 +19,7 @@
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "addToCart"
+      "property": "submitOrder"
     }
   ],
   "methods": {}

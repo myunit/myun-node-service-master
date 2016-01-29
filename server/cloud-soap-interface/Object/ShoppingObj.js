@@ -24,3 +24,36 @@ exports.addToCartXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.submitOrderXML = function (obj, cartIds) {
+  var order = {};
+  order.UId = obj.userId;
+  order.ReceiverId = obj.receiverId;
+  order.ProductSysNo = obj.product[0].pId;
+  order.ProductQty = obj.product[0].qty;
+  order.PayMent = obj.payMent;
+  order.Logistics = obj.logistics;
+  order.BuyerMessage = obj.message;
+  order.from = obj.from;
+
+  var xmlObj = [{
+    SubmitCouponOrderByCartItemSysNo: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        orderdata: JSON.stringify(order)
+      },
+      {
+        cartItemJson: cartIds.join()
+      },
+      {
+        couponCode: obj.couponCode
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

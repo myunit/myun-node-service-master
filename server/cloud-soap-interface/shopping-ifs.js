@@ -19,7 +19,20 @@ ShoppingIFS.prototype.addToCart = function (obj, callback) {
     try {
       callback(err, JSON.parse(response.CartForAddForAppResult));
     } catch (e) {
-      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常1'});
+    }
+  });
+};
+
+ShoppingIFS.prototype.submitOrder = function (obj, cartIds, callback) {
+  var Shopping = this.DS.models.Shopping;
+  var xml = ShoppingObj.submitOrderXML(obj, cartIds);
+  Shopping.SubmitCouponOrderByCartItemSysNo(xml, function (err, response) {
+    console.log(response);
+    try {
+      callback(err, JSON.parse(response.SubmitCouponOrderByCartItemSysNoResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常2'});
     }
   });
 };

@@ -15,12 +15,17 @@ module.exports = function (app) {
   });
 
   app.datasources.OrderSoap.once('connected', function () {
-    console.log('order interface is connected');
+    console.log('Order interface is connected');
     app.datasources.OrderSoap.createModel('Order', {});
   });
 
   app.datasources.ReceiverSoap.once('connected', function () {
-    console.log('receiver interface is connected');
+    console.log('Receiver interface is connected');
     app.datasources.ReceiverSoap.createModel('Receiver', {});
+  });
+
+  app.datasources.ShoppingSoap.once('connected', function () {
+    console.log('Shopping interface is connected');
+    app.datasources.ShoppingSoap.createModel('Shopping', {});
   });
 };

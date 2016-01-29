@@ -33,7 +33,7 @@
     "dataSource": "db",
     "public": false
   },
-  "MYUser": {
+  "Customer": {
     "dataSource": null,
     "public": true
   },
@@ -54,6 +54,10 @@
     "public": true
   },
   "Book": {
+    "dataSource": null,
+    "public": true
+  },
+  "IdentityAudit": {
     "dataSource": null,
     "public": true
   }

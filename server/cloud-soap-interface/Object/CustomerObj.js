@@ -278,17 +278,171 @@ exports.setDefaultReceiveAddressXML = function (obj) {
   return xml(xmlObj, true);
 };
 
-exports.getCaptchaXML = function (phone) {
+exports.getCaptchaXML = function (phone, interval) {
+  var captchaObj = {
+    Interval: interval || 900,
+    Password: '123',
+    PszMobis: phone,
+    PszMsg: '尊敬的用户，您申请的实名认证审核验证码是：{0},。验证码很重要，如非本人操作，请联系客服。【乡货圈】',
+    SMSType: 4,
+    UserId: '496',
+    iMobiCount: 1
+  };
 
   var xmlObj = [{
-    GetCaptcha: [
+    SendSmsCaptchaForApp: [
       {
         _attr: {
           xmlns: 'http://tempuri.org/'
         }
       },
       {
-        CellPhoneNo: phone
+        queryString: JSON.stringify(captchaObj)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+exports.loginByWeiXinXML = function (openId) {
+
+  var xmlObj = [{
+    LoginByWeixinOpenID: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        openid: openId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+exports.registerByWeiXinXML = function (obj) {
+  var register = {};
+  register.CellPhoneNo = obj.phone;
+  register.CustomerLevel = 1;
+  register.CustomerSource = 2;
+  register.HeadPicture = obj.picture;
+  register.LoginPassword = '123456';
+  register.Name = obj.name;
+  register.WeixinOpenID = obj.openId;
+  register.WeixinNo = obj.name;
+
+
+  var xmlObj = [{
+    RegisterByWechatForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(register)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+exports.addIdentityAuditXML = function (obj) {
+  var audit = {};
+  audit.Body = {};
+  audit.Body.Code = obj.captcha;
+  audit.Body.CustomerID = obj.cardId;
+  audit.Body.CustomerNo = obj.userId;
+  audit.Body.CustomerRealName = obj.realName;
+  audit.Body.IdentityImgs = obj.identityImgs;
+  audit.Body.IsFullModify = true;
+  audit.Body.MobileNo = obj.phone;
+  audit.UserId = obj.userId;
+  audit.UserName = obj.name;
+
+  var xmlObj = [{
+    AddCustomerIdentityAuditForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(audit)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+exports.modifyIdentityAuditXML = function (obj) {
+  var audit = {};
+  audit.Body = {};
+  audit.Body.Code = obj.captcha || '';
+  audit.Body.CustomerID = obj.id;
+  audit.Body.CustomerNo = obj.userId;
+  audit.Body.CustomerRealName = obj.realName;
+  audit.Body.IdentityImgs = obj.identityImgs;
+  audit.Body.IsFullModify = obj.captcha ? true : false;
+  audit.Body.MobileNo = obj.phone;
+  audit.Body.SysNo = obj.auditNo;
+  audit.UserId = obj.userId;
+  audit.UserName = obj.name;
+
+  var xmlObj = [{
+    AddCustomerIdentityAuditForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(audit)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+exports.getIdentityAuditXML = function (uId) {
+  var xmlObj = [{
+    GetCustomerIdentityAudit: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        uId: uId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+exports.setCurrentAddressXML = function (obj) {
+  var address = {};
+  address.ContactAddress = obj.homeTown;
+  address.PCDDescription = obj.domicile;
+  address.CustomerNo = obj.userId;
+  address.WeixinOpenID = obj.openId;
+
+  var xmlObj = [{
+    SaveUserCurrentAddrForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(address)
       }
     ]
   }];

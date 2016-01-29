@@ -1,5 +1,5 @@
 {
-  "name": "MYUser",
+  "name": "Customer",
   "base": "Model",
   "idInjection": true,
   "options": {
@@ -41,21 +41,23 @@
     },
     {
       "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "ALLOW",
-      "property": "forgetPassword"
-    },
-    {
-      "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "logout"
     },
     {
+      "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
-      "property": "getHome"
+      "property": "loginByWeiXin"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "registerByWeiXin"
     }
   ],
   "methods": {}

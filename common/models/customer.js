@@ -2,15 +2,15 @@ var loopback = require('loopback');
 var async = require('async');
 var CustomerIFS = require('../../server/cloud-soap-interface/customer-ifs');
 
-module.exports = function (MYUser) {
-  MYUser.getApp(function (err, app) {
+module.exports = function (Customer) {
+  Customer.getApp(function (err, app) {
     if (err) {
       throw err;
     }
     var app_self = app;
     var customerIFS = new CustomerIFS(app);
     //注册用户
-    MYUser.register = function (data, cb) {
+    Customer.register = function (data, cb) {
       if (!data.phone || !data.password) {
         cb(null, {status:0, msg: '手机号和密码不能为空'});
         return;
@@ -31,7 +31,7 @@ module.exports = function (MYUser) {
       });
     };
 
-    MYUser.remoteMethod(
+    Customer.remoteMethod(
       'register',
       {
         description: ['注册一个新用户.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'],
@@ -53,20 +53,20 @@ module.exports = function (MYUser) {
     );
 
     //获取验证码
-    MYUser.getCaptcha = function (phone, cb) {
+    Customer.getCaptcha = function (phone, interval, cb) {
       if (!phone) {
-        cb(null, {status: 0, msg: '操作异常'});
+        cb(null, {status: 0, msg: '参数错误'});
         return;
       }
 
-      customerIFS.getCaptcha(phone, function (err, res) {
+      customerIFS.getCaptcha(phone, interval, function (err, res) {
         if (err) {
           console.log('getCaptcha err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
           return;
         }
 
-        if (res.GetCaptchaResult.HasError === 'true') {
+        if (!res.IsSuccess) {
           cb(null, {status: 0, msg: '发送失败'});
         } else {
           cb(null, {status: 1, msg: '发送成功'});
@@ -74,12 +74,13 @@ module.exports = function (MYUser) {
       });
     };
 
-    MYUser.remoteMethod(
+    Customer.remoteMethod(
       'getCaptcha',
       {
-        description: ['获取验证码.返回结果-status:操作结果 0 成功 -1 失败, verifyCode:验证码'],
+        description: ['获取验证码.返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
         accepts: [
-          {arg: 'phone', type: 'string', required: true, http: {source: 'query'}, description: '手机号'}
+          {arg: 'phone', type: 'string', required: true, http: {source: 'query'}, description: '手机号'},
+          {arg: 'interval', type: 'number', default:900, http: {source: 'query'}, description: '验证码有效期(秒)'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-captcha', verb: 'get'}
@@ -87,7 +88,7 @@ module.exports = function (MYUser) {
     );
 
     //登录
-    MYUser.login = function (data, loginCb) {
+    Customer.login = function (data, loginCb) {
       var user = data.phone,
         myToken = app_self.models.MYToken;
 
@@ -144,7 +145,7 @@ module.exports = function (MYUser) {
       );
     };
 
-    MYUser.remoteMethod(
+    Customer.remoteMethod(
       'login',
       {
         description: ['用户登录.返回结果-status:操作结果 0 失败 -1 成功, token:用户token, msg:附带信息'],
@@ -162,7 +163,7 @@ module.exports = function (MYUser) {
     );
 
     //退出登录
-    MYUser.logout = function (cb) {
+    Customer.logout = function (cb) {
       //TODO: cloud logic
       var ctx = loopback.getCurrentContext(),
         token = ctx.get('accessToken'),
@@ -179,7 +180,7 @@ module.exports = function (MYUser) {
 
     };
 
-    MYUser.remoteMethod(
+    Customer.remoteMethod(
       'logout',
       {
         description: ['用户退出登录(access token).返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
@@ -189,7 +190,7 @@ module.exports = function (MYUser) {
     );
 
     //修改密码
-    MYUser.modifyPassword = function (data, cb) {
+    Customer.modifyPassword = function (data, cb) {
       if (!data.customerNo || !data.newPassword) {
         cb(null, {status:0, msg: '新密码不能为空'});
         return;
@@ -210,7 +211,7 @@ module.exports = function (MYUser) {
       });
     };
 
-    MYUser.remoteMethod(
+    Customer.remoteMethod(
       'modifyPassword',
       {
         description: ['修改密码(access token).返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'],
@@ -227,75 +228,118 @@ module.exports = function (MYUser) {
       }
     );
 
-    //忘记密码
-    MYUser.forgetPassword = function (data, cb) {
-      var user = data.user,
-        verifyCode = data.verifyCode,
-        newPassword = data.newPassword;
-      //TODO: cloud logic
-      cb(null, {status: 0, msg: '密码重设成功'});
-    };
+    //微信账号登录
+    Customer.loginByWeiXin = function (data, loginCb) {
+      var openId = data.openId,
+        myToken = app_self.models.MYToken;
 
-    MYUser.remoteMethod(
-      'forgetPassword',
-      {
-        description: ['忘记密码.返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
-        accepts: [
-          {
-            arg: 'data', type: 'object', required: true, http: {source: 'body'},
-            description: [
-              '密码信息(JSON string) {"realm(optional)":"string", "user":"string", "verifyCode":"string", "newPassword":"string"}'
-            ]
-          }
-        ],
-        returns: {arg: 'repData', type: 'string'},
-        http: {path: '/forget-password', verb: 'post'}
+      if (!data.openId) {
+        loginCb(null, {status:0, msg: '参数错误'});
+        return;
       }
-    );
 
-    //获取首页
-    MYUser.getHome = function (homeCb) {
-      //TODO: cloud logic
-      var goods = app_self.models.Goods;
-      var home = {};
       async.waterfall(
         [
           function (cb) {
-            goods.getPromo(function (err , promo) {
-              home['promo'] = promo['promo'];
-              cb(err, home);
+            myToken.destroyAll({userId: openId}, function (err) {
+              if (err) {
+                cb({status:0, msg: '操作异常'});
+              } else {
+                cb(null);
+              }
             });
           },
-          function (home, cb) {
-            goods.getNewPromo(function (err , newPromo) {
-              home['newPromo'] = newPromo['newPromo'];
-              cb(err, home);
+          function (cb) {
+            customerIFS.loginByWeiXin(openId, function (err, res) {
+              if (err) {
+                console.log('login err: ' + err);
+                cb({status:0, msg: '操作异常'});
+                return;
+              }
+
+              if (!res.IsSuccess) {
+                cb(null, {status:0, msg: res.ErrorDescription});
+              } else {
+                cb(null, {status: 1, data: res.Customer, msg: ''});
+              }
+
             });
           },
-          function (home, cb) {
-            goods.getSalePromo(function (err , salePromo) {
-              home['salePromo'] = salePromo['salePromo'];
-              cb(err, home);
+          function (msg, cb) {
+            myToken.create({userId: openId}, function (err, token) {
+              if (err) {
+                cb({status:0, msg: '操作异常'});
+              } else {
+                msg.token = token;
+                cb(null, msg);
+              }
             });
           }
         ],
-        function (err, home) {
+        function (err, msg) {
           if (err) {
-            homeCb(null, home);
+            loginCb(null, err);
           } else {
-            homeCb(null, home);
+            loginCb(null, msg);
           }
         }
       );
     };
 
-    MYUser.remoteMethod(
-      'getHome',
+    Customer.remoteMethod(
+      'loginByWeiXin',
       {
-        description: ['获取首页.返回结果-promo:主宣传片, newPromo:新品宣传片, salePromo:特卖/活动宣传片'],
-        accepts: [],
+        description: ['用微信账号登录.返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息, data:用户相关信息'],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '密码信息(JSON string) {"realm(optional)":"string", "openId":"string"}'
+            ]
+          }
+        ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/get-home', verb: 'get'}
+        http: {path: '/login-by-weixin', verb: 'post'}
+      }
+    );
+
+    //微信注册用户
+    Customer.registerByWeiXin = function (data, cb) {
+      if (!data.phone || !data.openId || !data.name || !data.picture) {
+        cb(null, {status:0, msg: '参数错误'});
+        return;
+      }
+
+      customerIFS.registerByWeiXin(data, function (err, res) {
+        if (err) {
+          console.log('register err: ' + err);
+          cb(null, {status:0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status:0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, data: res.Customer, msg: ''});
+        }
+      });
+    };
+
+    Customer.remoteMethod(
+      'registerByWeiXin',
+      {
+        description: ['通过微信注册一个新用户.返回结果-status:操作结果 0 失败 1 成功, data:用户信息, msg:附带信息'],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '用户注册信息(JSON string) {"phone":"string", "openId":"string", "name":"string",' +
+              '"picture":"string"}'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/register-by-weixin', verb: 'post'}
       }
     );
   });

@@ -15,52 +15,53 @@
       "permission": "DENY"
     },
     {
+      "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "$everyone",
+      "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "getRoad"
+      "property": "setCurrentAddress"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "getReceiveAddresses"
+      "property": "getReceiverAddress"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "getDefaultReceiveAddress"
+      "property": "delReceiverAddress"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "addReceiveAddress"
+      "property": "setDefaultReceiverAddress"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "modifyReceiveAddress"
+      "property": "getPCDList"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "removeReceiveAddress"
+      "property": "addReceiverAddress"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "setDefaultReceiveAddress"
+      "property": "modifyReceiverAddress"
     }
   ],
   "methods": {}

@@ -19,21 +19,21 @@
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "getUserShoppingCart"
+      "property": "submitOrder"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "delGoodsInCart"
+      "property": "checkOrderForPay"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "addGoodsInCart"
+      "property": "createPayRecord"
     }
   ],
   "methods": {}

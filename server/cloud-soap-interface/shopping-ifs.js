@@ -44,7 +44,7 @@ ShoppingIFS.prototype.checkOrderForPay = function (obj, callback) {
     try {
       callback(err, JSON.parse(response.PayForOrderResult));
     } catch (e) {
-      callback(err, {IsSuccess: false, ErrorDescription:'服务异常2'});
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
     }
   });
 };
@@ -56,7 +56,7 @@ ShoppingIFS.prototype.createPayRecord = function (obj, callback) {
     try {
       callback(err, JSON.parse(response.PayForCreateResult));
     } catch (e) {
-      callback(err, {IsSuccess: false, ErrorDescription:'服务异常2'});
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
     }
   });
 };

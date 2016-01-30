@@ -60,5 +60,9 @@
   "IdentityAudit": {
     "dataSource": null,
     "public": true
+  },
+  "Wallet": {
+    "dataSource": null,
+    "public": true
   }
 }

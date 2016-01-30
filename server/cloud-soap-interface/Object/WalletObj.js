@@ -52,3 +52,20 @@ exports.getCapitalAccountInfoXML = function (userId) {
 
   return xml(xmlObj, true);
 };
+
+exports.getCapitalFlowRecordXML = function (obj) {
+  var xmlObj = [{
+    GetAllMoneyDetailByCustomerNoQueryForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(obj)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

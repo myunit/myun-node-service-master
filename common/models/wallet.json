@@ -27,6 +27,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "getCapitalAccountInfo"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "getCapitalFlowRecord"
     }
   ],
   "methods": {}

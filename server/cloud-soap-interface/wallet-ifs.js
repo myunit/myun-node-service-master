@@ -36,4 +36,16 @@ WalletIFS.prototype.getCapitalAccountInfo = function (userId, callback) {
   });
 };
 
+WalletIFS.prototype.getCapitalFlowRecord = function (obj, callback) {
+  var Wallet = this.DS.models.Wallet;
+  var xml = WalletObj.getCapitalFlowRecordXML(obj);
+  Wallet.GetAllMoneyDetailByCustomerNoQueryForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.GetAllMoneyDetailByCustomerNoQueryForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = WalletIFS;

@@ -28,4 +28,9 @@ module.exports = function (app) {
     console.log('Shopping interface is connected');
     app.datasources.ShoppingSoap.createModel('Shopping', {});
   });
+
+  app.datasources.WalletSoap.once('connected', function () {
+    console.log('Wallet interface is connected');
+    app.datasources.WalletSoap.createModel('Wallet', {});
+  });
 };

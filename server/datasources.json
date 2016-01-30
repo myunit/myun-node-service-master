@@ -59,5 +59,11 @@
     "name": "ShoppingSoap",
     "connector": "soap",
     "wsdl": "http://10.10.5.130:10008/PC_API/ShoppingService.svc?WSDL"
+  },
+  "WalletSoap": {
+    "url": "http://10.10.5.130:10008/PC_API/WalletService.svc",
+    "name": "WalletSoap",
+    "connector": "soap",
+    "wsdl": "http://10.10.5.130:10008/PC_API/WalletService.svc?WSDL"
   }
 }

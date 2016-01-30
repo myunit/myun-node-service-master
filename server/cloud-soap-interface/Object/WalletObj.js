@@ -69,3 +69,20 @@ exports.getCapitalFlowRecordXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.getWithdrawsCashRecordXML = function (obj) {
+  var xmlObj = [{
+    GetAllMercuryBillPaymentForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(obj)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

@@ -48,4 +48,16 @@ WalletIFS.prototype.getCapitalFlowRecord = function (obj, callback) {
   });
 };
 
+WalletIFS.prototype.getWithdrawsCashRecord = function (obj, callback) {
+  var Wallet = this.DS.models.Wallet;
+  var xml = WalletObj.getWithdrawsCashRecordXML(obj);
+  Wallet.GetAllMercuryBillPaymentForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.GetAllMercuryBillPaymentForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = WalletIFS;

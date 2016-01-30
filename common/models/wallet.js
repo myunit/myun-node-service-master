@@ -112,10 +112,50 @@ module.exports = function (Wallet) {
           {arg: 'userId', type: 'number', require: true, http: {source: 'query'}, description: '用户编号'},
           {arg: 'pageId', type: 'number', default: 0, http: {source: 'query'}, description: '第几页'},
           {arg: 'pageSize', type: 'number', default: 10, http: {source: 'query'}, description: '每页记录数'},
-          {arg: 'type', type: 'number', default: 1, http: {source: 'query'}, description: '类型,目前提现类型是1'}
+          {arg: 'type', type: 'number', default: -1, http: {source: 'query'}, description: '类型,-1全部 0补贴 1提现 2转账 3交易 '}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-capital-flow-record', verb: 'get'}
+      }
+    );
+
+    //获取用户提现单记录
+    Wallet.getWithdrawsCashRecord = function (userId, pageId, pageSize, type, cb) {
+      var obj = {};
+      obj.CustomerNo = userId;
+      obj.SettlementMethod = type;
+      obj.PageIndex = pageId;
+      obj.PageSize = pageSize;
+
+      walletIFS.getWithdrawsCashRecord(obj, function (err, res) {
+        if (err) {
+          console.log('getWithdrawsCashRecord err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, data: res.Datas, msg: ''});
+        }
+      });
+    };
+
+    Wallet.remoteMethod(
+      'getWithdrawsCashRecord',
+      {
+        description: [
+          '获取用户提现单记录.返回结果-status:操作结果 0 失败 1 成功, data:提现信息, msg:附带信息'
+        ],
+        accepts: [
+          {arg: 'userId', type: 'number', require: true, http: {source: 'query'}, description: '用户编号'},
+          {arg: 'pageId', type: 'number', default: 0, http: {source: 'query'}, description: '第几页'},
+          {arg: 'pageSize', type: 'number', default: 10, http: {source: 'query'}, description: '每页记录数'},
+          {arg: 'type', type: 'number', default: 1, http: {source: 'query'}, description: '类型,1支付宝 2银行 '}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-withdraws-cash-record', verb: 'get'}
       }
     );
 

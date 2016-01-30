@@ -24,4 +24,16 @@ WalletIFS.prototype.addWithdrawsCash = function (obj, callback) {
   });
 };
 
+WalletIFS.prototype.getCapitalAccountInfo = function (userId, callback) {
+  var Wallet = this.DS.models.Wallet;
+  var xml = WalletObj.getCapitalAccountInfoXML(userId);
+  Wallet.GetMoneyByCustomerNoForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.GetMoneyByCustomerNoForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = WalletIFS;

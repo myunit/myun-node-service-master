@@ -20,6 +20,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "addWithdrawsCash"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "getCapitalAccountInfo"
     }
   ],
   "methods": {}

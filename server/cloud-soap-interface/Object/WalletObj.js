@@ -33,3 +33,22 @@ exports.addWithdrawsCashXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.getCapitalAccountInfoXML = function (userId) {
+  var obj = {};
+  obj.CustomerNo = userId;
+  var xmlObj = [{
+    GetMoneyByCustomerNoForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(obj)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

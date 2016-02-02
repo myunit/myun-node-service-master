@@ -39,9 +39,9 @@ module.exports = function(IdentityAudit) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '用户认证信息(JSON string) {"userId":int, "realName":"string", "name":"string",' +
-              '"cardId":"string", "captcha":"string", "identityImgs":[{"ImgKey":int, "ImgType":int, "ImgValue":"string"}],' +
-              ' "phone":"string"}'
+              '用户认证信息(JSON string) {"userId":int, "realName":"string", "name":"string", "cardId":"string", ',
+              '"captcha":"string", "identityImgs":[{"ImgKey":int, "ImgType":int, "ImgValue":"string"}], "phone":"string"}',
+              'ImgKey:等同于userId, ImgType: 101-正面 102-反面 103-手持面, ImgValue:图片地址'
             ]
           }
         ],

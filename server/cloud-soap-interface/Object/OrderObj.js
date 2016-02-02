@@ -25,13 +25,15 @@ exports.getOrderDetailXML = function (obj) {
   return xml(xmlObj, true);
 };
 
-exports.getOrderListXML = function (userId, page, pageSize, ownerId, orderType) {
+exports.getOrderListXML = function (userId, page, pageSize, ownerId, orderType, payStatus, deliveryStatus) {
   var obj = {};
   obj.Page = page;
   obj.PageSize = pageSize;
   obj.UID = userId;
   obj.ProductOwnerCustomerNo = ownerId;
   obj.OrderType = orderType;
+  obj.PayStatus = payStatus;
+  obj.DeliveryStatus = deliveryStatus;
 
   var xmlObj = [{
     GetAllOrderForApp: [

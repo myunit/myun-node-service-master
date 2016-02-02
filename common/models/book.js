@@ -44,8 +44,8 @@ module.exports = function (Book) {
     );
 
     //查询订单
-    Book.getOrderList = function (userId, page, pageSize, ownerId, orderType, cb) {
-      orderIFS.getOrderList(userId, page, pageSize, ownerId, orderType, function (err, res) {
+    Book.getOrderList = function (userId, page, pageSize, ownerId, orderType, payStatus, deliveryStatus, cb) {
+      orderIFS.getOrderList(userId, page, pageSize, ownerId, orderType, payStatus, deliveryStatus, function (err, res) {
         if (err) {
           console.log('getOrderList err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
@@ -71,7 +71,9 @@ module.exports = function (Book) {
           {arg: 'page', type: 'number', required: true, http: {source: 'query'}, description: '页码'},
           {arg: 'pageSize', type: 'number', required: true, http: {source: 'query'}, description: '每页记录数'},
           {arg: 'ownerId', type: 'number', default: 0, http: {source: 'query'}, description: '商品所有者编号'},
-          {arg: 'orderType', type: 'number', default: 0, http: {source: 'query'}, description: '订单类型(-1 全部,0 普通,3 包团)'}
+          {arg: 'orderType', type: 'number', default: 0, http: {source: 'query'}, description: '订单类型(-1 全部,0 普通,3 包团)'},
+          {arg: 'payStatus', type: 'number', default: 0, http: {source: 'query'}, description: '支付状态(0 全部,1 未支付)'},
+          {arg: 'deliveryStatus', type: 'number', default: 0, http: {source: 'query'}, description: '发货状态(0 全部,1 已发货, 2 已付款未发货)'}
 
         ],
         returns: {arg: 'repData', type: 'string'},

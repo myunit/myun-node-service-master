@@ -9,9 +9,10 @@ module.exports = function (Goods) {
     var productIFS = new ProductIFS(app);
 
     //获取商品列表
-    Goods.getAllProduct = function (userId, status, pcdCode, pageId, pageSize, name, cb) {
+    Goods.getAllProduct = function (userId, audit, status, pcdCode, pageId, pageSize, name, cb) {
       var product = {};
       product.CustomerNo = userId;
+      product.AuditStatus = audit;
       product.GroupStatus = status;
       product.PCDCode = pcdCode;
       product.Page = pageId;
@@ -41,7 +42,8 @@ module.exports = function (Goods) {
         ],
         accepts: [
           {arg: 'userId', type: 'number', default: 0, http: {source: 'query'}, description: '商品所有者编号'},
-          {arg: 'status', type: 'number', default: -1, http: {source: 'query'}, description: '商品状态(-1 全部 0 待审核 1 已审核 2 审核未通过)'},
+          {arg: 'audit', type: 'number', default: -1, http: {source: 'query'}, description: '商品审核状态(-1 全部 0 待审核 1 已审核 2 审核未通过)'},
+          {arg: 'status', type: 'number', default: -1, http: {source: 'query'}, description: '商品状态(-1 全部 2 上架)'},
           {arg: 'pcdCode', type: 'string', default: '', http: {source: 'query'}, description: '商品所在地pcd'},
           {arg: 'pageId', type: 'number', default: 0, http: {source: 'query'}, description: '第几页'},
           {arg: 'pageSize', type: 'number', default: 10, http: {source: 'query'}, description: '每页记录数'},

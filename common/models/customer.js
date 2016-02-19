@@ -23,10 +23,10 @@ module.exports = function (Customer) {
           return;
         }
 
-        if (res.RegisterResult.HasError === 'true') {
-          cb(null, {status:0, msg: res.RegisterResult.Faults.MessageFault.ErrorDescription});
+        if (!res.IsSuccess) {
+          cb(null, {status:0, msg: res.ErrorDescription});
         } else {
-          cb(null, {status: 1, msg: '注册成功'});
+          cb(null, {status: 1, data: res.Customer, msg: ''});
         }
       });
     };
@@ -39,11 +39,8 @@ module.exports = function (Customer) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '用户注册信息(JSON string) {"phone":"string", "password":"string", "name(Optional)":"string",' +
-              '"gender(Optional)":"string(All, Male, Famale)", "birthday(Optional)":"string", ' +
-              '"from(Optional)":"string", "level(Optional)":int, "source(Optional)":int' +
-              '"picture(Optional)":"string", "storeName(Optional)":"string", "WangWang(Optional)":"string", ' +
-              '"invitationCode(Optional)":"string"}'
+              '用户注册信息(JSON string) {"phone":"string", "password":"string", "code":"string",' +
+              '"from":"3:android"}, phone:手机号, password:密码, code:验证码, from:来源(字符串 3:android 或者 4:ios)'
             ]
           }
         ],
@@ -117,10 +114,10 @@ module.exports = function (Customer) {
                 return;
               }
 
-              if (!res.LoginResult.Body) {
-                cb({status:0, msg: '手机号或密码错误'});
+              if (!res.IsSuccess) {
+                cb(null, {status:0, msg: res.ErrorDescription});
               } else {
-                cb(null, {status: 1, customerNo: parseInt(res.LoginResult.Body.CustomerNo), msg: '登录成功'});
+                cb(null, {status: 1, data: res.Customer, msg: ''});
               }
             });
           },
@@ -191,7 +188,7 @@ module.exports = function (Customer) {
 
     //修改密码
     Customer.modifyPassword = function (data, cb) {
-      if (!data.customerNo || !data.newPassword) {
+      if (!data.userId || !data.newPassword) {
         cb(null, {status:0, msg: '新密码不能为空'});
         return;
       }
@@ -203,10 +200,10 @@ module.exports = function (Customer) {
           return;
         }
 
-        if (res.ModifyPasswordResult.HasError === 'true') {
-          cb(null, {status:0, msg: '密码设置失败'});
+        if (!res.IsSuccess) {
+          cb(null, {status:0, msg: res.ErrorDescription});
         } else {
-          cb(null, {status: 1, msg: '密码设置成功'});
+          cb(null, {status: 1, msg: ''});
         }
       });
     };
@@ -219,7 +216,7 @@ module.exports = function (Customer) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '密码信息(JSON string) {"customerNo":int, "newPassword":"string"}'
+              '密码信息(JSON string) {"userId":int, "newPassword":"string"}'
             ]
           }
         ],
@@ -252,7 +249,7 @@ module.exports = function (Customer) {
           function (cb) {
             customerIFS.loginByWeiXin(openId, function (err, res) {
               if (err) {
-                console.log('login err: ' + err);
+                console.log('login by weixin err: ' + err);
                 cb({status:0, msg: '操作异常'});
                 return;
               }

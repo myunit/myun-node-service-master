@@ -15,16 +15,24 @@ util.inherits(CustomerIFS, Object);
 CustomerIFS.prototype.register = function (obj, callback) {
   var Customer = this.DS.models.Customer;
   var xml = CustomerObj.registerXML(obj);
-  Customer.Register(xml, function (err, response) {
-    callback(err, response);
+  Customer.RegisterWithMobileForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.RegisterWithMobileForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
   });
 };
 
 CustomerIFS.prototype.login = function (obj, callback) {
   var Customer = this.DS.models.Customer;
   var xml = CustomerObj.loginXML(obj);
-  Customer.Login(xml, function (err, response) {
-    callback(err, response);
+  Customer.LogIn(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.LogInResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
   });
 };
 
@@ -32,7 +40,11 @@ CustomerIFS.prototype.modifyPW = function (obj, callback) {
   var Customer = this.DS.models.Customer;
   var xml = CustomerObj.modifyPWXML(obj);
   Customer.ModifyPassword(xml, function (err, response) {
-    callback(err, response);
+    try {
+      callback(err, JSON.parse(response.ModifyPasswordResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
   });
 };
 

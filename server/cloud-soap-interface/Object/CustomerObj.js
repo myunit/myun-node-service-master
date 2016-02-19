@@ -7,58 +7,24 @@ var utils = require('../../util/utils');
 var xml = require('xml');
 
 exports.registerXML = function (obj) {
-  obj.name = obj.name || '';
-  obj.gender = obj.gender || 'Male';
-  obj.birthday = obj.birthday || utils.formatByT(new Date());
-  obj.from = obj.from || '';
-  obj.level = obj.level || 0;
-  obj.source = obj.source || 0;
-  obj.picture = obj.picture || '';
-  obj.storeName = obj.storeName || '';
-  obj.WangWang = obj.WangWang || '';
-  obj.invitationCode = obj.invitationCode || '';
-
   var xmlObj = [{
-    Register: [
+    RegisterWithMobileForApp: [
       {
         _attr: {
           xmlns: 'http://tempuri.org/'
         }
       },
       {
-        registerInfo: [
-          {
-            _attr: {
-              'xmlns:d4p1': 'http://schemas.datacontract.org/2004/07/MYun.BPC.Contract.CustomerMgmt.Data',
-              'xmlns:i': 'http://www.w3.org/2001/XMLSchema-instance'
-            }
-          }, {
-            'd4p1:BirthDay': obj.birthday
-          }, {
-            'd4p1:CellPhoneNo': obj.phone
-          }, {
-            'd4p1:CustomerFrom': obj.from
-          }, {
-            'd4p1:CustomerLevel': obj.level
-          }, {
-            'd4p1:CustomerSource': obj.source
-          }, {
-            'd4p1:Gender': obj.gender
-          }, {
-            'd4p1:HeadPicture': obj.picture
-          }, {
-            'd4p1:LoginPassword': obj.password
-          }, {
-            'd4p1:Name': obj.name
-          }, {
-            'd4p1:StoreName': obj.storeName
-          }, {
-            'd4p1:WangwangNo': obj.WangWang
-          }
-        ]
+        mobile: obj.phone
       },
       {
-        invitationCode: obj.invitationCode
+        password: obj.password
+      },
+      {
+        code: obj.code
+      },
+      {
+        fromstr: obj.from
       }
     ]
   }];
@@ -70,17 +36,20 @@ exports.registerXML = function (obj) {
 exports.loginXML = function (obj) {
 
   var xmlObj = [{
-    Login: [
+    LogIn: [
       {
         _attr: {
           xmlns: 'http://tempuri.org/'
         }
       },
       {
-        cellPhone: obj.phone
+        cellPhoneNo: obj.phone
       },
       {
         password: obj.password
+      },
+      {
+        curinfo: obj.password
       }
     ]
   }];
@@ -98,11 +67,12 @@ exports.modifyPWXML = function (obj) {
         }
       },
       {
-        password: obj.newPassword
+        customerSysNo: obj.userId
       },
       {
-        customerSysNo: obj.customerNo
+        pwd: obj.newPassword
       }
+
     ]
   }];
 

@@ -48,6 +48,18 @@ CustomerIFS.prototype.modifyPW = function (obj, callback) {
   });
 };
 
+CustomerIFS.prototype.forgetPW = function (obj, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.forgetPWXML(obj);
+  Customer.ModifyPasswordByVerCode(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.ModifyPasswordByVerCodeResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 CustomerIFS.prototype.getCaptcha = function (phone, interval, callback) {
   var Customer = this.DS.models.Customer;
   var xml = CustomerObj.getCaptchaXML(phone, interval);

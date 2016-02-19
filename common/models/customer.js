@@ -186,6 +186,45 @@ module.exports = function (Customer) {
       }
     );
 
+    //忘记密码
+    Customer.forgetPassword = function (data, cb) {
+      if (!data.phone || !data.newPassword || !data.code) {
+        cb(null, {status:0, msg: '参数错误'});
+        return;
+      }
+
+      customerIFS.forgetPW(data, function (err, res) {
+        if (err) {
+          console.log('forgetPW err: ' + err);
+          cb(null, {status:0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status:0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: ''});
+        }
+      });
+    };
+
+    Customer.remoteMethod(
+      'forgetPassword',
+      {
+        description: ['忘记密码.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '密码信息(JSON string) {"phone":"string", "newPassword":"string", "code":"string"}'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/forget-password', verb: 'post'}
+      }
+    );
+
     //修改密码
     Customer.modifyPassword = function (data, cb) {
       if (!data.userId || !data.newPassword) {

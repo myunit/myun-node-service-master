@@ -11,7 +11,7 @@ module.exports = function(IdentityAudit) {
 
     //新增用户审核认证
     IdentityAudit.AddIdentityAudit = function (data, cb) {
-      if (!data.userId || !data.realName || !data.name || !data.cardId || data.identityImgs.length === 0 || !data.phone) {
+      if (!data.userId || !data.realName || !data.cardId || data.identityImgs.length === 0 || !data.phone) {
         cb(null, {status:0, msg: '参数错误'});
         return;
       }

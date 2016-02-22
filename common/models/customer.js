@@ -115,6 +115,78 @@ module.exports = function (Customer) {
       }
     );
 
+    //绑定微信号和手机号
+    Customer.bindWeiXinAndPhone = function (data, bindCb) {
+      var user = data.phone,
+        myToken = app_self.models.MYToken;
+
+      if (!data.phone || !data.password || !data.openId || !data.code || !data.from) {
+        bindCb(null, {status:0, msg: '参数错误'});
+        return;
+      }
+
+      //TODO: cloud logic
+      async.waterfall(
+        [
+          function (cb) {
+            customerIFS.register(data, function (err, res) {
+              if (err) {
+                console.log('register err: ' + err);
+                cb({status:0, msg: '操作异常'});
+                return;
+              }
+
+              if (!res.IsSuccess) {
+                cb({status:0, msg: res.ErrorDescription});
+              } else {
+                cb(null, res.Customer);
+              }
+            });
+          },
+          function (customer, cb) {
+            customerIFS.bindWeiXinAndPhone(data.openId, data.phone, function (err, res) {
+              if (err) {
+                console.log('bindWeiXinAndPhone err: ' + err);
+                cb({status:0, msg: '操作异常'});
+                return;
+              }
+
+              if (!res.IsSuccess) {
+                cb({status:0, msg: res.ErrorDescription});
+              } else {
+                cb(null, {status: 1, data: customer, msg: ''});
+              }
+            });
+          }
+        ],
+        function (err, msg) {
+          if (err) {
+            bindCb(null, err);
+          } else {
+            bindCb(null, msg);
+          }
+        }
+      );
+    };
+
+    Customer.remoteMethod(
+      'bindWeiXinAndPhone',
+      {
+        description: ['绑定微信号和手机号.返回结果-status:操作结果 0 失败 -1 成功, token:用户token, msg:附带信息'],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '用户绑定信息(JSON string) {"phone":"string", "openId":"string","password":"string", "code":"string",' +
+              '"from":"3:android"}, phone:手机号, openId微信id,password:密码, code:验证码, from:来源(字符串 3:android 或者 4:ios)'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/bind-weixin-phone', verb: 'post'}
+      }
+    );
+
     //登录
     Customer.login = function (data, loginCb) {
       var user = data.phone,

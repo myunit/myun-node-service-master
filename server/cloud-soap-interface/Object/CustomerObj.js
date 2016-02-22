@@ -74,6 +74,27 @@ exports.loginXML = function (obj) {
   return xml(xmlObj, true);
 };
 
+exports.bindWeiXinAndPhoneXML = function (openID, phone) {
+
+  var xmlObj = [{
+    SaveWeixinOpenID: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        CellPhoneNo: phone
+      },
+      {
+        wixinOpenID: openID
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
 exports.modifyPWXML = function (obj) {
 
   var xmlObj = [{

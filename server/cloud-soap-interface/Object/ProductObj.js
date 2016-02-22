@@ -132,11 +132,11 @@ exports.addProductXML = function (obj) {
   product.Memo = obj.memo;
   product.OriginPCDCode = obj.originPCD;
   product.OriginPlace = obj.originPlace;
-  product.ProductGroupCode = obj.styleCode;
   product.ProductName = obj.productName;
   product.SignlePrice = obj.singlePrice;
   product.Stock = obj.stock;
   product.ProductImgs = obj.productImgs;
+  product.ProductSysno = 0;
 
   var xmlObj = [{
     SetProductForApp: [

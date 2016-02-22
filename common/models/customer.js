@@ -49,6 +49,37 @@ module.exports = function (Customer) {
       }
     );
 
+    //判断手机号是否已经注册
+    Customer.isRegister = function (phone, cb) {
+      if (!phone) {
+        cb(null, {status: 0, msg: '参数错误'});
+        return;
+      }
+
+      customerIFS.isRegister(phone, function (err, res) {
+        if (err) {
+          console.log('isRegister err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        cb(null, {status: 1, data: res.IsSuccess, msg: res.ErrorDescription});
+
+      });
+    };
+
+    Customer.remoteMethod(
+      'isRegister',
+      {
+        description: ['判断手机号是否已经注册.返回结果-status:操作结果 0 成功 -1 失败, data:手机号是否被注册(true已被,false未被注册),msg:附带信息'],
+        accepts: [
+          {arg: 'phone', type: 'string', required: true, http: {source: 'query'}, description: '手机号'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/is-register', verb: 'get'}
+      }
+    );
+
     //获取验证码
     Customer.getCaptcha = function (phone, interval, cb) {
       if (!phone) {

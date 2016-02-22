@@ -32,6 +32,23 @@ exports.registerXML = function (obj) {
   return xml(xmlObj, true);
 };
 
+exports.isRegisterXML = function (phone) {
+  var xmlObj = [{
+    IsRegItemExist: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        cellPhoneNo: phone
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
 
 exports.loginXML = function (obj) {
 

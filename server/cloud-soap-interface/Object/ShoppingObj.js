@@ -50,7 +50,7 @@ exports.submitOrderXML = function (obj, cartIds) {
         cartItemJson: cartIds.join()
       },
       {
-        couponCode: obj.couponCode
+        couponCode: ''
       }
     ]
   }];

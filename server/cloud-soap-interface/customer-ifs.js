@@ -24,12 +24,36 @@ CustomerIFS.prototype.register = function (obj, callback) {
   });
 };
 
+CustomerIFS.prototype.isRegister = function (phone, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.isRegisterXML(phone);
+  Customer.IsRegItemExist(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.IsRegItemExistResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 CustomerIFS.prototype.login = function (obj, callback) {
   var Customer = this.DS.models.Customer;
   var xml = CustomerObj.loginXML(obj);
   Customer.LogIn(xml, function (err, response) {
     try {
       callback(err, JSON.parse(response.LogInResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
+CustomerIFS.prototype.bindWeiXinAndPhone = function (openID, phone, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.bindWeiXinAndPhoneXML(openID, phone);
+  Customer.SaveWeixinOpenID(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.SaveWeixinOpenIDResult));
     } catch (e) {
       callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
     }

@@ -32,6 +32,23 @@ exports.registerXML = function (obj) {
   return xml(xmlObj, true);
 };
 
+exports.isRegisterXML = function (phone) {
+  var xmlObj = [{
+    IsRegItemExist: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        cellPhoneNo: phone
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
 
 exports.loginXML = function (obj) {
 
@@ -50,6 +67,27 @@ exports.loginXML = function (obj) {
       },
       {
         curinfo: obj.password
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+exports.bindWeiXinAndPhoneXML = function (openID, phone) {
+
+  var xmlObj = [{
+    SaveWeixinOpenID: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        CellPhoneNo: phone
+      },
+      {
+        wixinOpenID: openID
       }
     ]
   }];
@@ -423,8 +461,9 @@ exports.getIdentityAuditXML = function (uId) {
 
 exports.setCurrentAddressXML = function (obj) {
   var address = {};
-  address.ContactAddress = obj.homeTown;
-  address.PCDDescription = obj.domicile;
+  address.ContactAddress = obj.domicile || '';
+  address.PCDDescription = obj.home || '';
+  address.PCDCode = obj.homeCode || '';
   address.CustomerNo = obj.userId;
   address.WeixinOpenID = obj.openId;
 

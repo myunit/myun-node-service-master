@@ -30,6 +30,12 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
+      "property": "isRegister"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
       "property": "forgetPassword"
     },
     {
@@ -44,6 +50,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "modifyPassword"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "bindWeiXinAndPhone"
     },
     {
       "principalType": "ROLE",

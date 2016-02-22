@@ -461,8 +461,9 @@ exports.getIdentityAuditXML = function (uId) {
 
 exports.setCurrentAddressXML = function (obj) {
   var address = {};
-  address.ContactAddress = obj.homeTown;
-  address.PCDDescription = obj.domicile;
+  address.ContactAddress = obj.domicile || '';
+  address.PCDDescription = obj.home || '';
+  address.PCDCode = obj.homeCode || '';
   address.CustomerNo = obj.userId;
   address.WeixinOpenID = obj.openId;
 

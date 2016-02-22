@@ -13,8 +13,8 @@ module.exports = function (Address) {
 
     //保存用户家乡和现居住地
     Address.setCurrentAddress = function (data, cb) {
-      if (!data.userId || !data.homeTown || !data.domicile) {
-        cb(null, {status: 0, msg: '操作异常'});
+      if (!data.userId) {
+        cb(null, {status: 0, msg: '参数错误'});
         return;
       }
 
@@ -41,8 +41,9 @@ module.exports = function (Address) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '地址信息(JSON string) {"userId":int, "homeTown":"string", "domicile":"string", ',
-              '"openId(optional)":"string"}'
+              '地址信息(JSON string) {"userId":int, "homeCode":"string", "home":"string", "domicile":"string", ',
+              '"openId(optional)":"string"} ',
+              'homeCode:家乡pcd code, home:家乡, domicile:现居住地(修改现居住地时, home和homeCode不需要传;修改家乡时, domicile不需要传)'
             ]
           }
         ],

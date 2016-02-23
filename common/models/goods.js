@@ -277,13 +277,14 @@ module.exports = function (Goods) {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
               '编辑商品信息(JSON string) {"userId":int, "userName":"string", "productId":int, "productName":"string", ',
-              '"styleCode":int, "skuId":int, "barCode":int, "skuData":[{"RuleSysno":int, "IsInStock":boolean}], ',
+              '"styleCode":"string", "skuId":int, "barCode":int, "skuData":[{"RuleSysno":int, "IsInStock":boolean}], ',
               '"originPCD":"string", "originPlace":"string", "memo":"string", "categoryName":"string", "categoryId":int, ',
               '"groupCount":int, "singlePrice":float, "groupPrice":float, "stock":int, ',
               '"productImgs":[{"SysNo":0, "ImgValue":"string"}]}',
               'userId用户编号, userName用户昵称, productId商品编号, productName商品名, styleCode款号, originPCD产地pcd码, ',
               'originPlace产地名, memo产品简介, categoryName分类名, categoryId分类编号, groupCount包团数量, singlePrice单价, ',
               'groupPrice包团价, stock库存(正数入库, 负数出库), productImgs产品图片数组(SysNo图片编号, ImgValue图片url)',
+              'styleCode对应getProductDetail应答中的ProductGroupCode',
               'skuId对应getProductDetail应答中的SkuSysno,',
               'barCode对应getProductDetail应答中的BarCode,',
               'skuData对应getProductDetail应答中的ProductSkuSupplyPriceData'

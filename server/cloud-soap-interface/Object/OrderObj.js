@@ -73,6 +73,28 @@ exports.getPackageOrderListXML = function (userId, page, pageSize) {
   return xml(xmlObj, true);
 };
 
+exports.getPackageOrderDetailXML = function (orderId) {
+  var obj = {};
+  obj.Page = 0;
+  obj.PageSize = 1;
+  obj.OrderId = orderId;
+
+  var xmlObj = [{
+    GetAllProductPackageForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(obj)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
 exports.getPackageByOrderIdXML = function (orderId) {
   var xmlObj = [{
     GetProductPackageBySysNo: [

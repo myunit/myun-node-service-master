@@ -40,7 +40,7 @@ module.exports = function(IdentityAudit) {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
               '用户认证信息(JSON string) {"userId":int, "realName":"string", "name":"string", "cardId":"string", ',
-              '"captcha":"string", "identityImgs":[{"ImgKey":int, "ImgType":int, "ImgValue":"string"}], "phone":"string"}',
+              '"captcha":"string", "identityImgs":[{"ImgType":int, "ImgValue":"string"}], "phone":"string"}',
               'ImgKey:等同于userId, ImgType: 101-正面 102-反面 103-手持面, ImgValue:图片地址'
             ]
           }
@@ -76,13 +76,13 @@ module.exports = function(IdentityAudit) {
     IdentityAudit.remoteMethod(
       'ModifyIdentityAudit',
       {
-        description: ['新增用户审核认证(access token).返回结果-status:操作结果 0 失败 1 成功, data:用户信息, msg:附带信息'],
+        description: ['编辑用户审核认证(access token).返回结果-status:操作结果 0 失败 1 成功, data:用户信息, msg:附带信息'],
         accepts: [
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
               '用户认证信息(JSON string) {"userId":int, "realName":"string", "name":"string",' +
-              '"cardId":"string", "captcha":"string", "identityImgs":[{"ImgKey":int, "ImgType":int, "ImgValue":"string"}],' +
+              '"cardId":"string", "captcha":"string", "identityImgs":[{"SysNo":int, "ImgType":int, "ImgValue":"string"}],' +
               ' "phone":"string","auditNo":int} '
             ]
           }

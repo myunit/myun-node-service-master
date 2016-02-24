@@ -397,7 +397,7 @@ module.exports = function (Customer) {
               }
 
               if (!res.IsSuccess) {
-                cb(null, {status:0, msg: res.ErrorDescription});
+                cb({status:0, msg: res.ErrorDescription});
               } else {
                 cb(null, {status: 1, data: res.Customer, msg: ''});
               }

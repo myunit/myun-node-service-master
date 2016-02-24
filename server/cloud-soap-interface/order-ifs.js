@@ -48,6 +48,18 @@ OrderIFS.prototype.getPackageOrderList = function (userId, page, pageSize, callb
   });
 };
 
+OrderIFS.prototype.getPackageOrderDetail = function (orderId, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.getPackageOrderDetailXML(orderId);
+  Order.GetAllProductPackageForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.GetAllProductPackageForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 OrderIFS.prototype.getPackageByOrderId = function (orderId, callback) {
   var Order = this.DS.models.Order;
   var xml = OrderObj.getPackageByOrderIdXML(orderId);

@@ -116,6 +116,7 @@ module.exports = function (Goods) {
 
     //删除商品图片
     Goods.deleteProductImg = function (data, cb) {
+      console.log('deleteProductImg: ' + JSON.stringify(data));
       var imgObj = {};
       imgObj.Body = data.imgNo;
       imgObj.UserId = data.userId;
@@ -151,7 +152,7 @@ module.exports = function (Goods) {
           }
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/del-product-img', verb: 'delete'}
+        http: {path: '/del-product-img', verb: 'post'}
       }
     );
 

@@ -1,13 +1,15 @@
 var loopback = require('loopback');
 var ProductIFS = require('../../server/cloud-soap-interface/product-ifs');
+var GoodsInter = require('../../server/cloud-rest-interface/cloud-goods-interface');
 
 module.exports = function (Goods) {
   Goods.getApp(function (err, app) {
     if (err) {
       throw err;
     }
-    var productIFS = new ProductIFS(app);
 
+    var productIFS = new ProductIFS(app);
+    var goodsInter = new GoodsInter();
     //获取商品列表
     Goods.getAllProduct = function (userId, audit, status, pcdCode, pageId, pageSize, name, cb) {
       var product = {};
@@ -116,7 +118,6 @@ module.exports = function (Goods) {
 
     //删除商品图片
     Goods.deleteProductImg = function (data, cb) {
-      console.log('deleteProductImg: ' + JSON.stringify(data));
       var imgObj = {};
       imgObj.Body = data.imgNo;
       imgObj.UserId = data.userId;
@@ -294,6 +295,32 @@ module.exports = function (Goods) {
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/modify-product', verb: 'post'}
+      }
+    );
+
+    //获取订单物流信息
+    Goods.getLogisticsInfo = function (company, postId, cb) {
+      goodsInter.getLogisticsInfo(company, postId, function (err, data) {
+        if (err != 200) {
+          cb(null, {status: 0, msg: '查询异常'});
+        } else {
+          cb(null, {status: 1, data: JSON.parse(data), msg: ''});
+        }
+      });
+    };
+
+    Goods.remoteMethod(
+      'getLogisticsInfo',
+      {
+        description: [
+          '获取订单物流信息.返回结果-status:操作结果 0 失败 1 成功, data:商品信息, msg:附带信息'
+        ],
+        accepts: [
+          {arg: 'company', type: 'string', require: true, http: {source: 'query'}, description: '快递公司名'},
+          {arg: 'postId', type: 'number', require: true, http: {source: 'query'}, description: '快递号'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-logistics-info', verb: 'get'}
       }
     );
 

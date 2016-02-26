@@ -60,12 +60,12 @@ OrderIFS.prototype.getPackageOrderDetail = function (orderId, callback) {
   });
 };
 
-OrderIFS.prototype.getPackageByOrderId = function (orderId, callback) {
+OrderIFS.prototype.getPackageByOrderId = function (userId, orderId, callback) {
   var Order = this.DS.models.Order;
-  var xml = OrderObj.getPackageByOrderIdXML(orderId);
-  Order.GetProductPackageBySysNo(xml, function (err, response) {
+  var xml = OrderObj.getPackageByOrderIdXML(userId, orderId);
+  Order.GetProductPackageBySysNoWithUid(xml, function (err, response) {
     try {
-      callback(err, JSON.parse(response.GetProductPackageBySysNoResult));
+      callback(err, JSON.parse(response.GetProductPackageBySysNoWithUidResult));
     } catch (e) {
       callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
     }

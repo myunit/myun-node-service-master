@@ -95,9 +95,9 @@ exports.getPackageOrderDetailXML = function (orderId) {
   return xml(xmlObj, true);
 };
 
-exports.getPackageByOrderIdXML = function (orderId) {
+exports.getPackageByOrderIdXML = function (userId, orderId) {
   var xmlObj = [{
-    GetProductPackageBySysNo: [
+    GetProductPackageBySysNoWithUid: [
       {
         _attr: {
           xmlns: 'http://tempuri.org/'
@@ -105,6 +105,9 @@ exports.getPackageByOrderIdXML = function (orderId) {
       },
       {
         packageId: orderId
+      },
+      {
+        uId: userId
       }
     ]
   }];

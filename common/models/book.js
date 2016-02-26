@@ -118,8 +118,8 @@ module.exports = function (Book) {
     );
 
     //根据包团订单id获取包团
-    Book.getPackageByOrderId = function (orderId, cb) {
-      orderIFS.getPackageByOrderId(orderId, function (err, res) {
+    Book.getPackageByOrderId = function (userId, orderId, cb) {
+      orderIFS.getPackageByOrderId(userId, orderId, function (err, res) {
         if (err) {
           console.log('getPackageByOrderId err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
@@ -145,6 +145,7 @@ module.exports = function (Book) {
           '根据包团订单id获取包团(access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
         ],
         accepts: [
+          {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户编号'},
           {arg: 'orderId', type: 'number', required: true, http: {source: 'query'}, description: '包团订单编号'}
 
         ],

@@ -228,5 +228,16 @@ OrderIFS.prototype.setOrderTrackDelivery = function (obj, callback) {
   });
 };
 
+OrderIFS.prototype.delayOrderReceive = function (obj, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.getDelayOrderReceiveXML(obj);
+  Order.DelayOrderReceiveForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.DelayOrderReceiveForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
 
 exports = module.exports = OrderIFS;

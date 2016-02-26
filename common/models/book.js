@@ -773,5 +773,41 @@ module.exports = function (Book) {
       }
     );
 
+    //延迟收货
+    Book.delayOrderReceive = function (data, cb) {
+      orderIFS.delayOrderReceive(data, function (err, res) {
+        if (err) {
+          console.log('delayOrderReceive err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: '操作成功'});
+        }
+      });
+    };
+
+    Book.remoteMethod(
+      'delayOrderReceive',
+      {
+        description: [
+          '延迟收货.返回结果-status:操作结果 0 失败 1 成功, data:商品信息, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '订单信息(JSON string) {"userId":int, "orderId":int, "userName":"string"}'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/delay-order-receive', verb: 'post'}
+      }
+    );
+
   });
 };

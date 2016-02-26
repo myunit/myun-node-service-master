@@ -152,7 +152,7 @@ module.exports = function (Wallet) {
           {arg: 'userId', type: 'number', require: true, http: {source: 'query'}, description: '用户编号'},
           {arg: 'pageId', type: 'number', default: 0, http: {source: 'query'}, description: '第几页'},
           {arg: 'pageSize', type: 'number', default: 10, http: {source: 'query'}, description: '每页记录数'},
-          {arg: 'type', type: 'number', default: 1, http: {source: 'query'}, description: '类型,1支付宝 2银行 '}
+          {arg: 'type', type: 'number', default: -1, http: {source: 'query'}, description: '类型,-1全部 1支付宝 2银行 '}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-withdraws-cash-record', verb: 'get'}

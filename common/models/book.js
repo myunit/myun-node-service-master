@@ -1,5 +1,6 @@
 var loopback = require('loopback');
 var OrderIFS = require('../../server/cloud-soap-interface/order-ifs');
+var GoodsInter = require('../../server/cloud-rest-interface/cloud-goods-interface');
 
 module.exports = function (Book) {
   Book.getApp(function (err, app) {
@@ -7,6 +8,7 @@ module.exports = function (Book) {
       throw err;
     }
     var orderIFS = new OrderIFS(app);
+    var goodsInter = new GoodsInter();
 
     //获取订单详情
     Book.getOrderDetail = function (userId, orderId, cb) {
@@ -116,8 +118,8 @@ module.exports = function (Book) {
     );
 
     //根据包团订单id获取包团
-    Book.getPackageByOrderId = function (orderId, cb) {
-      orderIFS.getPackageByOrderId(orderId, function (err, res) {
+    Book.getPackageByOrderId = function (userId, orderId, cb) {
+      orderIFS.getPackageByOrderId(userId, orderId, function (err, res) {
         if (err) {
           console.log('getPackageByOrderId err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
@@ -143,6 +145,7 @@ module.exports = function (Book) {
           '根据包团订单id获取包团(access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
         ],
         accepts: [
+          {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户编号'},
           {arg: 'orderId', type: 'number', required: true, http: {source: 'query'}, description: '包团订单编号'}
 
         ],
@@ -741,6 +744,68 @@ module.exports = function (Book) {
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/set-order-track-delivery', verb: 'post'}
+      }
+    );
+
+    //获取订单物流信息
+    Book.getLogisticsInfo = function (company, postId, cb) {
+      goodsInter.getLogisticsInfo(company, postId, function (err, data) {
+        if (err != 200) {
+          cb(null, {status: 0, msg: '查询异常'});
+        } else {
+          cb(null, {status: 1, data: JSON.parse(data), msg: ''});
+        }
+      });
+    };
+
+    Book.remoteMethod(
+      'getLogisticsInfo',
+      {
+        description: [
+          '获取订单物流信息.返回结果-status:操作结果 0 失败 1 成功, data:商品信息, msg:附带信息'
+        ],
+        accepts: [
+          {arg: 'company', type: 'string', require: true, http: {source: 'query'}, description: '快递公司名'},
+          {arg: 'postId', type: 'number', require: true, http: {source: 'query'}, description: '快递号'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-logistics-info', verb: 'get'}
+      }
+    );
+
+    //延迟收货
+    Book.delayOrderReceive = function (data, cb) {
+      orderIFS.delayOrderReceive(data, function (err, res) {
+        if (err) {
+          console.log('delayOrderReceive err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: '操作成功'});
+        }
+      });
+    };
+
+    Book.remoteMethod(
+      'delayOrderReceive',
+      {
+        description: [
+          '延迟收货.返回结果-status:操作结果 0 失败 1 成功, data:商品信息, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '订单信息(JSON string) {"userId":int, "orderId":int, "userName":"string"}'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/delay-order-receive', verb: 'post'}
       }
     );
 

@@ -6,6 +6,7 @@ module.exports = function (Goods) {
     if (err) {
       throw err;
     }
+
     var productIFS = new ProductIFS(app);
 
     //获取商品列表
@@ -116,7 +117,6 @@ module.exports = function (Goods) {
 
     //删除商品图片
     Goods.deleteProductImg = function (data, cb) {
-      console.log('deleteProductImg: ' + JSON.stringify(data));
       var imgObj = {};
       imgObj.Body = data.imgNo;
       imgObj.UserId = data.userId;
@@ -284,7 +284,7 @@ module.exports = function (Goods) {
               '"productImgs":[{"SysNo":0, "ImgValue":"string"}]}',
               'userId用户编号, userName用户昵称, productId商品编号, productName商品名, styleCode款号, originPCD产地pcd码, ',
               'originPlace产地名, memo产品简介, categoryName分类名, categoryId分类编号, groupCount包团数量, singlePrice单价, ',
-              'groupPrice包团价, stock库存(正数入库, 负数出库), productImgs产品图片数组(SysNo图片编号, ImgValue图片url)',
+              'groupPrice包团价, stock库存(正数入库, 负数出库), productImgs产品图片数组(SysNo图片编号(新增图片时不需要该字段), ImgValue图片url)',
               'styleCode对应getProductDetail应答中的ProductGroupCode',
               'skuId对应getProductDetail应答中的SkuSysno,',
               'barCode对应getProductDetail应答中的BarCode,',

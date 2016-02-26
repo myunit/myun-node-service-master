@@ -95,9 +95,9 @@ exports.getPackageOrderDetailXML = function (orderId) {
   return xml(xmlObj, true);
 };
 
-exports.getPackageByOrderIdXML = function (orderId) {
+exports.getPackageByOrderIdXML = function (userId, orderId) {
   var xmlObj = [{
-    GetProductPackageBySysNo: [
+    GetProductPackageBySysNoWithUid: [
       {
         _attr: {
           xmlns: 'http://tempuri.org/'
@@ -105,6 +105,9 @@ exports.getPackageByOrderIdXML = function (orderId) {
       },
       {
         packageId: orderId
+      },
+      {
+        uId: userId
       }
     ]
   }];
@@ -398,6 +401,30 @@ exports.setOrderTrackDeliveryXML = function (obj) {
       },
       {
         queryString: JSON.stringify(track)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+exports.getDelayOrderReceiveXML = function (obj) {
+  var data = {};
+  data.Body = obj.orderId;
+  data.PageIndex = 0;
+  data.PageSize = 0;
+  data.UserId = obj.userId;
+  data.UserName = obj.userName;
+
+  var xmlObj = [{
+    DelayOrderReceiveForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(data)
       }
     ]
   }];

@@ -146,6 +146,20 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "setOrderTrackDelivery"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "getLogisticsInfo"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "delayOrderReceive"
     }
   ],
   "methods": {}

@@ -1,5 +1,6 @@
 var loopback = require('loopback');
 var OrderIFS = require('../../server/cloud-soap-interface/order-ifs');
+var GoodsInter = require('../../server/cloud-rest-interface/cloud-goods-interface');
 
 module.exports = function (Book) {
   Book.getApp(function (err, app) {
@@ -7,6 +8,7 @@ module.exports = function (Book) {
       throw err;
     }
     var orderIFS = new OrderIFS(app);
+    var goodsInter = new GoodsInter();
 
     //获取订单详情
     Book.getOrderDetail = function (userId, orderId, cb) {
@@ -741,6 +743,32 @@ module.exports = function (Book) {
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/set-order-track-delivery', verb: 'post'}
+      }
+    );
+
+    //获取订单物流信息
+    Book.getLogisticsInfo = function (company, postId, cb) {
+      goodsInter.getLogisticsInfo(company, postId, function (err, data) {
+        if (err != 200) {
+          cb(null, {status: 0, msg: '查询异常'});
+        } else {
+          cb(null, {status: 1, data: JSON.parse(data), msg: ''});
+        }
+      });
+    };
+
+    Book.remoteMethod(
+      'getLogisticsInfo',
+      {
+        description: [
+          '获取订单物流信息.返回结果-status:操作结果 0 失败 1 成功, data:商品信息, msg:附带信息'
+        ],
+        accepts: [
+          {arg: 'company', type: 'string', require: true, http: {source: 'query'}, description: '快递公司名'},
+          {arg: 'postId', type: 'number', require: true, http: {source: 'query'}, description: '快递号'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-logistics-info', verb: 'get'}
       }
     );
 

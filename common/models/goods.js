@@ -278,7 +278,7 @@ module.exports = function (Goods) {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
               '编辑商品信息(JSON string) {"userId":int, "userName":"string", "productId":int, "productName":"string", ',
-              '"styleCode":"string", "skuId":int, "barCode":"string", "skuData":[{"RuleSysno":int, "IsInStock":boolean}], ',
+              '"styleCode":"string", "skuId":int, "barCode":"string", "skuData":[{"RuleSysNo":int, "IsInStock":boolean}...], ',
               '"originPCD":"string", "originPlace":"string", "memo":"string", "categoryName":"string", "categoryId":int, ',
               '"groupCount":int, "singlePrice":float, "groupPrice":float, "stock":int, ',
               '"productImgs":[{"SysNo":0, "ImgValue":"string"}]}',

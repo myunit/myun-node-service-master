@@ -431,3 +431,20 @@ exports.getDelayOrderReceiveXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.finishOrderDeliveryXML = function (obj) {
+  var xmlObj = [{
+    FinishOrderDeliveryVoucher: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        orderId: obj.orderId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

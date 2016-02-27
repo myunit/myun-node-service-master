@@ -160,6 +160,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "delayOrderReceive"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "finishOrderDelivery"
     }
   ],
   "methods": {}

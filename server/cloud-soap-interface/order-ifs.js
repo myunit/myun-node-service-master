@@ -240,4 +240,16 @@ OrderIFS.prototype.delayOrderReceive = function (obj, callback) {
   });
 };
 
+OrderIFS.prototype.finishOrderDelivery = function (obj, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.finishOrderDeliveryXML(obj);
+  Order.FinishOrderDeliveryVoucher(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.FinishOrderDeliveryVoucherResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = OrderIFS;

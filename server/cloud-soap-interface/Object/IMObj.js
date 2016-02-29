@@ -260,3 +260,23 @@ exports.checkIsFriendXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.getFriendInfoXML = function (userId, friendId) {
+  var xmlObj = [{
+    GetCustomerFriendInfo: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        cus_a: userId
+      },
+      {
+        cus_b: friendId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

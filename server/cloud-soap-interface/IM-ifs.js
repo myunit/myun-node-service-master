@@ -96,4 +96,16 @@ IMIFS.prototype.checkIsFriend = function (obj, callback) {
   });
 };
 
+IMIFS.prototype.getFriendInfo = function (userId, friendId, callback) {
+  var IM = this.DS.models.IM;
+  var xml = IMObj.getFriendInfoXML(userId, friendId);
+  IM.GetCustomerFriendInfo(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.GetCustomerFriendInfoResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = IMIFS;

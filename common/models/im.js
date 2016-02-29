@@ -256,5 +256,37 @@ module.exports = function (IM) {
         http: {path: '/check-is-friend', verb: 'post'}
       }
     );
+
+    //获取好友信息
+    IM.getFriendInfo = function (userId, friendId, cb) {
+      ImIFS.getFriendInfo(userId, friendId, function (err, res) {
+        if (err) {
+          console.log('getFriendInfo err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, data: res.Body, msg: ''});
+        }
+      });
+    };
+
+    IM.remoteMethod(
+      'getFriendInfo',
+      {
+        description: [
+          '获取好友信息(access token).返回结果-status:操作结果 0 失败 1 成功, data:好友数据, msg:附带信息'
+        ],
+        accepts: [
+          {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户编号'},
+          {arg: 'friendId', type: 'number', required: true, http: {source: 'query'}, description: '好友用户编号'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-friend-info', verb: 'get'}
+      }
+    );
   });
 };

@@ -48,6 +48,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "AcceptFriendApply"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "AddFriendApply"
     }
   ],
   "methods": {}

@@ -14,10 +14,22 @@ util.inherits(IMIFS, Object);
 
 IMIFS.prototype.getAllFriendApply = function (userId, pageId, pageSize, callback) {
   var IM = this.DS.models.IM;
-  var xml = IMObj.getAllFriendApplylXML(userId, pageId, pageSize);
+  var xml = IMObj.getAllFriendApplyXML(userId, pageId, pageSize);
   IM.GetAllCustomerFriendApply(xml, function (err, response) {
     try {
       callback(err, JSON.parse(response.GetAllCustomerFriendApplyResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
+IMIFS.prototype.getAllFriends = function (userId, callback) {
+  var IM = this.DS.models.IM;
+  var xml = IMObj.getAllFriendsXML(userId);
+  IM.GetAllCustomerFriends(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.GetAllCustomerFriendsResult));
     } catch (e) {
       callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
     }

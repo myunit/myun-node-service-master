@@ -5,7 +5,7 @@
  */
 var xml = require('xml');
 
-exports.getAllFriendApplylXML = function (userId, pageId, pageSize) {
+exports.getAllFriendApplyXML = function (userId, pageId, pageSize) {
   var xmlObj = [{
     GetAllCustomerFriendApply: [
       {
@@ -47,6 +47,23 @@ exports.getAllFriendApplylXML = function (userId, pageId, pageSize) {
             ]
           }
         ]
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+exports.getAllFriendsXML = function (userId) {
+  var xmlObj = [{
+    GetAllCustomerFriends: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        customerNo: userId
       }
     ]
   }];

@@ -38,12 +38,43 @@ module.exports = function (IM) {
           '获取未处理的好友申请(access token).返回结果-status:操作结果 0 失败 1 成功, data:申请数据, msg:附带信息'
         ],
         accepts: [
-          {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '商品所有者编号'},
+          {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户编号'},
           {arg: 'pageId', type: 'number', default: 0, http: {source: 'query'}, description: '第几页'},
           {arg: 'pageSize', type: 'number', default: 10, http: {source: 'query'}, description: '每页记录数'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-all-friend-apply', verb: 'get'}
+      }
+    );
+
+    //获取所有好友
+    IM.getAllFriends = function (userId, cb) {
+      ImIFS.getAllFriends(userId, function (err, res) {
+        if (err) {
+          console.log('getAllFriends err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, count: res.Counts, data: res.Datas, msg: ''});
+        }
+      });
+    };
+
+    IM.remoteMethod(
+      'getAllFriends',
+      {
+        description: [
+          '获取所有好友(access token).返回结果-status:操作结果 0 失败 1 成功, data:好友数据, msg:附带信息'
+        ],
+        accepts: [
+          {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户编号'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-all-friends', verb: 'get'}
       }
     );
   });

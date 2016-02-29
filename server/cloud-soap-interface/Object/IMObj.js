@@ -153,7 +153,7 @@ exports.searchUserByKeyXML = function (obj) {
   return xml(xmlObj, true);
 };
 
-exports.AcceptFriendApplyXML = function (obj) {
+exports.acceptFriendApplyXML = function (obj) {
   var xmlObj = [{
     AcceptCustomerFriendApply: [
       {
@@ -192,7 +192,7 @@ exports.AcceptFriendApplyXML = function (obj) {
   return xml(xmlObj, true);
 };
 
-exports.AddFriendApplyXML = function (obj) {
+exports.addFriendApplyXML = function (obj) {
   var xmlObj = [{
     AddCustomerFriendApply: [
       {
@@ -234,6 +234,26 @@ exports.AddFriendApplyXML = function (obj) {
             ]
           }
         ]
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
+exports.checkIsFriendXML = function (obj) {
+  var xmlObj = [{
+    CheckIsFriends: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        cus_a: obj.userId
+      },
+      {
+        cus_b: obj.friendId
       }
     ]
   }];

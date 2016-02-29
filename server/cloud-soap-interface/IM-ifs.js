@@ -60,9 +60,9 @@ IMIFS.prototype.searchUserByKey = function (obj, callback) {
   });
 };
 
-IMIFS.prototype.AcceptFriendApply = function (obj, callback) {
+IMIFS.prototype.acceptFriendApply = function (obj, callback) {
   var IM = this.DS.models.IM;
-  var xml = IMObj.AcceptFriendApplyXML(obj);
+  var xml = IMObj.acceptFriendApplyXML(obj);
   IM.AcceptCustomerFriendApply(xml, function (err, response) {
     try {
       callback(err, JSON.parse(response.AcceptCustomerFriendApplyResult));
@@ -72,12 +72,24 @@ IMIFS.prototype.AcceptFriendApply = function (obj, callback) {
   });
 };
 
-IMIFS.prototype.AddFriendApply = function (obj, callback) {
+IMIFS.prototype.addFriendApply = function (obj, callback) {
   var IM = this.DS.models.IM;
-  var xml = IMObj.AddFriendApplyXML(obj);
+  var xml = IMObj.addFriendApplyXML(obj);
   IM.AddCustomerFriendApply(xml, function (err, response) {
     try {
       callback(err, JSON.parse(response.AddCustomerFriendApplyResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
+IMIFS.prototype.checkIsFriend = function (obj, callback) {
+  var IM = this.DS.models.IM;
+  var xml = IMObj.checkIsFriendXML(obj);
+  IM.CheckIsFriends(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.CheckIsFriendsResult));
     } catch (e) {
       callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
     }

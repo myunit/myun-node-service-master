@@ -148,10 +148,10 @@ module.exports = function (IM) {
     );
 
     //同意好友添加申请
-    IM.AcceptFriendApply = function (data, cb) {
-      ImIFS.AcceptFriendApply(data, function (err, res) {
+    IM.acceptFriendApply = function (data, cb) {
+      ImIFS.acceptFriendApply(data, function (err, res) {
         if (err) {
-          console.log('AcceptFriendApply err: ' + err);
+          console.log('acceptFriendApply err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
           return;
         }
@@ -165,7 +165,7 @@ module.exports = function (IM) {
     };
 
     IM.remoteMethod(
-      'AcceptFriendApply',
+      'acceptFriendApply',
       {
         description: [
           '同意好友添加申请.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
@@ -184,10 +184,10 @@ module.exports = function (IM) {
     );
 
     //添加好友申请
-    IM.AddFriendApply = function (data, cb) {
-      ImIFS.AddFriendApply(data, function (err, res) {
+    IM.addFriendApply = function (data, cb) {
+      ImIFS.addFriendApply(data, function (err, res) {
         if (err) {
-          console.log('AddFriendApply err: ' + err);
+          console.log('addFriendApply err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
           return;
         }
@@ -201,7 +201,7 @@ module.exports = function (IM) {
     };
 
     IM.remoteMethod(
-      'AddFriendApply',
+      'addFriendApply',
       {
         description: [
           '添加好友申请.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
@@ -217,6 +217,43 @@ module.exports = function (IM) {
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/add-friend-apply', verb: 'post'}
+      }
+    );
+
+    //检查好友关系
+    IM.checkIsFriend = function (data, cb) {
+      ImIFS.checkIsFriend(data, function (err, res) {
+        if (err) {
+          console.log('checkIsFriend err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, isFriend: res.Body, msg: ''});
+        }
+      });
+    };
+
+    IM.remoteMethod(
+      'checkIsFriend',
+      {
+        description: [
+          '检查好友关系.返回结果-status:操作结果 0 失败 1 成功, isFriend 是否好友, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '搜索信息(JSON string) {"userId":int, "friendId":int}',
+              'friendId:好友的用户的id'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/check-is-friend', verb: 'post'}
       }
     );
   });

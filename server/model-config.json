@@ -64,5 +64,9 @@
   "Wallet": {
     "dataSource": null,
     "public": true
+  },
+  "IM": {
+    "dataSource": null,
+    "public": true
   }
 }

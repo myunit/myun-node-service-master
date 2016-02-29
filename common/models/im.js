@@ -288,5 +288,42 @@ module.exports = function (IM) {
         http: {path: '/get-friend-info', verb: 'get'}
       }
     );
+
+    //删除好友关系
+    IM.deleteFriend = function (data, cb) {
+      ImIFS.deleteFriend(data, function (err, res) {
+        if (err) {
+          console.log('deleteFriend err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: '删除成功'});
+        }
+      });
+    };
+
+    IM.remoteMethod(
+      'deleteFriend',
+      {
+        description: [
+          '删除好友关系.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '搜索信息(JSON string) {"userId":int, "userName":"string", "friendId":int}',
+              'friendId:好友的用户的id'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/delete-friend', verb: 'post'}
+      }
+    );
   });
 };

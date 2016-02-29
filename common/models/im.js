@@ -246,7 +246,7 @@ module.exports = function (IM) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '搜索信息(JSON string) {"userId":int, "userName":"string", "friendId":int, "remark":"string"}',
+              '申请信息(JSON string) {"userId":int, "userName":"string", "friendId":int, "remark":"string"}',
               'friendId:要加为好友的用户的id, remark:申请消息'
             ]
           }
@@ -361,5 +361,43 @@ module.exports = function (IM) {
         http: {path: '/delete-friend', verb: 'post'}
       }
     );
+
+    //设置好友昵称
+    IM.setFriendNickName = function (data, cb) {
+      ImIFS.setFriendNickName(data, function (err, res) {
+        if (err) {
+          console.log('setFriendNickName err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: ''});
+        }
+      });
+    };
+
+    IM.remoteMethod(
+      'setFriendNickName',
+      {
+        description: [
+          '设置好友昵称.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '设置信息(JSON string) {"userId":int, "userName":"string", "friendId":int, "nick":"string"}',
+              'friendId:好友的用户的id, nick:昵称'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/set-friend-nick', verb: 'post'}
+      }
+    );
+
   });
 };

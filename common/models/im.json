@@ -83,6 +83,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "rejectFriendApply"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "setFriendNickName"
     }
   ],
   "methods": {}

@@ -132,4 +132,16 @@ IMIFS.prototype.deleteFriend = function (obj, callback) {
   });
 };
 
+IMIFS.prototype.setFriendNickName = function (obj, callback) {
+  var IM = this.DS.models.IM;
+  var xml = IMObj.setFriendNickNameXML(obj);
+  IM.SetCustomerFriendNickName(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.SetCustomerFriendNickNameResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = IMIFS;

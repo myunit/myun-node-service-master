@@ -48,4 +48,16 @@ IMIFS.prototype.getRecommendFriends = function (userId, contactAddress, pcdCode,
   });
 };
 
+IMIFS.prototype.searchUserByKey = function (obj, callback) {
+  var IM = this.DS.models.IM;
+  var xml = IMObj.searchUserByKeyXML(obj);
+  IM.SearchCustomerByKey(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.SearchCustomerByKeyResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = IMIFS;

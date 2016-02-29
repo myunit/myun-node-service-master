@@ -113,3 +113,42 @@ exports.getRecommendFriendsXML = function (userId, contactAddress, pcdCode) {
 
   return xml(xmlObj, true);
 };
+
+exports.searchUserByKeyXML = function (obj) {
+  var xmlObj = [{
+    SearchCustomerByKey: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        request: [
+          {
+            _attr: {
+              'xmlns:d4p1': 'http://schemas.datacontract.org/2004/07/MYun.CIE.Contract.Data',
+              'xmlns:i': 'http://www.w3.org/2001/XMLSchema-instance'
+            }
+          },
+          {
+            'd4p1:PageIndex': obj.pageId
+          },
+          {
+            'd4p1:PageSize': obj.pageSize
+          },
+          {
+            'd4p1:UserId': obj.userId
+          },
+          {
+            'd4p1:UserName': ''
+          },
+          {
+            'd4p1:Body': obj.key
+          }
+        ]
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

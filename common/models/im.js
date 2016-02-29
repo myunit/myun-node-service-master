@@ -110,5 +110,41 @@ module.exports = function (IM) {
         http: {path: '/get-recommend-friends', verb: 'get'}
       }
     );
+
+    //根据关键字搜索用户
+    IM.searchUserByKey = function (data, cb) {
+      ImIFS.searchUserByKey(data, function (err, res) {
+        if (err) {
+          console.log('searchUserByKey err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, count: res.Counts, data: res.Datas, msg: ''});
+        }
+      });
+    };
+
+    IM.remoteMethod(
+      'searchUserByKey',
+      {
+        description: [
+          '根据关键字搜索用户.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '搜索信息(JSON string) {"userId":int, "pageId":int, "pageSize":int, "key":"string"}'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/search-user-by-key', verb: 'post'}
+      }
+    );
   });
 };

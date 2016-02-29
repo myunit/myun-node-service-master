@@ -70,3 +70,46 @@ exports.getAllFriendsXML = function (userId) {
 
   return xml(xmlObj, true);
 };
+
+exports.getRecommendFriendsXML = function (userId, contactAddress, pcdCode) {
+  if (pcdCode.charAt(pcdCode.length - 1) !== '-') {
+    pcdCode += '-';
+  }
+
+  var xmlObj = [{
+    GetCustomerByLuck: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        query: [
+          {
+            _attr: {
+              'xmlns:d4p1': 'http://schemas.datacontract.org/2004/07/MYun.CIE.Contract.Data',
+              'xmlns:i': 'http://www.w3.org/2001/XMLSchema-instance'
+            }
+          },
+          {
+            'd4p1:ContactAddress': contactAddress
+          },
+          {
+            'd4p1:Count': 10
+          },
+          {
+            'd4p1:ExCustomerNo': userId
+          },
+          {
+            'd4p1:PCDCode': pcdCode
+          },
+          {
+            'd4p1:PCDDescription': ''
+          }
+        ]
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

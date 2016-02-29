@@ -27,6 +27,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "getAllFriends"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "getRecommendFriends"
     }
   ],
   "methods": {}

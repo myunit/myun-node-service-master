@@ -36,4 +36,16 @@ IMIFS.prototype.getAllFriends = function (userId, callback) {
   });
 };
 
+IMIFS.prototype.getRecommendFriends = function (userId, contactAddress, pcdCode, callback) {
+  var IM = this.DS.models.IM;
+  var xml = IMObj.getRecommendFriendsXML(userId, contactAddress, pcdCode);
+  IM.GetCustomerByLuck(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.GetCustomerByLuckResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = IMIFS;

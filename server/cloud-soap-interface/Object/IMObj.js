@@ -192,6 +192,45 @@ exports.acceptFriendApplyXML = function (obj) {
   return xml(xmlObj, true);
 };
 
+exports.rejectFriendApplyXML = function (obj) {
+  var xmlObj = [{
+    RejectCustomerFriendApply: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        request: [
+          {
+            _attr: {
+              'xmlns:d4p1': 'http://schemas.datacontract.org/2004/07/MYun.CIE.Contract.Data',
+              'xmlns:i': 'http://www.w3.org/2001/XMLSchema-instance'
+            }
+          },
+          {
+            'd4p1:PageIndex': 0
+          },
+          {
+            'd4p1:PageSize': 0
+          },
+          {
+            'd4p1:UserId': obj.userId
+          },
+          {
+            'd4p1:UserName': obj.userName
+          },
+          {
+            'd4p1:Body': obj.applyId
+          }
+        ]
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
 exports.addFriendApplyXML = function (obj) {
   var xmlObj = [{
     AddCustomerFriendApply: [

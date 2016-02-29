@@ -183,6 +183,42 @@ module.exports = function (IM) {
       }
     );
 
+    //拒绝好友添加申请
+    IM.rejectFriendApply = function (data, cb) {
+      ImIFS.rejectFriendApply(data, function (err, res) {
+        if (err) {
+          console.log('rejectFriendApply err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: ''});
+        }
+      });
+    };
+
+    IM.remoteMethod(
+      'rejectFriendApply',
+      {
+        description: [
+          '拒绝好友添加申请.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '搜索信息(JSON string) {"userId":int, "userName":"string", "applyId":int}'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/reject-friend-apply', verb: 'post'}
+      }
+    );
+
     //添加好友申请
     IM.addFriendApply = function (data, cb) {
       ImIFS.addFriendApply(data, function (err, res) {

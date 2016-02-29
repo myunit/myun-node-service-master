@@ -76,6 +76,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "deleteFriend"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "rejectFriendApply"
     }
   ],
   "methods": {}

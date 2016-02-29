@@ -72,6 +72,18 @@ IMIFS.prototype.acceptFriendApply = function (obj, callback) {
   });
 };
 
+IMIFS.prototype.rejectFriendApply = function (obj, callback) {
+  var IM = this.DS.models.IM;
+  var xml = IMObj.rejectFriendApplyXML(obj);
+  IM.RejectCustomerFriendApply(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.RejectCustomerFriendApplyResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 IMIFS.prototype.addFriendApply = function (obj, callback) {
   var IM = this.DS.models.IM;
   var xml = IMObj.addFriendApplyXML(obj);

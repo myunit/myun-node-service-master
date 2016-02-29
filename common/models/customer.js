@@ -304,7 +304,7 @@ module.exports = function (Customer) {
         }
 
         if (!res.IsSuccess) {
-          cb(null, {status:0, msg: res.ErrorDescription});
+          cb(null, {status:0, msg: res.ErrorInfo});
         } else {
           cb(null, {status: 1, msg: ''});
         }

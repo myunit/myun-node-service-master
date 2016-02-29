@@ -65,5 +65,11 @@
     "name": "WalletSoap",
     "connector": "soap",
     "wsdl": "http://122.225.60.230:10008/PC_API/WalletService.svc?WSDL"
+  },
+  "IMSoap": {
+    "url": "http://122.225.60.230:10008/PC_API/IMService.svc",
+    "name": "IMSoap",
+    "connector": "soap",
+    "wsdl": "http://122.225.60.230:10008/PC_API/IMService.svc?WSDL"
   }
 }

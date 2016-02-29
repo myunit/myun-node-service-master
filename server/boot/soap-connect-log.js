@@ -33,4 +33,9 @@ module.exports = function (app) {
     console.log('Wallet interface is connected');
     app.datasources.WalletSoap.createModel('Wallet', {});
   });
+
+  app.datasources.IMSoap.once('connected', function () {
+    console.log('IMSoap interface is connected');
+    app.datasources.IMSoap.createModel('IM', {});
+  });
 };

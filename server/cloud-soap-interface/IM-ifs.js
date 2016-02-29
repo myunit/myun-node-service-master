@@ -60,4 +60,16 @@ IMIFS.prototype.searchUserByKey = function (obj, callback) {
   });
 };
 
+IMIFS.prototype.AcceptFriendApply = function (obj, callback) {
+  var IM = this.DS.models.IM;
+  var xml = IMObj.AcceptFriendApplyXML(obj);
+  IM.AcceptCustomerFriendApply(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.AcceptCustomerFriendApplyResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = IMIFS;

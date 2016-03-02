@@ -46,7 +46,7 @@ module.exports = function (ShoppingCart) {
               }
 
               if (!res.IsSuccess) {
-                cb(null, {status: 0, msg: res.ErrorDescription});
+                cb({status: 0, msg: res.ErrorDescription});
               } else {
                 cb(null, res);
               }
@@ -66,7 +66,7 @@ module.exports = function (ShoppingCart) {
               var end = new Date();
               package.shareEndDate = utils.formatByT(new Date(end.valueOf() + 1*24*60*60*1000));
               package.deliverDate = utils.formatByT(new Date(end.valueOf() + 7*24*60*60*1000));
-              package.packagePrice = order.TotalAmount/ order.TotalQty;
+              package.packagePrice = order.TotalAmount/order.TotalQty;
               orderIFS.createPackage(package, function (err, res) {
                 if (err) {
                   console.log('createPackage err: ' + err);

@@ -175,6 +175,7 @@ exports.modifyProductXML = function (obj) {
   product.SkuSysno = obj.skuId;
   product.BarCode = obj.barCode;
   product.ProductSkuSupplyPriceData = obj.skuData;
+  product.AuditStatus = obj.audit;
 
   var xmlObj = [{
     SetProductForApp: [

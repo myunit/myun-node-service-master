@@ -240,7 +240,7 @@ module.exports = function (Address) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '地址信息(JSON string) {"userId":int, "addressId":int, "name":"string", "phone":"string", "mobile":"string", ',
+              '地址信息(JSON string) {"userId":int, "addressId":int, "name":"string", "phone":"string", ',
               '"provinceId":int, "province":"string", "cityId":int, "city":"string", "districtId":int, ',
               '"district":"string", "address":"string", "isDefault":boolean}'
             ]

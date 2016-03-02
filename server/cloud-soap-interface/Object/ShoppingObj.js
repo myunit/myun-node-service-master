@@ -35,6 +35,7 @@ exports.submitOrderXML = function (obj, cartIds) {
   order.Logistics = obj.logistics;
   order.BuyerMessage = obj.message;
   order.from = obj.from;
+  order.OrderType = obj.type;
 
   var xmlObj = [{
     SubmitCouponOrderByCartItemSysNo: [

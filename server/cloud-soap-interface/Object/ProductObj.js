@@ -132,6 +132,7 @@ exports.addProductXML = function (obj) {
   product.Memo = obj.memo;
   product.OriginPCDCode = obj.originPCD;
   product.OriginPlace = obj.originPlace;
+  product.ProductGroupCode = '';
   product.ProductName = obj.productName;
   product.SignlePrice = obj.singlePrice;
   product.Stock = obj.stock;

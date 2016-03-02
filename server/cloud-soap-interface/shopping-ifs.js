@@ -28,7 +28,6 @@ ShoppingIFS.prototype.submitOrder = function (obj, cartIds, callback) {
   var Shopping = this.DS.models.Shopping;
   var xml = ShoppingObj.submitOrderXML(obj, cartIds);
   Shopping.SubmitCouponOrderByCartItemSysNo(xml, function (err, response) {
-    console.log(response);
     try {
       callback(err, JSON.parse(response.SubmitCouponOrderByCartItemSysNoResult));
     } catch (e) {

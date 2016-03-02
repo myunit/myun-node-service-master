@@ -1,6 +1,8 @@
 var loopback = require('loopback');
 var async = require('async');
-var ShoppingIFS = require('../../server/cloud-soap-interface/shopping-ifs');
+var ShoppingIFS = require('../../server/cloud-soap-interface/shopping-ifs')
+var OrderIFS = require('../../server/cloud-soap-interface/order-ifs');
+var utils = require('../../server/util/utils');
 
 module.exports = function (ShoppingCart) {
   ShoppingCart.getApp(function (err, app) {
@@ -9,6 +11,7 @@ module.exports = function (ShoppingCart) {
     }
 
     var shoppingIFS = new ShoppingIFS(app);
+    var orderIFS = new OrderIFS(app);
 
     //提交订单
     ShoppingCart.submitOrder = function (data, submitCB) {
@@ -45,9 +48,41 @@ module.exports = function (ShoppingCart) {
               if (!res.IsSuccess) {
                 cb(null, {status: 0, msg: res.ErrorDescription});
               } else {
-                cb(null, {status: 1, cartId: res, msg: ''});
+                cb(null, res);
               }
             });
+          },
+          function (order, cb) {
+            if (data.type === 3) {
+              var package = {};
+              package.userId = data.userId;
+              package.sharePrice = order.TotalAmount;
+              package.quantity = order.TotalQty;
+              package.orderId = order.OrderId;
+              package.payAmount = order.TotalAmount;
+              package.skuId = data.product[0].pItemId;
+              package.buyLimit = 1;
+              package.retentionQuantity = 1;
+              var end = new Date();
+              package.shareEndDate = utils.formatByT(new Date(end.valueOf() + 1*24*60*60*1000));
+              package.deliverDate = utils.formatByT(new Date(end.valueOf() + 7*24*60*60*1000));
+              package.packagePrice = order.TotalAmount/ order.TotalQty;
+              orderIFS.createPackage(package, function (err, res) {
+                if (err) {
+                  console.log('createPackage err: ' + err);
+                  cb(null, {status: 0, msg: '操作异常'});
+                  return;
+                }
+
+                if (!res.IsSuccess) {
+                  cb(null, {status: 0, msg: res.ErrorDescription});
+                } else {
+                  cb(null, {status: 1, order: order, package:{packageId:res.SysNo}, msg: ''});
+                }
+              });
+            } else {
+              cb(null, {status: 1, order: order, msg: ''});
+            }
           }
         ],
         function (err, msg) {
@@ -70,10 +105,10 @@ module.exports = function (ShoppingCart) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '提交订单(JSON string) {"userId":int, "receiverId":int, "logistics":"string", "message":"string", ',
+              '提交订单(JSON string) {"userId":int, "receiverId":int, "logistics":"string", "message":"string", "type":int',
               '"payMent":int, "from":int, "product":[{"pItemId":int, "pId":int, "qty":int}]}',
-              'userId:用户编号, receiverId:收货地址编号, logistics:物流(快递 or 自提), message:留言, payMent:支付方式(13-微信支付), ',
-              'from:订单来源(3-android 4-ios), pId:商品编号, pItemId:商品sku编号,qty数量'
+              'userId:用户编号, receiverId:收货地址编号, logistics:物流(快递 or 自提), message:留言, type:订单类型(0-普通订单,3-包团订单), ',
+              'payMent:支付方式(13-微信支付), from:订单来源(3-android 4-ios), pId:商品编号, pItemId:商品sku编号,qty数量'
             ]
           }
         ],

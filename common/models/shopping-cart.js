@@ -1,6 +1,6 @@
 var loopback = require('loopback');
 var async = require('async');
-var ShoppingIFS = require('../../server/cloud-soap-interface/shopping-ifs')
+var ShoppingIFS = require('../../server/cloud-soap-interface/shopping-ifs');
 var OrderIFS = require('../../server/cloud-soap-interface/order-ifs');
 var utils = require('../../server/util/utils');
 

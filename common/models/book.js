@@ -1,6 +1,7 @@
 var loopback = require('loopback');
 var OrderIFS = require('../../server/cloud-soap-interface/order-ifs');
 var GoodsInter = require('../../server/cloud-rest-interface/cloud-goods-interface');
+var track = require('../../server/tracking-company');
 
 module.exports = function (Book) {
   Book.getApp(function (err, app) {
@@ -749,7 +750,7 @@ module.exports = function (Book) {
 
     //获取订单物流信息
     Book.getLogisticsInfo = function (company, postId, cb) {
-      goodsInter.getLogisticsInfo(company, postId, function (err, data) {
+      goodsInter.getLogisticsInfo(track[company].short, postId, function (err, data) {
         if (err != 200) {
           cb(null, {status: 0, msg: '查询异常'});
         } else {

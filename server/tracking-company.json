@@ -1,0 +1,46 @@
+{
+  "EMS": {
+    "name": "EMS",
+    "short": "youzhengguonei"
+  },
+  "GT": {
+    "name": "国通",
+    "short": "guotongkuaidi"
+  },
+  "HT": {
+    "name": "百世快递",
+    "short": "huitongkuaidi"
+  },
+  "JFKD": {
+    "name": "全峰快递",
+    "short": "quanfengkuaidi"
+  },
+  "SF": {
+    "name": "顺丰",
+    "short": "shunfeng"
+  },
+  "STO": {
+    "name": "申通",
+    "short": "shentong"
+  },
+  "TT": {
+    "name": "天天",
+    "short": "tiantian"
+  },
+  "YD": {
+    "name": "韵达",
+    "short": "yunda"
+  },
+  "YT": {
+    "name": "圆通",
+    "short": "yuantong"
+  },
+  "ZT": {
+    "name": "中通",
+    "short": "zhongtong"
+  },
+  "DB": {
+    "name": "德邦",
+    "short": "debangwuliu"
+  }
+}

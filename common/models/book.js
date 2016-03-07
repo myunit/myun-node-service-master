@@ -298,7 +298,7 @@ module.exports = function (Book) {
 
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/cancel-package', verb: 'delete'}
+        http: {path: '/cancel-package', verb: 'post'}
       }
     );
 
@@ -336,7 +336,7 @@ module.exports = function (Book) {
 
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/finish-package', verb: 'delete'}
+        http: {path: '/finish-package', verb: 'post'}
       }
     );
 

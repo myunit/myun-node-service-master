@@ -84,8 +84,8 @@ module.exports = function (Address) {
     );
 
     //删除用户收货地址
-    Address.delReceiverAddress = function (userId, addressId, cb) {
-      receiverIFS.delReceiverAddress(userId, addressId, function (err, res) {
+    Address.delReceiverAddress = function (data, cb) {
+      receiverIFS.delReceiverAddress(data.userId, data.addressId, function (err, res) {
         if (err) {
           console.log('delReceiverAddress err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
@@ -107,11 +107,16 @@ module.exports = function (Address) {
           '删除用户收货地址.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
         ],
         accepts: [
-          {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户编号'},
-          {arg: 'addressId', type: 'number', required: true, http: {source: 'query'}, description: '地址编号'}
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '地址信息(JSON string) {"userId":int, "addressId":int}',
+              'userId:用户编号, addressId:地址编号'
+            ]
+          }
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/del-receiver-address', verb: 'delete'}
+        http: {path: '/del-receiver-address', verb: 'post'}
       }
     );
 

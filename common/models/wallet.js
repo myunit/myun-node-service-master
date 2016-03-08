@@ -39,7 +39,7 @@ module.exports = function (Wallet) {
               '提现信息信息(JSON string) {"userId":int, "userName":"string", "account":"string", "company":"string", ',
               '"accountName":"string", "amount":float, "phone":"string", "type":int}',
               'userId:用户编号, userName:用户昵称, account：银行开号或支付宝账号, company:银行名(支付宝时为空字符串), ',
-              'accountName:开户人名(支付宝时为空字符串), amount:提现金额, phone:电话, type:提现方式(1-支付宝 2-银行卡)'
+              'accountName:真实姓名, amount:提现金额, phone:电话, type:提现方式(1-支付宝 2-银行卡)'
             ]
           }
         ],

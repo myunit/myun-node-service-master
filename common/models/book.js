@@ -76,7 +76,7 @@ module.exports = function (Book) {
           {arg: 'ownerId', type: 'number', default: 0, http: {source: 'query'}, description: '商品所有者编号'},
           {arg: 'orderType', type: 'number', default: 0, http: {source: 'query'}, description: '订单类型(-1 全部,0 普通,3 包团)'},
           {arg: 'payStatus', type: 'number', default: 0, http: {source: 'query'}, description: '支付状态(0 全部,1 未支付)'},
-          {arg: 'deliveryStatus', type: 'number', default: 0, http: {source: 'query'}, description: '发货状态(0 全部,1 已发货, 2 已付款未发货)'}
+          {arg: 'deliveryStatus', type: 'number', default: 0, http: {source: 'query'}, description: '发货状态(0 全部,1 待收货, 2 待发货)'}
 
         ],
         returns: {arg: 'repData', type: 'string'},

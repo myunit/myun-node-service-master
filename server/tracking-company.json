@@ -42,5 +42,9 @@
   "DB": {
     "name": "德邦",
     "short": "debangwuliu"
+  },
+  "ZJS": {
+    "name": "宅急送",
+    "short": "zhaijisong"
   }
 }

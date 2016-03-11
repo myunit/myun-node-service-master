@@ -713,12 +713,8 @@ module.exports = function (Book) {
     //获取订单物流信息
     Book.getLogisticsInfo = function (company, postId, cb) {
       var track_company = track[company];
-      if (track_company === undefined) {
-        cb(null, {status: 0, msg: '快递公司不存在'});
-        return;
-      }
 
-      goodsInter.getLogisticsInfo(track_company.short, postId, function (err, data) {
+      goodsInter.getLogisticsInfo(track_company === undefined ? company:track_company.short, postId, function (err, data) {
         if (err != 200) {
           cb(null, {status: 0, msg: '查询异常'});
         } else {

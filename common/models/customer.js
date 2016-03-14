@@ -134,7 +134,7 @@ module.exports = function (Customer) {
               }
 
               if (res.IsSuccess) {
-                cb({status:0, msg: res.ErrorDescription});
+                cb({status:0, msg: '该手机号已被注册'});
               } else {
                 cb(null);
               }

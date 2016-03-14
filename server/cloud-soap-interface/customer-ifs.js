@@ -48,12 +48,12 @@ CustomerIFS.prototype.login = function (obj, callback) {
   });
 };
 
-CustomerIFS.prototype.bindWeiXinAndPhone = function (openID, phone, callback) {
+CustomerIFS.prototype.bindWeiXinAndPhone = function (obj, callback) {
   var Customer = this.DS.models.Customer;
-  var xml = CustomerObj.bindWeiXinAndPhoneXML(openID, phone);
-  Customer.SaveWeixinOpenID(xml, function (err, response) {
+  var xml = CustomerObj.bindWeiXinAndPhoneXML(obj);
+  Customer.BindMobileByWeixinOpenIDForApp(xml, function (err, response) {
     try {
-      callback(err, JSON.parse(response.SaveWeixinOpenIDResult));
+      callback(err, JSON.parse(response.BindMobileByWeixinOpenIDForAppResult));
     } catch (e) {
       callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
     }

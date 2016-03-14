@@ -115,8 +115,72 @@ module.exports = function (Customer) {
       }
     );
 
+    //获取验证码(微信手机号绑定)
+    Customer.getCaptchaForBind = function (phone, interval, bindCb) {
+      if (!phone) {
+        cb(null, {status: 0, msg: '参数错误'});
+        return;
+      }
+
+      async.waterfall(
+        [
+          function (cb) {
+            //判断手机号是否已经注册
+            customerIFS.isRegister(phone, function (err, res) {
+              if (err) {
+                console.log('isRegister err: ' + err);
+                cb({status: 0, msg: '操作异常'});
+                return;
+              }
+
+              if (!res.IsSuccess) {
+                cb({status:0, msg: res.ErrorDescription});
+              } else {
+                cb(null);
+              }
+            });
+          },
+          function (cb) {
+            customerIFS.getCaptcha(phone, interval, function (err, res) {
+              if (err) {
+                console.log('getCaptcha err: ' + err);
+                cb({status: 0, msg: '操作异常'});
+                return;
+              }
+
+              if (!res.IsSuccess) {
+                cb({status: 0, msg: '发送失败'});
+              } else {
+                cb(null, {status: 1, msg: '发送成功'});
+              }
+            });
+          }
+        ],
+        function (err, msg) {
+          if (err) {
+            bindCb(null, err);
+          } else {
+            bindCb(null, msg);
+          }
+        }
+      );
+    };
+
+    Customer.remoteMethod(
+      'getCaptchaForBind',
+      {
+        description: ['获取验证码(微信手机号绑定).返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
+        accepts: [
+          {arg: 'phone', type: 'string', required: true, http: {source: 'query'}, description: '手机号'},
+          {arg: 'interval', type: 'number', default:900, http: {source: 'query'}, description: '验证码有效期(秒)'}
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-captcha-for-bind', verb: 'get'}
+      }
+    );
+
     //绑定微信号和手机号(自动注册)
-    Customer.bindWeiXinAndPhoneWithReg = function (data, bindCb) {
+    /*Customer.bindWeiXinAndPhoneWithReg = function (data, bindCb) {
       if (!data.phone || !data.password || !data.openId || !data.code || !data.from) {
         bindCb(null, {status:0, msg: '参数错误'});
         return;
@@ -181,7 +245,7 @@ module.exports = function (Customer) {
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/bind-weixin-phone-register', verb: 'post'}
       }
-    );
+    );*/
 
     //绑定微信号和手机号(不带注册功能)
     Customer.bindWeiXinAndPhone = function (data, cb) {
@@ -190,7 +254,7 @@ module.exports = function (Customer) {
         return;
       }
 
-      customerIFS.bindWeiXinAndPhone(data.openId, data.phone, function (err, res) {
+      customerIFS.bindWeiXinAndPhone(data, function (err, res) {
         if (err) {
           console.log('bindWeiXinAndPhone err: ' + err);
           cb({status:0, msg: '操作异常'});
@@ -213,8 +277,8 @@ module.exports = function (Customer) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '用户绑定信息(JSON string) {"phone":"string", "openId":"string"},',
-              'phone:手机号, openId微信id'
+              '用户绑定信息(JSON string) {"phone":"string", "openId":"string","code":"string"},',
+              'phone:手机号, openId微信id, code验证码'
             ]
           }
         ],

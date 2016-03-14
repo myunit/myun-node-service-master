@@ -57,13 +57,13 @@
       "permission": "ALLOW",
       "property": "modifyPassword"
     },
-    {
+    /*{
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "bindWeiXinAndPhoneWithReg"
-    },
+    },*/
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",

@@ -133,7 +133,7 @@ module.exports = function (Customer) {
                 return;
               }
 
-              if (!res.IsSuccess) {
+              if (res.IsSuccess) {
                 cb({status:0, msg: res.ErrorDescription});
               } else {
                 cb(null);

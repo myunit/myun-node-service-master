@@ -10,7 +10,7 @@ module.exports = function (Goods) {
     var productIFS = new ProductIFS(app);
 
     //获取商品列表
-    Goods.getAllProduct = function (userId, audit, status, pcdCode, pageId, pageSize, name, cb) {
+    Goods.getAllProduct = function (userId, audit, status, pcdCode, pageId, pageSize, name, friendIds, cb) {
       var product = {};
       product.CustomerNo = userId;
       product.AuditStatus = audit;
@@ -19,6 +19,9 @@ module.exports = function (Goods) {
       product.Page = pageId;
       product.PageSize = pageSize;
       product.ProductName = name;
+      if (friendIds) {
+        product.UserIDs = friendIds;
+      }
 
       productIFS.getAllProduct(product, function (err, res) {
         if (err) {
@@ -48,7 +51,8 @@ module.exports = function (Goods) {
           {arg: 'pcdCode', type: 'string', default: '', http: {source: 'query'}, description: '商品所在地pcd'},
           {arg: 'pageId', type: 'number', default: 0, http: {source: 'query'}, description: '第几页'},
           {arg: 'pageSize', type: 'number', default: 10, http: {source: 'query'}, description: '每页记录数'},
-          {arg: 'name', type: 'string', default: '', http: {source: 'query'}, description: '商品名'}
+          {arg: 'name', type: 'string', default: '', http: {source: 'query'}, description: '商品名'},
+          {arg: 'friendIds', type: 'string', default: '', http: {source: 'query'}, description: '好友user id 字符串,数组格[1,2,3...]'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-all-product', verb: 'get'}

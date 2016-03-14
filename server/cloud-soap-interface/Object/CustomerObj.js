@@ -74,20 +74,23 @@ exports.loginXML = function (obj) {
   return xml(xmlObj, true);
 };
 
-exports.bindWeiXinAndPhoneXML = function (openID, phone) {
+exports.bindWeiXinAndPhoneXML = function (obj) {
 
   var xmlObj = [{
-    SaveWeixinOpenID: [
+    BindMobileByWeixinOpenIDForApp: [
       {
         _attr: {
           xmlns: 'http://tempuri.org/'
         }
       },
       {
-        CellPhoneNo: phone
+        weixinopenid: obj.openId
       },
       {
-        wixinOpenID: openID
+        mobile: obj.phone
+      },
+      {
+        code: obj.code
       }
     ]
   }];

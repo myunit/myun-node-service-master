@@ -20,7 +20,7 @@ module.exports = function (Goods) {
       product.PageSize = pageSize;
       product.ProductName = name;
       if (friendIds) {
-        product.UserIDs = friendIds;
+        product.UserIDs = friendIds.split(',');
       }
 
       productIFS.getAllProduct(product, function (err, res) {
@@ -52,7 +52,7 @@ module.exports = function (Goods) {
           {arg: 'pageId', type: 'number', default: 0, http: {source: 'query'}, description: '第几页'},
           {arg: 'pageSize', type: 'number', default: 10, http: {source: 'query'}, description: '每页记录数'},
           {arg: 'name', type: 'string', default: '', http: {source: 'query'}, description: '商品名'},
-          {arg: 'friendIds', type: 'string', default: '', http: {source: 'query'}, description: '好友user id 字符串,数组格[1,2,3...]'}
+          {arg: 'friendIds', type: 'string', default: '', http: {source: 'query'}, description: '好友user id 字符串,格式1,2,3...'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-all-product', verb: 'get'}

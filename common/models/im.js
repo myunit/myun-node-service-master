@@ -15,8 +15,8 @@ module.exports = function (IM) {
     var ImIFS = new IMIFS(app);
 
     //获取未处理的好友申请
-    IM.getAllFriendApply = function (userId, pageId, pageSize, cb) {
-      ImIFS.getAllFriendApply(userId, pageId, pageSize, function (err, res) {
+    IM.getAllFriendApply = function (userId, state, pageId, pageSize, cb) {
+      ImIFS.getAllFriendApply(userId, state, pageId, pageSize, function (err, res) {
         if (err) {
           console.log('getAllFriendApply err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
@@ -39,6 +39,7 @@ module.exports = function (IM) {
         ],
         accepts: [
           {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户编号'},
+          {arg: 'state', type: 'number', default: -1, http: {source: 'query'}, description: '申请状态(-1 所有 0 等待验证 10 同意申请 11 拒绝申请)'},
           {arg: 'pageId', type: 'number', default: 0, http: {source: 'query'}, description: '第几页'},
           {arg: 'pageSize', type: 'number', default: 10, http: {source: 'query'}, description: '每页记录数'}
         ],

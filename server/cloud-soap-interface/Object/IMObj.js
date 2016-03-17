@@ -5,7 +5,7 @@
  */
 var xml = require('xml');
 
-exports.getAllFriendApplyXML = function (userId, pageId, pageSize) {
+exports.getAllFriendApplyXML = function (userId, state, pageId, pageSize) {
   var xmlObj = [{
     GetAllCustomerFriendApply: [
       {
@@ -36,7 +36,7 @@ exports.getAllFriendApplyXML = function (userId, pageId, pageSize) {
           {
             'd4p1:Body': [
               {
-                'd4p1:ApplyState': 0
+                'd4p1:ApplyState': state
               },
               {
                 'd4p1:CustomerNoFrom': -1

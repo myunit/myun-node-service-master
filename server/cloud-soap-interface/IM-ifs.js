@@ -12,9 +12,9 @@ var IMIFS = function (app) {
 };
 util.inherits(IMIFS, Object);
 
-IMIFS.prototype.getAllFriendApply = function (userId, pageId, pageSize, callback) {
+IMIFS.prototype.getAllFriendApply = function (userId, state, pageId, pageSize, callback) {
   var IM = this.DS.models.IM;
-  var xml = IMObj.getAllFriendApplyXML(userId, pageId, pageSize);
+  var xml = IMObj.getAllFriendApplyXML(userId, state, pageId, pageSize);
   IM.GetAllCustomerFriendApply(xml, function (err, response) {
     try {
       callback(err, JSON.parse(response.GetAllCustomerFriendApplyResult));

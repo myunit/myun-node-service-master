@@ -65,7 +65,7 @@ module.exports = function (ShoppingCart) {
               package.retentionQuantity = 1;
               var end = new Date();
               package.shareEndDate = utils.formatByT(new Date(end.valueOf() + 1*24*60*60*1000));
-              package.deliverDate = utils.formatByT(new Date(end.valueOf() + 7*24*60*60*1000));
+              package.deliverDate = utils.formatByT(new Date(end.valueOf() + 3*24*60*60*1000));
               package.packagePrice = order.TotalAmount/order.TotalQty;
               orderIFS.createPackage(package, function (err, res) {
                 if (err) {

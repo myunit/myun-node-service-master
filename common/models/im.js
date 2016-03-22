@@ -80,8 +80,8 @@ module.exports = function (IM) {
     );
 
     //获取随机推荐的10个同城同乡好友
-    IM.getRecommendFriends = function (userId, contactAddress, pcdCode, cb) {
-      ImIFS.getRecommendFriends(userId, contactAddress, pcdCode, function (err, res) {
+    IM.getRecommendFriends = function (userId, contactAddress, pcdDes, cb) {
+      ImIFS.getRecommendFriends(userId, contactAddress, pcdDes, function (err, res) {
         if (err) {
           console.log('getRecommendFriends err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
@@ -104,8 +104,8 @@ module.exports = function (IM) {
         ],
         accepts: [
           {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户编号'},
-          {arg: 'contactAddress', type: 'string', http: {source: 'query'}, description: '所在地(同城)'},
-          {arg: 'pcdCode', type: 'string', http: {source: 'query'}, description: '家乡(同乡)'}
+          {arg: 'contactAddress', type: 'string', required: true, http: {source: 'query'}, description: '所在地(同城)'},
+          {arg: 'pcdDes', type: 'string', required: true, http: {source: 'query'}, description: '家乡(同乡)'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-recommend-friends', verb: 'get'}

@@ -104,8 +104,8 @@ module.exports = function (IM) {
         ],
         accepts: [
           {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户编号'},
-          {arg: 'contactAddress', type: 'string', http: {source: 'query'}, description: '所在地(同城)'},
-          {arg: 'pcdCode', type: 'string', http: {source: 'query'}, description: '家乡(同乡)'}
+          {arg: 'contactAddress', type: 'string', required: true, http: {source: 'query'}, description: '所在地(同城)'},
+          {arg: 'pcdCode', type: 'string', required: true, http: {source: 'query'}, description: '家乡(同乡)'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-recommend-friends', verb: 'get'}

@@ -36,9 +36,9 @@ IMIFS.prototype.getAllFriends = function (userId, callback) {
   });
 };
 
-IMIFS.prototype.getRecommendFriends = function (userId, contactAddress, pcdCode, callback) {
+IMIFS.prototype.getRecommendFriends = function (userId, contactAddress, pcdDes, callback) {
   var IM = this.DS.models.IM;
-  var xml = IMObj.getRecommendFriendsXML(userId, contactAddress, pcdCode);
+  var xml = IMObj.getRecommendFriendsXML(userId, contactAddress, pcdDes);
   IM.GetCustomerByLuck(xml, function (err, response) {
     try {
       callback(err, JSON.parse(response.GetCustomerByLuckResult));

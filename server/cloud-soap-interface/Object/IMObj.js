@@ -71,10 +71,7 @@ exports.getAllFriendsXML = function (userId) {
   return xml(xmlObj, true);
 };
 
-exports.getRecommendFriendsXML = function (userId, contactAddress, pcdCode) {
-  if (pcdCode.charAt(pcdCode.length - 1) !== '-') {
-    pcdCode += '-';
-  }
+exports.getRecommendFriendsXML = function (userId, contactAddress, pcdDes) {
 
   var xmlObj = [{
     GetCustomerByLuck: [
@@ -101,10 +98,10 @@ exports.getRecommendFriendsXML = function (userId, contactAddress, pcdCode) {
             'd4p1:ExCustomerNo': userId
           },
           {
-            'd4p1:PCDCode': pcdCode
+            'd4p1:PCDCode': ''
           },
           {
-            'd4p1:PCDDescription': ''
+            'd4p1:PCDDescription': pcdDes
           }
         ]
       }

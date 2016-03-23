@@ -35,7 +35,12 @@ module.exports = function (app) {
   });
 
   app.datasources.IMSoap.once('connected', function () {
-    console.log('IMSoap interface is connected');
+    console.log('IM interface is connected');
     app.datasources.IMSoap.createModel('IM', {});
+  });
+
+  app.datasources.ReportSoap.once('connected', function () {
+    console.log('Report interface is connected');
+    app.datasources.ReportSoap.createModel('Report', {});
   });
 };

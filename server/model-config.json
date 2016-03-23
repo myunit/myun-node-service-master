@@ -68,5 +68,9 @@
   "IM": {
     "dataSource": null,
     "public": true
+  },
+  "Report": {
+    "dataSource": null,
+    "public": true
   }
 }

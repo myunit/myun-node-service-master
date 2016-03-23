@@ -71,5 +71,11 @@
     "name": "IMSoap",
     "connector": "soap",
     "wsdl": "http://122.225.60.230:10008/PC_API/IMService.svc?WSDL"
+  },
+  "ReportSoap": {
+    "url": "http://122.225.60.230:10008/PC_API/ReportService.svc",
+    "name": "ReportSoap",
+    "connector": "soap",
+    "wsdl": "http://122.225.60.230:10008/PC_API/ReportService.svc?WSDL"
   }
 }

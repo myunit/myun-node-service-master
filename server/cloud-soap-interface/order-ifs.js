@@ -60,9 +60,9 @@ OrderIFS.prototype.getPackageOrderDetail = function (orderId, callback) {
   });
 };
 
-OrderIFS.prototype.getPackageByOrderId = function (userId, orderId, callback) {
+OrderIFS.prototype.getPackageByOrderId = function (userId, orderId, type, callback) {
   var Order = this.DS.models.Order;
-  var xml = OrderObj.getPackageByOrderIdXML(userId, orderId);
+  var xml = OrderObj.getPackageByOrderIdXML(userId, orderId, type);
   Order.GetProductPackageBySysNoWithUid(xml, function (err, response) {
     try {
       callback(err, JSON.parse(response.GetProductPackageBySysNoWithUidResult));
@@ -258,6 +258,18 @@ OrderIFS.prototype.finishOrderDelivery = function (obj, callback) {
   Order.FinishOrderDeliveryVoucher(xml, function (err, response) {
     try {
       callback(err, JSON.parse(response.FinishOrderDeliveryVoucherResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
+OrderIFS.prototype.getGroupOn = function (obj, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.getGroupOnXML(obj);
+  Order.AddGrouponItemForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.AddGrouponItemForAppResult));
     } catch (e) {
       callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
     }

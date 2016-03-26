@@ -107,7 +107,7 @@ module.exports = function (ShoppingCart) {
             description: [
               '提交订单(JSON string) {"userId":int, "receiverId":int, "logistics":"string", "message":"string", "type":int',
               '"payMent":int, "from":int, "product":[{"pItemId":int, "pId":int, "qty":int}]}',
-              'userId:用户编号, receiverId:收货地址编号, logistics:物流(快递 or 自提), message:留言, type:订单类型(0-普通订单,3-包团订单), ',
+              'userId:用户编号, receiverId:收货地址编号, logistics:物流(快递 or 自提), message:留言, type:订单类型(0-普通订单,3-包团订单, 5-拼团), ',
               'payMent:支付方式(13-微信支付), from:订单来源(3-android 4-ios), pId:商品编号, pItemId:商品sku编号,qty数量'
             ]
           }

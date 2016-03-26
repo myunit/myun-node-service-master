@@ -119,8 +119,8 @@ module.exports = function (Book) {
     );
 
     //根据包团订单id获取包团
-    Book.getPackageByOrderId = function (userId, orderId, cb) {
-      orderIFS.getPackageByOrderId(userId, orderId, function (err, res) {
+    Book.getPackageByOrderId = function (userId, orderId, type, cb) {
+      orderIFS.getPackageByOrderId(userId, orderId, type, function (err, res) {
         if (err) {
           console.log('getPackageByOrderId err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
@@ -147,8 +147,8 @@ module.exports = function (Book) {
         ],
         accepts: [
           {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户编号'},
-          {arg: 'orderId', type: 'number', required: true, http: {source: 'query'}, description: '包团订单编号'}
-
+          {arg: 'orderId', type: 'number', required: true, http: {source: 'query'}, description: '包团订单编号'},
+          {arg: 'type', type: 'number', required: true, http: {source: 'query'}, description: '0-拼团 1-包团'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-package-by-orderId', verb: 'get'}
@@ -808,6 +808,44 @@ module.exports = function (Book) {
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/finish-order-delivery', verb: 'post'}
+      }
+    );
+
+    //领取拼团单
+    Book.getGroupOn = function (data, cb) {
+      orderIFS.getGroupOn(data, function (err, res) {
+        if (err) {
+          console.log('getGroupOn err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: '领取成功'});
+        }
+      });
+    };
+
+    Book.remoteMethod(
+      'getGroupOn',
+      {
+        description: [
+          '领取拼团单(access token).返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '领取拼团单(JSON string) {"userId":int,"name":"string","orderId":int,"groupOnId":int,"quantity":int,"price":int}',
+              'groupOnId:拼团id, orderId:订单id, quantity:数量, price:价格'
+            ]
+          }
+
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/get-group-on', verb: 'post'}
       }
     );
 

@@ -118,7 +118,7 @@ module.exports = function (Book) {
       }
     );
 
-    //根据包团订单id获取包团
+    //根据包团id获取包团
     Book.getPackageByOrderId = function (userId, orderId, type, cb) {
       orderIFS.getPackageByOrderId(userId, orderId, type, function (err, res) {
         if (err) {
@@ -143,11 +143,11 @@ module.exports = function (Book) {
       'getPackageByOrderId',
       {
         description: [
-          '根据包团订单id获取包团(access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
+          '根据包团id获取包团(access token).返回结果-status:操作结果 0 失败 1 成功, data:订单信息, msg:附带信息'
         ],
         accepts: [
           {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户编号'},
-          {arg: 'orderId', type: 'number', required: true, http: {source: 'query'}, description: '包团订单编号'},
+          {arg: 'packageId', type: 'number', required: true, http: {source: 'query'}, description: '包团编号'},
           {arg: 'type', type: 'number', required: true, http: {source: 'query'}, description: '1-拼团 2-包团'}
         ],
         returns: {arg: 'repData', type: 'string'},

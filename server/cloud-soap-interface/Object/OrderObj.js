@@ -108,6 +108,9 @@ exports.getPackageByOrderIdXML = function (userId, orderId) {
       },
       {
         uId: userId
+      },
+      {
+        type: type
       }
     ]
   }];

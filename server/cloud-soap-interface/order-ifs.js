@@ -60,9 +60,9 @@ OrderIFS.prototype.getPackageOrderDetail = function (orderId, callback) {
   });
 };
 
-OrderIFS.prototype.getPackageByOrderId = function (userId, orderId, callback) {
+OrderIFS.prototype.getPackageByOrderId = function (userId, orderId, type, callback) {
   var Order = this.DS.models.Order;
-  var xml = OrderObj.getPackageByOrderIdXML(userId, orderId);
+  var xml = OrderObj.getPackageByOrderIdXML(userId, orderId, type);
   Order.GetProductPackageBySysNoWithUid(xml, function (err, response) {
     try {
       callback(err, JSON.parse(response.GetProductPackageBySysNoWithUidResult));

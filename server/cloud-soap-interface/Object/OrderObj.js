@@ -451,3 +451,30 @@ exports.finishOrderDeliveryXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.getGroupOnXML = function (obj) {
+  var group = {};
+  group.Body = {};
+  group.Body.CustomerNo = obj.userId;
+  group.Body.GrouponSysNo = obj.groupOnId;
+  group.Body.OrderSysNo = obj.orderId;
+  group.Body.Quantity = obj.quantity;
+  group.Body.UnitPrice = obj.price;
+  group.UserId = obj.userId;
+  group.UserName = obj.name;
+
+  var xmlObj = [{
+    AddGrouponItemForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(group)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

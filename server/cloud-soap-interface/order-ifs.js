@@ -264,4 +264,16 @@ OrderIFS.prototype.finishOrderDelivery = function (obj, callback) {
   });
 };
 
+OrderIFS.prototype.getGroupOn = function (obj, callback) {
+  var Order = this.DS.models.Order;
+  var xml = OrderObj.getGroupOnXML(obj);
+  Order.AddGrouponItemForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.AddGrouponItemForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = OrderIFS;

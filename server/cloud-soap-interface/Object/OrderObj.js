@@ -95,7 +95,7 @@ exports.getPackageOrderDetailXML = function (orderId) {
   return xml(xmlObj, true);
 };
 
-exports.getPackageByOrderIdXML = function (userId, orderId) {
+exports.getPackageByOrderIdXML = function (userId, orderId, type) {
   var xmlObj = [{
     GetProductPackageBySysNoWithUid: [
       {

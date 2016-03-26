@@ -148,7 +148,7 @@ module.exports = function (Book) {
         accepts: [
           {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户编号'},
           {arg: 'orderId', type: 'number', required: true, http: {source: 'query'}, description: '包团订单编号'},
-          {arg: 'type', type: 'number', required: true, http: {source: 'query'}, description: '0-拼团 1-包团'}
+          {arg: 'type', type: 'number', required: true, http: {source: 'query'}, description: '1-拼团 2-包团'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-package-by-orderId', verb: 'get'}

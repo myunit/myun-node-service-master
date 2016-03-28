@@ -31,51 +31,51 @@
     ]
   },
   "CustomerSoap": {
-    "url": "http://192.168.1.98/xhq/PC_API/CustomerService.svc",
+    "url": "http://122.225.60.230:10008/PC_API/CustomerService.svc",
     "name": "CustomerSoap",
     "connector": "soap",
-    "wsdl": "http://192.168.1.98/xhq/PC_API/CustomerService.svc?WSDL"
+    "wsdl": "http://122.225.60.230:10008/PC_API/CustomerService.svc?WSDL"
   },
   "ProductSoap": {
-    "url": "http://192.168.1.98/xhq/PC_API/ItemService.svc",
+    "url": "http://122.225.60.230:10008/PC_API/ItemService.svc",
     "name": "ProductSoap",
     "connector": "soap",
-    "wsdl": "http://192.168.1.98/xhq/PC_API/ItemService.svc?WSDL"
+    "wsdl": "http://122.225.60.230:10008/PC_API/ItemService.svc?WSDL"
   },
   "OrderSoap": {
-    "url": "http://192.168.1.98/xhq/PC_API/OrderService.svc",
+    "url": "http://122.225.60.230:10008/PC_API/OrderService.svc",
     "name": "OrderSoap",
     "connector": "soap",
-    "wsdl": "http://192.168.1.98/xhq/PC_API/OrderService.svc?WSDL"
+    "wsdl": "http://122.225.60.230:10008/PC_API/OrderService.svc?WSDL"
   },
   "ReceiverSoap": {
-    "url": "http://192.168.1.98/xhq/PC_API/ReceiverService.svc",
+    "url": "http://122.225.60.230:10008/PC_API/ReceiverService.svc",
     "name": "ReceiverSoap",
     "connector": "soap",
-    "wsdl": "http://192.168.1.98/xhq/PC_API/ReceiverService.svc?WSDL"
+    "wsdl": "http://122.225.60.230:10008/PC_API/ReceiverService.svc?WSDL"
   },
   "ShoppingSoap": {
-    "url": "http://192.168.1.98/xhq/PC_API/ShoppingService.svc",
+    "url": "http://122.225.60.230:10008/PC_API/ShoppingService.svc",
     "name": "ShoppingSoap",
     "connector": "soap",
-    "wsdl": "http://192.168.1.98/xhq/PC_API/ShoppingService.svc?WSDL"
+    "wsdl": "http://122.225.60.230:10008/PC_API/ShoppingService.svc?WSDL"
   },
   "WalletSoap": {
-    "url": "http://192.168.1.98/xhq/PC_API/WalletService.svc",
+    "url": "http://122.225.60.230:10008/PC_API/WalletService.svc",
     "name": "WalletSoap",
     "connector": "soap",
-    "wsdl": "http://192.168.1.98/xhq/PC_API/WalletService.svc?WSDL"
+    "wsdl": "http://122.225.60.230:10008/PC_API/WalletService.svc?WSDL"
   },
   "IMSoap": {
-    "url": "http://192.168.1.98/xhq/PC_API/IMService.svc",
+    "url": "http://122.225.60.230:10008/PC_API/IMService.svc",
     "name": "IMSoap",
     "connector": "soap",
-    "wsdl": "http://192.168.1.98/xhq/PC_API/IMService.svc?WSDL"
+    "wsdl": "http://122.225.60.230:10008/PC_API/IMService.svc?WSDL"
   },
   "ReportSoap": {
-    "url": "http://192.168.1.98/xhq/PC_API/ReportService.svc",
+    "url": "http://122.225.60.230:10008/PC_API/ReportService.svc",
     "name": "ReportSoap",
     "connector": "soap",
-    "wsdl": "http://192.168.1.98/xhq/PC_API/ReportService.svc?WSDL"
+    "wsdl": "http://122.225.60.230:10008/PC_API/ReportService.svc?WSDL"
   }
 }

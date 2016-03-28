@@ -144,4 +144,16 @@ IMIFS.prototype.setFriendNickName = function (obj, callback) {
   });
 };
 
+IMIFS.prototype.getCustomerIM = function (obj, callback) {
+  var IM = this.DS.models.IM;
+  var xml = IMObj.getCustomerIMXML(obj);
+  IM.GetCustomerIMBySysNo(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.GetCustomerIMBySysNoResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = IMIFS;

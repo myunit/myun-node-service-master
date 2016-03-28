@@ -414,3 +414,20 @@ exports.setFriendNickNameXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.getCustomerIMXML = function (obj) {
+  var xmlObj = [{
+    GetCustomerIMBySysNo: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        customerId: obj.userId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

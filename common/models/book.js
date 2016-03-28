@@ -130,11 +130,7 @@ module.exports = function (Book) {
         if (!res.IsSuccess) {
           cb(null, {status: 0, msg: res.ErrorDescription});
         } else {
-          if (res.Counts > 0) {
-            cb(null, {status: 1, data: res.Data, msg: ''});
-          } else {
-            cb(null, {status: 1, data: {}, msg: ''});
-          }
+          cb(null, {status: 1, data: res.Data, msg: ''});
         }
       });
     };

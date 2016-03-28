@@ -10,7 +10,7 @@ module.exports = function (Goods) {
     var productIFS = new ProductIFS(app);
 
     //获取商品列表
-    Goods.getAllProduct = function (userId, audit, status, pcdCode, pageId, pageSize, name, isNeedCategory, friendIds, cb) {
+    Goods.getAllProduct = function (userId, audit, status, pcdCode, pageId, pageSize, name, isNeedCategory, categoryId, friendIds, cb) {
       var product = {};
       product.CustomerNo = userId;
       product.AuditStatus = audit;
@@ -20,6 +20,7 @@ module.exports = function (Goods) {
       product.PageSize = pageSize;
       product.ProductName = name;
       product.IsNeedCateforys = isNeedCategory;
+      product.CategorySysNo = categoryId;
       if (friendIds) {
         product.UserIDs = friendIds.split(',');
       }
@@ -34,7 +35,7 @@ module.exports = function (Goods) {
         if (!res.IsSuccess) {
           cb(null, {status: 0, msg: res.ErrorDescription});
         } else {
-          cb(null, {status: 1, count: res.Counts, data: res.Datas, msg: ''});
+          cb(null, {status: 1, count: res.Counts, data: res.Datas, category:res.CategoryDatas ,msg: ''});
         }
       });
     };
@@ -54,6 +55,7 @@ module.exports = function (Goods) {
           {arg: 'pageSize', type: 'number', default: 10, http: {source: 'query'}, description: '每页记录数'},
           {arg: 'name', type: 'string', default: '', http: {source: 'query'}, description: '商品名'},
           {arg: 'isNeedCategory', type: 'boolean', default: false, http: {source: 'query'}, description: '是否需要分类列表'},
+          {arg: 'categoryId', type: 'number', default: 0, http: {source: 'query'}, description: '分类id'},
           {arg: 'friendIds', type: 'string', default: '', http: {source: 'query'}, description: '好友user id 字符串,格式1,2,3...'}
         ],
         returns: {arg: 'repData', type: 'string'},

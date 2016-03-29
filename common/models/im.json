@@ -97,6 +97,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "getCustomerIM"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "pushIMMsg"
     }
   ],
   "methods": {}

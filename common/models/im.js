@@ -436,5 +436,42 @@ module.exports = function (IM) {
       }
     );
 
+    //推送消息
+    IM.pushIMMsg = function (data, cb) {
+      ImIFS.pushIMMsg(data, function (err, res) {
+        if (err) {
+          console.log('pushIMMsg err: ' + err);
+          cb(null, {status: 0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status: 0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, data: res.Body, msg: ''});
+        }
+      });
+    };
+
+    IM.remoteMethod(
+      'pushIMMsg',
+      {
+        description: [
+          '推送消息.返回结果-status:操作结果 0 失败 1 成功, msg:附带信息'
+        ],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '推送消息(JSON string) {"Context":"string", "FromAppKey":"string", "FromUser":"string", "MediaAttr":"string", ',
+              '"MsgType":int, "ToAppKey":"string", "ToUsers":"string"}'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/push-im-msg', verb: 'post'}
+      }
+    );
+
   });
 };

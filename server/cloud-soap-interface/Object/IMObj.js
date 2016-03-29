@@ -431,3 +431,20 @@ exports.getCustomerIMXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.pushIMMsgXML = function (obj) {
+  var xmlObj = [{
+    PushIMMsgForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(obj)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

@@ -53,7 +53,7 @@ module.exports = function (ShoppingCart) {
             });
           },
           function (order, cb) {
-            if (data.type === 3) {
+            /*if (data.type === 3) {
               var package = {};
               package.userId = data.userId;
               package.sharePrice = order.TotalAmount;
@@ -82,7 +82,8 @@ module.exports = function (ShoppingCart) {
               });
             } else {
               cb(null, {status: 1, order: order, msg: ''});
-            }
+            }*/
+            cb(null, {status: 1, order: order, msg: ''});
           }
         ],
         function (err, msg) {

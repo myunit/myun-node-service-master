@@ -51,11 +51,12 @@ exports.getOrderListXML = function (userId, page, pageSize, ownerId, orderType, 
   return xml(xmlObj, true);
 };
 
-exports.getPackageOrderListXML = function (userId, page, pageSize) {
+exports.getPackageOrderListXML = function (userId, page, pageSize, orderId) {
   var obj = {};
   obj.Page = page;
   obj.PageSize = pageSize;
   obj.UID = userId;
+  obj.OrderId = orderId;
 
   var xmlObj = [{
     GetAllProductPackageForApp: [

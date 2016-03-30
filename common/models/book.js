@@ -85,8 +85,8 @@ module.exports = function (Book) {
     );
 
     //查询包团订单
-    Book.getPackageOrderList = function (userId, page, pageSize, cb) {
-      orderIFS.getPackageOrderList(userId, page, pageSize, function (err, res) {
+    Book.getPackageOrderList = function (userId, page, pageSize, orderId, cb) {
+      orderIFS.getPackageOrderList(userId, page, pageSize, orderId, function (err, res) {
         if (err) {
           console.log('getPackageOrderList err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
@@ -110,8 +110,8 @@ module.exports = function (Book) {
         accepts: [
           {arg: 'userId', type: 'number', required: true, http: {source: 'query'}, description: '用户编号'},
           {arg: 'page', type: 'number', required: true, http: {source: 'query'}, description: '页码'},
-          {arg: 'pageSize', type: 'number', required: true, http: {source: 'query'}, description: '每页记录数'}
-
+          {arg: 'pageSize', type: 'number', required: true, http: {source: 'query'}, description: '每页记录数'},
+          {arg: 'orderId', type: 'number', default: 0, http: {source: 'query'}, description: '订单号'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-package-order-list', verb: 'get'}

@@ -36,9 +36,9 @@ OrderIFS.prototype.getOrderList = function (userId, page, pageSize, ownerId, ord
   });
 };
 
-OrderIFS.prototype.getPackageOrderList = function (userId, page, pageSize, callback) {
+OrderIFS.prototype.getPackageOrderList = function (userId, page, pageSize, orderId, callback) {
   var Order = this.DS.models.Order;
-  var xml = OrderObj.getPackageOrderListXML(userId, page, pageSize);
+  var xml = OrderObj.getPackageOrderListXML(userId, page, pageSize, orderId);
   Order.GetAllProductPackageForApp(xml, function (err, response) {
     try {
       callback(err, JSON.parse(response.GetAllProductPackageForAppResult));

@@ -641,7 +641,7 @@ module.exports = function (Customer) {
     };
 
     Customer.remoteMethod(
-      'loginByWeiXin',
+      'loginByWeiXinUnionId',
       {
         description: ['用微信账号登录.返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息, data:用户相关信息'],
         accepts: [
@@ -654,7 +654,7 @@ module.exports = function (Customer) {
           }
         ],
         returns: {arg: 'repData', type: 'string'},
-        http: {path: '/login-by-weixin', verb: 'post'}
+        http: {path: '/login-by-weixin-unionId', verb: 'post'}
       }
     );
   });

@@ -368,6 +368,7 @@ exports.registerByWeiXinXML = function (obj) {
   register.Name = obj.name;
   register.WeixinOpenID = obj.openId;
   register.WeixinNo = obj.name;
+  register.WeixinUniqueID = obj.unionId;
 
 
   var xmlObj = [{

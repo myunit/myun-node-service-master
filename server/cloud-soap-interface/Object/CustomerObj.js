@@ -485,3 +485,21 @@ exports.setCurrentAddressXML = function (obj) {
 
   return xml(xmlObj, true);
 };
+
+exports.loginByWeiXinUnionIdXML = function (unionId) {
+
+  var xmlObj = [{
+    LoginByWeixinUnionID: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        wixinUnionID: unionId
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

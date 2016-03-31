@@ -15,9 +15,8 @@
       "permission": "DENY"
     },
     {
-      "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "$authenticated",
+      "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "setCurrentAddress"
     },

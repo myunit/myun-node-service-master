@@ -464,7 +464,8 @@ module.exports = function (IM) {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
               '推送消息(JSON string) {"Context":"string", "FromAppKey":"string", "FromUser":"string", "MediaAttr":"string", ',
-              '"MsgType":int, "ToAppKey":"string", "ToUsers":"string"}'
+              '"MsgType":int, "ToAppKey":"string", "ToUsers":"string", "EDIOpenIMMsgData":int}',
+              'EDIOpenIMMsgData:回话id'
             ]
           }
         ],

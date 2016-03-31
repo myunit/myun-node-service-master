@@ -58,9 +58,8 @@
       "property": "modifyPassword"
     },
     {
-      "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "$authenticated",
+      "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "bindWeiXinAndPhone"
     },
@@ -69,6 +68,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "logout"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "loginByWeiXinUnionId"
     },
     {
       "accessType": "EXECUTE",

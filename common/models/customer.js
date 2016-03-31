@@ -581,5 +581,81 @@ module.exports = function (Customer) {
         http: {path: '/register-by-weixin', verb: 'post'}
       }
     );
+
+    //微信账号登录,用unionId
+    Customer.loginByWeiXinUnionId = function (data, loginCb) {
+      if (!data.unionId) {
+        loginCb(null, {status:0, msg: '参数错误'});
+        return;
+      }
+
+      var unionId = data.unionId,
+        myToken = app_self.models.MYToken;
+
+      async.waterfall(
+        [
+          function (cb) {
+            myToken.destroyAll({userId: unionId}, function (err) {
+              if (err) {
+                cb({status:0, msg: '操作异常'});
+              } else {
+                cb(null);
+              }
+            });
+          },
+          function (cb) {
+            customerIFS.loginByWeiXinUnionId(unionId, function (err, res) {
+              if (err) {
+                console.log('login by weixin unionId err: ' + err);
+                cb({status:0, msg: '操作异常'});
+                return;
+              }
+
+              if (!res.IsSuccess) {
+                cb({status:0, msg: res.ErrorDescription});
+              } else {
+                cb(null, {status: 1, data: res.Customer, msg: ''});
+              }
+
+            });
+          },
+          function (msg, cb) {
+            myToken.create({userId: unionId}, function (err, token) {
+              if (err) {
+                cb({status:0, msg: '操作异常'});
+              } else {
+                msg.token = token;
+                cb(null, msg);
+              }
+            });
+          }
+        ],
+        function (err, msg) {
+          if (err) {
+            loginCb(null, err);
+          } else {
+            loginCb(null, msg);
+          }
+        }
+      );
+    };
+
+    Customer.remoteMethod(
+      'loginByWeiXin',
+      {
+        description: ['用微信账号登录.返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息, data:用户相关信息'],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '密码信息(JSON string) {"realm(optional)":"string", "unionId":"string"}',
+              '没有unionId, 用openId'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/login-by-weixin', verb: 'post'}
+      }
+    );
   });
 };

@@ -168,4 +168,16 @@ CustomerIFS.prototype.setCurrentAddress = function (obj, callback) {
   });
 };
 
+CustomerIFS.prototype.loginByWeiXinUnionId = function (unionId, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.loginByWeiXinUnionIdXML(unionId);
+  Customer.LoginByWeixinUnionID(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.LoginByWeixinUnionIDResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = CustomerIFS;

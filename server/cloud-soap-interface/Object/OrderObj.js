@@ -25,7 +25,7 @@ exports.getOrderDetailXML = function (obj) {
   return xml(xmlObj, true);
 };
 
-exports.getOrderListXML = function (userId, page, pageSize, ownerId, orderType, payStatus, deliveryStatus) {
+exports.getOrderListXML = function (userId, page, pageSize, ownerId, orderType, payStatus, deliveryStatus, isClearGroupStatus) {
   var obj = {};
   obj.Page = page;
   obj.PageSize = pageSize;
@@ -34,6 +34,7 @@ exports.getOrderListXML = function (userId, page, pageSize, ownerId, orderType, 
   obj.OrderType = orderType;
   obj.PayStatus = payStatus;
   obj.DeliveryStatus = deliveryStatus;
+  obj.IsClearGrouponStatus = isClearGroupStatus;
 
   var xmlObj = [{
     GetAllOrderForApp: [

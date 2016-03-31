@@ -24,9 +24,9 @@ OrderIFS.prototype.getOrderDetail = function (obj, callback) {
   });
 };
 
-OrderIFS.prototype.getOrderList = function (userId, page, pageSize, ownerId, orderType, payStatus, deliveryStatus, callback) {
+OrderIFS.prototype.getOrderList = function (userId, page, pageSize, ownerId, orderType, payStatus, deliveryStatus, isClearGroupStatus, callback) {
   var Order = this.DS.models.Order;
-  var xml = OrderObj.getOrderListXML(userId, page, pageSize, ownerId, orderType, payStatus, deliveryStatus);
+  var xml = OrderObj.getOrderListXML(userId, page, pageSize, ownerId, orderType, payStatus, deliveryStatus, isClearGroupStatus);
   Order.GetAllOrderForApp(xml, function (err, response) {
     try {
       callback(err, JSON.parse(response.GetAllOrderForAppResult));

@@ -47,8 +47,8 @@ module.exports = function (Book) {
     );
 
     //查询订单
-    Book.getOrderList = function (userId, page, pageSize, ownerId, orderType, payStatus, deliveryStatus, cb) {
-      orderIFS.getOrderList(userId, page, pageSize, ownerId, orderType, payStatus, deliveryStatus, function (err, res) {
+    Book.getOrderList = function (userId, page, pageSize, ownerId, orderType, payStatus, deliveryStatus, isClearGroupStatus, cb) {
+      orderIFS.getOrderList(userId, page, pageSize, ownerId, orderType, payStatus, deliveryStatus, isClearGroupStatus, function (err, res) {
         if (err) {
           console.log('getOrderList err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
@@ -76,7 +76,8 @@ module.exports = function (Book) {
           {arg: 'ownerId', type: 'number', default: 0, http: {source: 'query'}, description: '商品所有者编号'},
           {arg: 'orderType', type: 'number', default: 0, http: {source: 'query'}, description: '订单类型(-1 全部,0 普通,3 包团)'},
           {arg: 'payStatus', type: 'number', default: 0, http: {source: 'query'}, description: '支付状态(0 全部,1 未支付)'},
-          {arg: 'deliveryStatus', type: 'number', default: 0, http: {source: 'query'}, description: '发货状态(0 全部,1 待收货, 2 待发货)'}
+          {arg: 'deliveryStatus', type: 'number', default: 0, http: {source: 'query'}, description: '发货状态(0 全部,1 待收货, 2 待发货)'},
+          {arg: 'isClearGroupStatus', type: 'boolean', default: false, http: {source: 'query'}, description: '在卖家订单列表, 待收货和待付款需要过滤拼团单时, 设置为true)'}
 
         ],
         returns: {arg: 'repData', type: 'string'},

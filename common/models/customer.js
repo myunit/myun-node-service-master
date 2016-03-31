@@ -544,7 +544,7 @@ module.exports = function (Customer) {
 
     //微信注册用户
     Customer.registerByWeiXin = function (data, cb) {
-      if (!data.phone || !data.openId || !data.name || !data.picture) {
+      if (!data.phone || !data.openId || !data.name || !data.picture || !data.unionId) {
         cb(null, {status:0, msg: '参数错误'});
         return;
       }
@@ -573,7 +573,7 @@ module.exports = function (Customer) {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
               '用户注册信息(JSON string) {"phone":"string", "openId":"string", "name":"string",' +
-              '"picture":"string"}'
+              '"picture":"string", "unionId":"string"}'
             ]
           }
         ],

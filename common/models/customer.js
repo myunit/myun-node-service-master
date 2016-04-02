@@ -257,12 +257,12 @@ module.exports = function (Customer) {
       customerIFS.bindWeiXinAndPhone(data, function (err, res) {
         if (err) {
           console.log('bindWeiXinAndPhone err: ' + err);
-          cb({status:0, msg: '操作异常'});
+          cb(null, {status:0, msg: '操作异常'});
           return;
         }
 
         if (!res.IsSuccess) {
-          cb({status:0, msg: res.ErrorDescription});
+          cb(null, {status:0, msg: res.ErrorDescription});
         } else {
           cb(null, {status: 1, msg: ''});
         }

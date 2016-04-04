@@ -39,7 +39,7 @@ module.exports = function (Goods) {
           if (!res.IsSuccess) {
             cb(null, {status: 0, msg: res.ErrorDescription});
           } else {
-            cb(null, {status: 1, count: res.Counts, data: res.Datas, category:res.CategoryDatas ,msg: ''});
+            cb(null, {status: 1, count: res.Counts, data: res.Datas, category:res.CategoryDatas, isAllProduct:res.IsAllProduct, msg: ''});
           }
         });
       } else {

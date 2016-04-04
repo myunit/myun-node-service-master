@@ -504,3 +504,26 @@ exports.loginByWeiXinUnionIdXML = function (unionId) {
 
   return xml(xmlObj, true);
 };
+
+exports.saveNickAndFaceXML = function (obj) {
+  var xmlObj = [{
+    SaveUserFace: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        customerId: obj.userId
+      },
+      {
+        nickname: obj.nick
+      },
+      {
+        faceUrl: obj.face
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};

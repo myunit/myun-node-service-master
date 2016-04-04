@@ -657,5 +657,45 @@ module.exports = function (Customer) {
         http: {path: '/login-by-weixin-unionId', verb: 'post'}
       }
     );
+
+    //保存用户头像和昵称
+    Customer.saveNickAndFace = function (data, cb) {
+      if (!data.userId) {
+        cb(null, {status:0, msg: '参数错误'});
+        return;
+      }
+
+      customerIFS.saveNickAndFace(data, function (err, res) {
+        if (err) {
+          console.log('saveUserNickAndFace err: ' + err);
+          cb(null, {status:0, msg: '操作异常'});
+          return;
+        }
+
+        if (!res.IsSuccess) {
+          cb(null, {status:0, msg: res.ErrorDescription});
+        } else {
+          cb(null, {status: 1, msg: ''});
+        }
+      });
+    };
+
+    Customer.remoteMethod(
+      'saveNickAndFace',
+      {
+        description: ['保存用户头像和昵称.返回结果-status:操作结果 0 失败 1 成功, data:用户信息, msg:附带信息'],
+        accepts: [
+          {
+            arg: 'data', type: 'object', required: true, http: {source: 'body'},
+            description: [
+              '保存用户头像和昵称(JSON string) {"userId":int, "nick":"string", "face":"string"'
+            ]
+          }
+        ],
+        returns: {arg: 'repData', type: 'string'},
+        http: {path: '/save-nick-face', verb: 'post'}
+      }
+    );
+
   });
 };

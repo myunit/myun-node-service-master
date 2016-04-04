@@ -89,6 +89,13 @@
       "principalId": "$everyone",
       "permission": "ALLOW",
       "property": "registerByWeiXin"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "saveNickAndFace"
     }
   ],
   "methods": {}

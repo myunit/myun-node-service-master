@@ -10,11 +10,12 @@ module.exports = function (Goods) {
     var productIFS = new ProductIFS(app);
 
     //获取商品列表
-    Goods.getAllProduct = function (userId, audit, status, pcdCode, pageId, pageSize, name, isNeedCategory, categoryId, friendIds, exceptPlace, exceptPcdCode, cb) {
+    Goods.getAllProduct = function (userId, audit, status, place, pcdCode, pageId, pageSize, name, isNeedCategory, categoryId, friendIds, exceptPlace, exceptPcdCode, cb) {
       var product = {};
       product.CustomerNo = userId;
       product.AuditStatus = audit;
       product.GroupStatus = status;
+      product.OriginPlace = place;
       product.PCDCode = pcdCode;
       product.Page = pageId;
       product.PageSize = pageSize;
@@ -27,7 +28,7 @@ module.exports = function (Goods) {
       product.ExceptOriginPlace = exceptPlace;
       product.ExceptOriginPCDCode = exceptPcdCode;
 
-      if (product.ExceptOriginPlace || product.ExceptOriginPCDCode) {
+      if (product.PCDCode || product.OriginPlace || product.ExceptOriginPlace || product.ExceptOriginPCDCode) {
         productIFS.getAllProductLight(product, function (err, res) {
           if (err) {
             console.log('getAllProductLight err: ' + err);
@@ -68,7 +69,8 @@ module.exports = function (Goods) {
           {arg: 'userId', type: 'number', default: 0, http: {source: 'query'}, description: '商品所有者编号'},
           {arg: 'audit', type: 'number', default: -1, http: {source: 'query'}, description: '商品审核状态(-1 全部 0 待审核 1 已审核 2 审核未通过)'},
           {arg: 'status', type: 'number', default: -1, http: {source: 'query'}, description: '商品状态(-1 全部 2 上架)'},
-          {arg: 'pcdCode', type: 'string', default: '', http: {source: 'query'}, description: '商品所在地pcd'},
+          {arg: 'place', type: 'string', default: '', http: {source: 'query'}, description: '当前用户所在地'},
+          {arg: 'pcdCode', type: 'string', default: '', http: {source: 'query'}, description: '当前用户所在地pcd'},
           {arg: 'pageId', type: 'number', default: 0, http: {source: 'query'}, description: '第几页'},
           {arg: 'pageSize', type: 'number', default: 10, http: {source: 'query'}, description: '每页记录数'},
           {arg: 'name', type: 'string', default: '', http: {source: 'query'}, description: '商品名'},

@@ -24,7 +24,7 @@ exports.getAllProductXML = function (obj) {
 
 exports.getAllProductLightXML = function (obj) {
   var xmlObj = [{
-    GetAllGetProduct_lightForApp: [
+    GetAllGetProduct_LightForApp: [
       {
         _attr: {
           xmlns: 'http://tempuri.org/'

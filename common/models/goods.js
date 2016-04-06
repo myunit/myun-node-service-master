@@ -10,11 +10,12 @@ module.exports = function (Goods) {
     var productIFS = new ProductIFS(app);
 
     //获取商品列表
-    Goods.getAllProduct = function (userId, audit, status, pcdCode, pageId, pageSize, name, isNeedCategory, categoryId, friendIds, cb) {
+    Goods.getAllProduct = function (userId, audit, status, place, pcdCode, pageId, pageSize, name, isNeedCategory, categoryId, friendIds, exceptPlace, exceptPcdCode, cb) {
       var product = {};
       product.CustomerNo = userId;
       product.AuditStatus = audit;
       product.GroupStatus = status;
+      product.OriginPlace = place;
       product.PCDCode = pcdCode;
       product.Page = pageId;
       product.PageSize = pageSize;
@@ -24,20 +25,38 @@ module.exports = function (Goods) {
       if (friendIds) {
         product.UserIDs = friendIds.split(',');
       }
+      product.ExceptOriginPlace = exceptPlace;
+      product.ExceptOriginPCDCode = exceptPcdCode;
 
-      productIFS.getAllProduct(product, function (err, res) {
-        if (err) {
-          console.log('getAllProduct err: ' + err);
-          cb(null, {status: 0, msg: '操作异常'});
-          return;
-        }
+      if (product.PCDCode || product.OriginPlace || product.ExceptOriginPlace || product.ExceptOriginPCDCode) {
+        productIFS.getAllProductLight(product, function (err, res) {
+          if (err) {
+            console.log('getAllProductLight err: ' + err);
+            cb(null, {status: 0, msg: '操作异常'});
+            return;
+          }
 
-        if (!res.IsSuccess) {
-          cb(null, {status: 0, msg: res.ErrorDescription});
-        } else {
-          cb(null, {status: 1, count: res.Counts, data: res.Datas, category:res.CategoryDatas ,msg: ''});
-        }
-      });
+          if (!res.IsSuccess) {
+            cb(null, {status: 0, msg: res.ErrorDescription});
+          } else {
+            cb(null, {status: 1, count: res.Counts, data: res.Datas, category:res.CategoryDatas, isAllProduct:res.IsAllProduct, msg: ''});
+          }
+        });
+      } else {
+        productIFS.getAllProduct(product, function (err, res) {
+          if (err) {
+            console.log('getAllProduct err: ' + err);
+            cb(null, {status: 0, msg: '操作异常'});
+            return;
+          }
+
+          if (!res.IsSuccess) {
+            cb(null, {status: 0, msg: res.ErrorDescription});
+          } else {
+            cb(null, {status: 1, count: res.Counts, data: res.Datas, category:res.CategoryDatas ,msg: ''});
+          }
+        });
+      }
     };
 
     Goods.remoteMethod(
@@ -50,13 +69,16 @@ module.exports = function (Goods) {
           {arg: 'userId', type: 'number', default: 0, http: {source: 'query'}, description: '商品所有者编号'},
           {arg: 'audit', type: 'number', default: -1, http: {source: 'query'}, description: '商品审核状态(-1 全部 0 待审核 1 已审核 2 审核未通过)'},
           {arg: 'status', type: 'number', default: -1, http: {source: 'query'}, description: '商品状态(-1 全部 2 上架)'},
-          {arg: 'pcdCode', type: 'string', default: '', http: {source: 'query'}, description: '商品所在地pcd'},
+          {arg: 'place', type: 'string', default: '', http: {source: 'query'}, description: '当前用户所在地'},
+          {arg: 'pcdCode', type: 'string', default: '', http: {source: 'query'}, description: '当前用户所在地pcd'},
           {arg: 'pageId', type: 'number', default: 0, http: {source: 'query'}, description: '第几页'},
           {arg: 'pageSize', type: 'number', default: 10, http: {source: 'query'}, description: '每页记录数'},
           {arg: 'name', type: 'string', default: '', http: {source: 'query'}, description: '商品名'},
           {arg: 'isNeedCategory', type: 'boolean', default: false, http: {source: 'query'}, description: '是否需要分类列表'},
           {arg: 'categoryId', type: 'number', default: 0, http: {source: 'query'}, description: '分类id'},
-          {arg: 'friendIds', type: 'string', default: '', http: {source: 'query'}, description: '好友user id 字符串,格式1,2,3...'}
+          {arg: 'friendIds', type: 'string', default: '', http: {source: 'query'}, description: '好友user id 字符串,格式1,2,3...'},
+          {arg: 'exceptPlace', type: 'string', default: '', http: {source: 'query'}, description: '过滤家乡 浙江-嘉兴, 和exceptPcdCode二选一'},
+          {arg: 'exceptPcdCode', type: 'string', default: '', http: {source: 'query'}, description: '过滤家乡6-14, 和exceptPlace二选一'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-all-product', verb: 'get'}

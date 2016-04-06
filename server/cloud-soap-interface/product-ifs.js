@@ -24,6 +24,18 @@ ProductIFS.prototype.getAllProduct = function (obj, callback) {
   });
 };
 
+ProductIFS.prototype.getAllProductLight = function (obj, callback) {
+  var Product = this.DS.models.Product;
+  var xml = ProductObj.getAllProductLightXML(obj);
+  Product.GetAllGetProduct_LigthForApp(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.GetAllGetProduct_LigthForAppResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 ProductIFS.prototype.getProductDetail = function (obj, callback) {
   var Product = this.DS.models.Product;
   var xml = ProductObj.getProductDetailXML(obj);

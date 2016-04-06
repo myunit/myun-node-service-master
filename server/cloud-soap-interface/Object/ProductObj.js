@@ -22,6 +22,23 @@ exports.getAllProductXML = function (obj) {
   return xml(xmlObj, true);
 };
 
+exports.getAllProductLightXML = function (obj) {
+  var xmlObj = [{
+    GetAllGetProduct_LigthForApp: [
+      {
+        _attr: {
+          xmlns: 'http://tempuri.org/'
+        }
+      },
+      {
+        queryString: JSON.stringify(obj)
+      }
+    ]
+  }];
+
+  return xml(xmlObj, true);
+};
+
 exports.getProductDetailXML = function (productNo) {
   var xmlObj = [{
     GetProductDetailBySysno: [

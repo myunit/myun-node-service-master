@@ -180,4 +180,16 @@ CustomerIFS.prototype.loginByWeiXinUnionId = function (unionId, callback) {
   });
 };
 
+CustomerIFS.prototype.saveNickAndFace = function (obj, callback) {
+  var Customer = this.DS.models.Customer;
+  var xml = CustomerObj.saveNickAndFaceXML(obj);
+  Customer.SaveUserFace(xml, function (err, response) {
+    try {
+      callback(err, JSON.parse(response.SaveUserFaceResult));
+    } catch (e) {
+      callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
+    }
+  });
+};
+
 exports = module.exports = CustomerIFS;

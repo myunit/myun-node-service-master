@@ -277,8 +277,8 @@ module.exports = function (Customer) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '用户绑定信息(JSON string) {"phone":"string", "openId":"string","code":"string"},',
-              'phone:手机号, openId微信id, code验证码'
+              '用户绑定信息(JSON string) {"phone":"string", "userId":"string","code":"string"},',
+              'phone:手机号, userId用户id, code验证码'
             ]
           }
         ],

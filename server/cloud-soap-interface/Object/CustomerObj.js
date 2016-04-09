@@ -77,14 +77,14 @@ exports.loginXML = function (obj) {
 exports.bindWeiXinAndPhoneXML = function (obj) {
 
   var xmlObj = [{
-    BindMobileByWeixinOpenIDForApp: [
+    BiningdingContactCellPhoneNoForApp: [
       {
         _attr: {
           xmlns: 'http://tempuri.org/'
         }
       },
       {
-        weixinopenid: obj.openId
+        customer: obj.userId
       },
       {
         mobile: obj.phone

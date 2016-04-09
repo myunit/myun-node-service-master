@@ -249,7 +249,7 @@ module.exports = function (Customer) {
 
     //绑定微信号和手机号(不带注册功能)
     Customer.bindWeiXinAndPhone = function (data, cb) {
-      if (!data.phone || !data.openId) {
+      if (!data.phone || !data.userId) {
         cb(null, {status:0, msg: '参数错误'});
         return;
       }
@@ -277,8 +277,8 @@ module.exports = function (Customer) {
           {
             arg: 'data', type: 'object', required: true, http: {source: 'body'},
             description: [
-              '用户绑定信息(JSON string) {"phone":"string", "openId":"string","code":"string"},',
-              'phone:手机号, openId微信id, code验证码'
+              '用户绑定信息(JSON string) {"phone":"string", "userId":"string","code":"string"},',
+              'phone:手机号, userId用户id, code验证码'
             ]
           }
         ],

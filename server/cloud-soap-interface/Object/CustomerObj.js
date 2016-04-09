@@ -313,13 +313,28 @@ exports.setDefaultReceiveAddressXML = function (obj) {
   return xml(xmlObj, true);
 };
 
-exports.getCaptchaXML = function (phone, interval) {
+exports.getCaptchaXML = function (phone, interval, type) {
+  var msg = '';
+  var smsType = 99;
+  if (type === 1) {
+    msg = '尊敬的用户，您申请的注册验证码是：{0},。验证码很重要，如非本人操作，请联系客服。【乡货圈】';
+    smsType = 1;
+  } else if (type === 3) {
+    msg = '尊敬的用户，您找回密码的手机验证码是：{0},。验证码很重要，如非本人操作，请联系客服。【乡货圈】';
+    smsType = 3;
+  } else if (type === 4) {
+    msg = '尊敬的用户，您申请的实名认证审核验证码是：{0},。验证码很重要，如非本人操作，请联系客服。【乡货圈】';
+    smsType = 4;
+  } else {
+    msg = '尊敬的用户，您申请的绑定手机验证码是：{0},。验证码很重要，如非本人操作，请联系客服。【乡货圈】';
+    smsType = 99;
+  }
   var captchaObj = {
     Interval: interval || 900,
     Password: '123',
     PszMobis: phone,
-    PszMsg: '尊敬的用户，您申请的实名认证审核验证码是：{0},。验证码很重要，如非本人操作，请联系客服。【乡货圈】',
-    SMSType: 4,
+    PszMsg: msg,
+    SMSType: smsType,
     UserId: '496',
     iMobiCount: 1
   };

@@ -81,13 +81,13 @@ module.exports = function (Customer) {
     );
 
     //获取验证码
-    Customer.getCaptcha = function (phone, interval, cb) {
+    Customer.getCaptcha = function (phone, interval, type, cb) {
       if (!phone) {
         cb(null, {status: 0, msg: '参数错误'});
         return;
       }
 
-      customerIFS.getCaptcha(phone, interval, function (err, res) {
+      customerIFS.getCaptcha(phone, interval, type, function (err, res) {
         if (err) {
           console.log('getCaptcha err: ' + err);
           cb(null, {status: 0, msg: '操作异常'});
@@ -108,7 +108,8 @@ module.exports = function (Customer) {
         description: ['获取验证码.返回结果-status:操作结果 0 成功 -1 失败, msg:附带信息'],
         accepts: [
           {arg: 'phone', type: 'string', required: true, http: {source: 'query'}, description: '手机号'},
-          {arg: 'interval', type: 'number', default:900, http: {source: 'query'}, description: '验证码有效期(秒)'}
+          {arg: 'interval', type: 'number', default:900, http: {source: 'query'}, description: '验证码有效期(秒)'},
+          {arg: 'type', type: 'number', default:99, http: {source: 'query'}, description: '1 注册, 3 忘记密码, 4 审核'}
         ],
         returns: {arg: 'repData', type: 'string'},
         http: {path: '/get-captcha', verb: 'get'}
@@ -125,23 +126,7 @@ module.exports = function (Customer) {
       async.waterfall(
         [
           function (cb) {
-            //判断手机号是否已经注册
-            customerIFS.isRegister(phone, function (err, res) {
-              if (err) {
-                console.log('isRegister err: ' + err);
-                cb({status: 0, msg: '操作异常'});
-                return;
-              }
-
-              if (res.IsSuccess) {
-                cb({status:0, msg: '该手机号已被绑定'});
-              } else {
-                cb(null);
-              }
-            });
-          },
-          function (cb) {
-            customerIFS.getCaptcha(phone, interval, function (err, res) {
+            customerIFS.getCaptcha(phone, interval, 99, function (err, res) {
               if (err) {
                 console.log('getCaptcha err: ' + err);
                 cb({status: 0, msg: '操作异常'});

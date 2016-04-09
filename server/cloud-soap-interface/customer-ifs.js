@@ -84,9 +84,9 @@ CustomerIFS.prototype.forgetPW = function (obj, callback) {
   });
 };
 
-CustomerIFS.prototype.getCaptcha = function (phone, interval, callback) {
+CustomerIFS.prototype.getCaptcha = function (phone, interval, type, callback) {
   var Customer = this.DS.models.Customer;
-  var xml = CustomerObj.getCaptchaXML(phone, interval);
+  var xml = CustomerObj.getCaptchaXML(phone, interval, type);
   Customer.SendSmsCaptchaForApp(xml, function (err, response) {
     try {
       callback(err, JSON.parse(response.SendSmsCaptchaForAppResult));

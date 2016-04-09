@@ -77,7 +77,7 @@ exports.loginXML = function (obj) {
 exports.bindWeiXinAndPhoneXML = function (obj) {
 
   var xmlObj = [{
-    BiningdingContactCellPhoneNoForApp: [
+    BingdingContactCellPhoneNoForApp: [
       {
         _attr: {
           xmlns: 'http://tempuri.org/'

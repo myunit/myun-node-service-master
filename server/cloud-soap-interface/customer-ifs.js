@@ -51,9 +51,9 @@ CustomerIFS.prototype.login = function (obj, callback) {
 CustomerIFS.prototype.bindWeiXinAndPhone = function (obj, callback) {
   var Customer = this.DS.models.Customer;
   var xml = CustomerObj.bindWeiXinAndPhoneXML(obj);
-  Customer.BiningdingContactCellPhoneNoForApp(xml, function (err, response) {
+  Customer.BingdingContactCellPhoneNoForApp(xml, function (err, response) {
     try {
-      callback(err, JSON.parse(response.BiningdingContactCellPhoneNoForAppResult));
+      callback(err, JSON.parse(response.BingdingContactCellPhoneNoForAppResult));
     } catch (e) {
       callback(err, {IsSuccess: false, ErrorDescription:'服务异常'});
     }

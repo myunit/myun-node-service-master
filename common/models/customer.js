@@ -249,7 +249,7 @@ module.exports = function (Customer) {
 
     //绑定微信号和手机号(不带注册功能)
     Customer.bindWeiXinAndPhone = function (data, cb) {
-      if (!data.phone || !data.openId) {
+      if (!data.phone || !data.userId) {
         cb(null, {status:0, msg: '参数错误'});
         return;
       }
